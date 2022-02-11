@@ -11,6 +11,8 @@
 /mnt/c/Users/agber/Desktop/XTetris/Tetramino/rotazioni.h
 
 /mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.h
+stdio.h
+-
 colori.h
 /mnt/c/Users/agber/Desktop/XTetris/Tetramino/colori.h
 rotazioni.h
