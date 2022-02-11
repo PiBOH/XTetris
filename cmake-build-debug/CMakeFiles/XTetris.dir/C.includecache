@@ -1,0 +1,24 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/mnt/c/Users/agber/Desktop/XTetris/Tetramino/colori.h
+
+/mnt/c/Users/agber/Desktop/XTetris/Tetramino/rotazioni.h
+
+/mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.h
+colori.h
+/mnt/c/Users/agber/Desktop/XTetris/Tetramino/colori.h
+rotazioni.h
+/mnt/c/Users/agber/Desktop/XTetris/Tetramino/rotazioni.h
+
+/mnt/c/Users/agber/Desktop/XTetris/main.c
+stdio.h
+-
+Tetramino/tetramino.h
+/mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.h
+
