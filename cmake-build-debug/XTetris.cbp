@@ -82,6 +82,9 @@
 		<Unit filename="/mnt/c/Users/agber/Desktop/XTetris/Tetramino/rotazioni.h">
 			<Option target="XTetris"/>
 		</Unit>
+		<Unit filename="/mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.c">
+			<Option target="XTetris"/>
+		</Unit>
 		<Unit filename="/mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.h">
 			<Option target="XTetris"/>
 		</Unit>

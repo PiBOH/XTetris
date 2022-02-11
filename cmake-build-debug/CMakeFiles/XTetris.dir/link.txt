@@ -1,1 +1,1 @@
-/usr/bin/cc -g   CMakeFiles/XTetris.dir/main.c.o  -o XTetris 
+/usr/bin/cc -g   CMakeFiles/XTetris.dir/main.c.o CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o  -o XTetris 

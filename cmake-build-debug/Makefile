@@ -123,6 +123,33 @@ XTetris/fast:
 	$(MAKE) -f CMakeFiles/XTetris.dir/build.make CMakeFiles/XTetris.dir/build
 .PHONY : XTetris/fast
 
+Tetramino/tetramino.o: Tetramino/tetramino.c.o
+
+.PHONY : Tetramino/tetramino.o
+
+# target to build an object file
+Tetramino/tetramino.c.o:
+	$(MAKE) -f CMakeFiles/XTetris.dir/build.make CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o
+.PHONY : Tetramino/tetramino.c.o
+
+Tetramino/tetramino.i: Tetramino/tetramino.c.i
+
+.PHONY : Tetramino/tetramino.i
+
+# target to preprocess a source file
+Tetramino/tetramino.c.i:
+	$(MAKE) -f CMakeFiles/XTetris.dir/build.make CMakeFiles/XTetris.dir/Tetramino/tetramino.c.i
+.PHONY : Tetramino/tetramino.c.i
+
+Tetramino/tetramino.s: Tetramino/tetramino.c.s
+
+.PHONY : Tetramino/tetramino.s
+
+# target to generate assembly for a file
+Tetramino/tetramino.c.s:
+	$(MAKE) -f CMakeFiles/XTetris.dir/build.make CMakeFiles/XTetris.dir/Tetramino/tetramino.c.s
+.PHONY : Tetramino/tetramino.c.s
+
 main.o: main.c.o
 
 .PHONY : main.o
@@ -159,6 +186,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... XTetris"
+	@echo "... Tetramino/tetramino.o"
+	@echo "... Tetramino/tetramino.i"
+	@echo "... Tetramino/tetramino.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
