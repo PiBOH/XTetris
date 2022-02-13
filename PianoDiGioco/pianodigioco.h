@@ -4,21 +4,22 @@
 #include "../Elements/boolType.h"
 #include "../Tetramino/tetramino.h"
 
-#define ROWS 20
-#define COLS 20
+#define ROWS 15
+#define COLS 10
 
 typedef
 struct cella_t {
     int riga;
     int colonna;
     Bool_t is_vuota;
-    Tetramino_t tetramino_contenuto;
+    Tetramino_t* tetramino_contenuto;
 }
 Cella_t;
 
 typedef
 struct pianodigioco_t {
     Cella_t matrice_di_gioco[ROWS][COLS];
+    Bool_t is_limiteraggiunto;
 }
 PianoDiGioco_t;
 

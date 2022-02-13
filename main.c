@@ -1,10 +1,9 @@
 #include "PianoDiGioco/pianodigioco.h"
 
 int main() {
-    int i, j;
-    Tetramino_t t;
-    t = create_tetramino6();
+    PianoDiGioco_t pianoDiGioco;
 
-    print_tetramino(t);
+    pianoDiGioco = create_pianodigioco_sp();
+
     return 0;
 }

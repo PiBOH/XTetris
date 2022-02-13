@@ -3,8 +3,8 @@
 
 typedef
 enum bool_t {
-    false = 0,
-    true
+    FALSE = 0,
+    TRUE
 }
 Bool_t;
 
