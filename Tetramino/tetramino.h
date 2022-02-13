@@ -2,8 +2,8 @@
 #define XTETRIS_TETRAMINO_H
 
 #import <stdio.h>
-#import "colori.h"
-#import "rotazioni.h"
+#import "../Elements/colori.h"
+#import "../Elements/rotazioni.h"
 #define DIM 4
 
 typedef
@@ -16,8 +16,6 @@ struct tetramino_t {
     int stato_ADD270 [DIM][DIM];
 }
 Tetramino_t;
-
-void __set_zero_tetramino(Tetramino_t* t);
 
 /**
  * Metodo che costruisce un nuovo tatramino del 1° tipo in accordo con lo standard definito nella documentazione fornita
@@ -63,7 +61,13 @@ Tetramino_t create_tetramino7();
 
 /**
  * Metodo avente il compito di stampare un tetramino passato come parametro
- * @param t il tetramino da stampare passato come parametro costante
+ * @param t: il tetramino da stampare passato come parametro costante
  */
 void print_tetramino(const Tetramino_t t);
+
+/**
+ * Metodo utilizzato per settare tutti i valori delle matrici interne al tetramino pari a 0
+ * @param t: il tetramino su cui eseguire l'operazione specificata
+ */
+void __set_zero_tetramino(Tetramino_t* t);
 #endif

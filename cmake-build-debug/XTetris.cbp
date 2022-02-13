@@ -76,10 +76,19 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/mnt/c/Users/agber/Desktop/XTetris/Tetramino/colori.h">
+		<Unit filename="/mnt/c/Users/agber/Desktop/XTetris/Elements/boolType.h">
 			<Option target="XTetris"/>
 		</Unit>
-		<Unit filename="/mnt/c/Users/agber/Desktop/XTetris/Tetramino/rotazioni.h">
+		<Unit filename="/mnt/c/Users/agber/Desktop/XTetris/Elements/colori.h">
+			<Option target="XTetris"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/agber/Desktop/XTetris/Elements/rotazioni.h">
+			<Option target="XTetris"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/agber/Desktop/XTetris/PianoDiGioco/pianodigioco.c">
+			<Option target="XTetris"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/agber/Desktop/XTetris/PianoDiGioco/pianodigioco.h">
 			<Option target="XTetris"/>
 		</Unit>
 		<Unit filename="/mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.c">

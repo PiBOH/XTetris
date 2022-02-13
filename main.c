@@ -1,4 +1,4 @@
-#include "Tetramino/tetramino.h"
+#include "PianoDiGioco/pianodigioco.h"
 
 int main() {
     int i, j;

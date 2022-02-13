@@ -1,5 +1,6 @@
 #ifndef XTETRIS_ROTAZIONI_H
 #define XTETRIS_ROTAZIONI_H
+
 typedef
 enum rotazione_t {
     BASIC = 0,
@@ -8,4 +9,5 @@ enum rotazione_t {
     ADD270
 }
 Rotazione_t;
-#endif //XTETRIS_ROTAZIONI_H
+
+#endif

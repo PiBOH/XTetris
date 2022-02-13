@@ -123,6 +123,33 @@ XTetris/fast:
 	$(MAKE) -f CMakeFiles/XTetris.dir/build.make CMakeFiles/XTetris.dir/build
 .PHONY : XTetris/fast
 
+PianoDiGioco/pianodigioco.o: PianoDiGioco/pianodigioco.c.o
+
+.PHONY : PianoDiGioco/pianodigioco.o
+
+# target to build an object file
+PianoDiGioco/pianodigioco.c.o:
+	$(MAKE) -f CMakeFiles/XTetris.dir/build.make CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o
+.PHONY : PianoDiGioco/pianodigioco.c.o
+
+PianoDiGioco/pianodigioco.i: PianoDiGioco/pianodigioco.c.i
+
+.PHONY : PianoDiGioco/pianodigioco.i
+
+# target to preprocess a source file
+PianoDiGioco/pianodigioco.c.i:
+	$(MAKE) -f CMakeFiles/XTetris.dir/build.make CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.i
+.PHONY : PianoDiGioco/pianodigioco.c.i
+
+PianoDiGioco/pianodigioco.s: PianoDiGioco/pianodigioco.c.s
+
+.PHONY : PianoDiGioco/pianodigioco.s
+
+# target to generate assembly for a file
+PianoDiGioco/pianodigioco.c.s:
+	$(MAKE) -f CMakeFiles/XTetris.dir/build.make CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.s
+.PHONY : PianoDiGioco/pianodigioco.c.s
+
 Tetramino/tetramino.o: Tetramino/tetramino.c.o
 
 .PHONY : Tetramino/tetramino.o
@@ -186,6 +213,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... XTetris"
+	@echo "... PianoDiGioco/pianodigioco.o"
+	@echo "... PianoDiGioco/pianodigioco.i"
+	@echo "... PianoDiGioco/pianodigioco.s"
 	@echo "... Tetramino/tetramino.o"
 	@echo "... Tetramino/tetramino.i"
 	@echo "... Tetramino/tetramino.s"
