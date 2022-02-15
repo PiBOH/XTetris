@@ -6,12 +6,16 @@
 
 #IncludeRegexTransform: 
 
+/mnt/c/Users/agber/Desktop/XTetris/Elements/boolType.h
+
 /mnt/c/Users/agber/Desktop/XTetris/Elements/colori.h
 
 /mnt/c/Users/agber/Desktop/XTetris/Elements/rotazioni.h
 
-/mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.c
-tetramino.h
+/mnt/c/Users/agber/Desktop/XTetris/PianoDiGioco/pianodigioco.h
+../Elements/boolType.h
+/mnt/c/Users/agber/Desktop/XTetris/Elements/boolType.h
+../Tetramino/tetramino.h
 /mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.h
 
 /mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.h
@@ -21,4 +25,8 @@ stdio.h
 /mnt/c/Users/agber/Desktop/XTetris/Elements/colori.h
 ../Elements/rotazioni.h
 /mnt/c/Users/agber/Desktop/XTetris/Elements/rotazioni.h
+
+/mnt/c/Users/agber/Desktop/XTetris/main.c
+PianoDiGioco/pianodigioco.h
+/mnt/c/Users/agber/Desktop/XTetris/PianoDiGioco/pianodigioco.h
 

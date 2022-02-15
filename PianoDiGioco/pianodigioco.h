@@ -29,6 +29,7 @@ PianoDiGioco_t;
  */
 typedef
 struct tetraminodigioco_t {
+    int id;
     Tetramino_t t;
     int n_disponibili;
 }
