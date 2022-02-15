@@ -1,5 +1,21 @@
 #include "tetramino.h"
 
+/**
+ * Metodo utilizzato per settare tutti i valori delle matrici interne al tetramino pari a 0
+ * @param t: il tetramino su cui eseguire l'operazione specificata
+ */
+void __set_zero_tetramino(Tetramino_t* t) {
+    int i, j;
+    for (i = 0; i < DIM; ++i) {
+        for (j = 0; j < DIM; ++j) {
+            (*t).stato_BASIC [i][j] = 0;
+            (*t).stato_ADD90 [i][j] = 0;
+            (*t).stato_ADD180[i][j] = 0;
+            (*t).stato_ADD270[i][j] = 0;
+        }
+    }
+}
+
 Tetramino_t create_tetramino1() {
     int i, j;
     Tetramino_t new_t;
@@ -191,36 +207,51 @@ Tetramino_t create_tetramino7() {
 }
 
 void print_tetramino(const Tetramino_t t) {
+    const string_t terminal_colors[] = { "\033[0;36m", "\033[0;34m",
+                                         "", "\033[0;33m",
+                                         "\033[0;31m", "\033[0;32m",
+                                         "\033[0;35m" };
+    int i, j;
+    printf(" _________ \n");
+    for (i = 0; i < DIM; ++i) {
+        printf("| ");
+        for (j = 0; j < DIM; ++j) {
+            printf("%s", terminal_colors[t.colore]);
+            if(t.rotazione == BASIC) {
+                if (t.stato_BASIC[i][j] == 1) printf("# ");
+                else printf("  ");
+            } else if(t.rotazione == ADD90) {
+                if (t.stato_ADD90[i][j] == 1) printf("# ");
+                else printf("  ");
+            } else if(t.rotazione == ADD180) {
+                if (t.stato_ADD180[i][j] == 1) printf("# ");
+                else printf("  ");
+            } else if(t.rotazione == ADD270) {
+                if (t.stato_ADD270[i][j] == 1) printf("# ");
+                else printf("  ");
+            }
+            printf("\033[0m");
+        }
+        printf("|\n");
+    }
+    printf(" --------- \n");
+}
+
+void print_tetramino_basic(const Tetramino_t t) {
     int i, j;
     for (i = 0; i < DIM; ++i) {
         for (j = 0; j < DIM; ++j) {
             if(t.rotazione == BASIC) {
-                if (t.stato_BASIC[i][j] == 1) printf("# ");
-                else printf("_ ");
+                printf("%d ", t.stato_BASIC[i][j]);
             } else if(t.rotazione == ADD90) {
-                if (t.stato_ADD90[i][j] == 1) printf("# ");
-                else printf("_ ");
+                printf("%d ", t.stato_ADD90[i][j]);
             } else if(t.rotazione == ADD180) {
-                if (t.stato_ADD180[i][j] == 1) printf("# ");
-                else printf("_ ");
+                printf("%d ", t.stato_ADD180[i][j]);
             } else if(t.rotazione == ADD270) {
-                if (t.stato_ADD270[i][j] == 1) printf("# ");
-                else printf("_ ");
+                printf("%d ", t.stato_ADD270[i][j]);
             }
         }
 
         printf("\n");
-    }
-}
-
-void __set_zero_tetramino(Tetramino_t* t) {
-    int i, j;
-    for (i = 0; i < DIM; ++i) {
-        for (j = 0; j < DIM; ++j) {
-            (*t).stato_BASIC [i][j] = 0;
-            (*t).stato_ADD90 [i][j] = 0;
-            (*t).stato_ADD180[i][j] = 0;
-            (*t).stato_ADD270[i][j] = 0;
-        }
     }
 }

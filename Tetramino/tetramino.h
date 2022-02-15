@@ -60,14 +60,14 @@ Tetramino_t create_tetramino6();
 Tetramino_t create_tetramino7();
 
 /**
- * Metodo avente il compito di stampare un tetramino passato come parametro
+ * Metodo avente il compito di stampare un tetramino passato come parametro in maniera basica (usando zeri e uni)
+ * @param t: il tetramino da stampare passato come parametro costante
+ */
+void print_tetramino_basic(const Tetramino_t t);
+
+/**
+ * Metodo avente il compito di stampare, con una tecnica avanazata, un tetramino passato come parametro
  * @param t: il tetramino da stampare passato come parametro costante
  */
 void print_tetramino(const Tetramino_t t);
-
-/**
- * Metodo utilizzato per settare tutti i valori delle matrici interne al tetramino pari a 0
- * @param t: il tetramino su cui eseguire l'operazione specificata
- */
-void __set_zero_tetramino(Tetramino_t* t);
 #endif

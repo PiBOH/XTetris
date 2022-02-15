@@ -5,7 +5,7 @@ const string_t terminal_colors[] = { "\033[0;36m", "\033[0;34m",
                                      "\033[0;31m", "\033[0;32m",
                                      "\033[0;35m" };
 
-void set_celle(PianoDiGioco_t* p) {
+void __set_celle(PianoDiGioco_t* p) {
     int i, j;
     for (i = 0; i < ROWS; ++i) {
         for (j = 0; j < COLS; ++j) {
@@ -19,7 +19,7 @@ void set_celle(PianoDiGioco_t* p) {
 
 PianoDiGioco_t create_pianodigioco_sp() {
     PianoDiGioco_t new_pdt;
-    set_celle(&new_pdt);
+    __set_celle(&new_pdt);
     new_pdt.is_limiteraggiunto = FALSE;
     return new_pdt;
 }
