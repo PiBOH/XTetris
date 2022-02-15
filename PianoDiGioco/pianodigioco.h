@@ -36,11 +36,9 @@ PianoDiGioco_t create_pianodigioco_sp();
 void print_pianodigioco(const PianoDiGioco_t p);
 
 /**
- * Metodo che stampa il piano di gioco con una tecnica di stampa basilare .
+ * Metodo che stampa il piano di gioco con una tecnica di stampa basilare (zeri e uni).
  * @param p: piano di gioco da stampare
  */
 void print_pianodigioco_basic(const PianoDiGioco_t p);
-
-
 
 #endif
