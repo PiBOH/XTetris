@@ -1,4 +1,5 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/XTetris.dir/GameSetting/menus.c.o"
   "CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o"
   "CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o"
   "CMakeFiles/XTetris.dir/main.c.o"

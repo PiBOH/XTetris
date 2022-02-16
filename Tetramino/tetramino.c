@@ -255,3 +255,25 @@ void print_tetramino_basic(const Tetramino_t t) {
         printf("\n");
     }
 }
+
+void print_pezzirimanenti(const Tetraminodigioco_t t[]) {
+    int i;
+    for (i = 0; i < PIECES; ++i) {
+        printf("\n\n= = = = = = = = = = = = = = = = = = = = = = =\n");
+        if (t[i].n_disponibili > 0) {
+            printf("%sID tetramino: %d%s\n", "\e[1;97m", t[i].id, "\033[0m");
+            print_tetramino(t[i].t);
+
+            string_t val;
+            if (t[i].n_disponibili < 5)
+                val = "\e[0;93m";
+            else
+                val = "\e[0;92m";
+            printf("A disposizione: %s%d%s", val, t[i].n_disponibili, "\033[0m");
+        } else {
+            printf("%sI PEZZI PER QUESTO TETRAMINO SONO TERMINATI !%s\n", "\e[1;91m", "\033[0m");
+            print_tetramino(t[i].t);
+        }
+    }
+    printf("\n\n= = = = = = = = = = = = = = = = = = = = = = =\n");
+}

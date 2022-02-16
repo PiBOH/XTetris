@@ -24,18 +24,6 @@ struct pianodigioco_t {
 PianoDiGioco_t;
 
 /**
- * Struttura dati da utilizzare per gesitre la disponibilità dei tetramini da posizionare nel
- * piano di gioco.
- */
-typedef
-struct tetraminodigioco_t {
-    int id;
-    Tetramino_t t;
-    int n_disponibili;
-}
-Tetraminodigioco_t;
-
-/**
  * Metodo in grado di creare un nuovo piano di gioco
  * @return piano di gioco con settaggio di partenza per partita singleplayer
  */

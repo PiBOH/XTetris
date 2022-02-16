@@ -5,6 +5,7 @@
 #import "../Elements/colori.h"
 #import "../Elements/rotazioni.h"
 #define DIM 4
+#define PIECES 7
 
 typedef
 struct tetramino_t {
@@ -16,6 +17,18 @@ struct tetramino_t {
     int stato_ADD270 [DIM][DIM];
 }
 Tetramino_t;
+
+/**
+ * Struttura dati da utilizzare per gesitre la disponibilità dei tetramini da posizionare nel
+ * piano di gioco.
+ */
+typedef
+struct tetraminodigioco_t {
+    int id;
+    Tetramino_t t;
+    int n_disponibili;
+}
+Tetraminodigioco_t;
 
 /**
  * Metodo che costruisce un nuovo tatramino del 1° tipo in accordo con lo standard definito nella documentazione fornita
@@ -70,4 +83,10 @@ void print_tetramino_basic(const Tetramino_t t);
  * @param t: il tetramino da stampare passato come parametro costante
  */
 void print_tetramino(const Tetramino_t t);
+
+/**
+ * Metodo avente il compito di stampare ad ogni turno di gioco i tetramini rimasti per giocare
+ * @param t: array contenente le informazioni necessarie, array di tipo Tetraminodigioco_t.
+ */
+void print_pezzirimanenti(const Tetraminodigioco_t t[]);
 #endif

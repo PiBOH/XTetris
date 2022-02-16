@@ -1,1 +1,1 @@
-/usr/bin/cc -g   CMakeFiles/XTetris.dir/main.c.o CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o  -o XTetris 
+/usr/bin/cc -g   CMakeFiles/XTetris.dir/main.c.o CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o CMakeFiles/XTetris.dir/GameSetting/menus.c.o  -o XTetris 

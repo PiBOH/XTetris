@@ -123,6 +123,33 @@ XTetris/fast:
 	$(MAKE) -f CMakeFiles/XTetris.dir/build.make CMakeFiles/XTetris.dir/build
 .PHONY : XTetris/fast
 
+GameSetting/menus.o: GameSetting/menus.c.o
+
+.PHONY : GameSetting/menus.o
+
+# target to build an object file
+GameSetting/menus.c.o:
+	$(MAKE) -f CMakeFiles/XTetris.dir/build.make CMakeFiles/XTetris.dir/GameSetting/menus.c.o
+.PHONY : GameSetting/menus.c.o
+
+GameSetting/menus.i: GameSetting/menus.c.i
+
+.PHONY : GameSetting/menus.i
+
+# target to preprocess a source file
+GameSetting/menus.c.i:
+	$(MAKE) -f CMakeFiles/XTetris.dir/build.make CMakeFiles/XTetris.dir/GameSetting/menus.c.i
+.PHONY : GameSetting/menus.c.i
+
+GameSetting/menus.s: GameSetting/menus.c.s
+
+.PHONY : GameSetting/menus.s
+
+# target to generate assembly for a file
+GameSetting/menus.c.s:
+	$(MAKE) -f CMakeFiles/XTetris.dir/build.make CMakeFiles/XTetris.dir/GameSetting/menus.c.s
+.PHONY : GameSetting/menus.c.s
+
 PianoDiGioco/pianodigioco.o: PianoDiGioco/pianodigioco.c.o
 
 .PHONY : PianoDiGioco/pianodigioco.o
@@ -213,6 +240,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... XTetris"
+	@echo "... GameSetting/menus.o"
+	@echo "... GameSetting/menus.i"
+	@echo "... GameSetting/menus.s"
 	@echo "... PianoDiGioco/pianodigioco.o"
 	@echo "... PianoDiGioco/pianodigioco.i"
 	@echo "... PianoDiGioco/pianodigioco.s"
