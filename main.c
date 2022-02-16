@@ -2,6 +2,9 @@
 #include "GameSetting/menus.h"
 
 int main() {
+    Scelta_t scelta_player;
+    print_titologioco();
+    scelta_player = menu_gioco();
     Tetraminodigioco_t tetramini_a_disposizione[PIECES] = {
             { .id = 1, .t = create_tetramino1(), .n_disponibili = 20 },
             { .id = 2, .t = create_tetramino2(), .n_disponibili = 20 },
@@ -15,8 +18,7 @@ int main() {
     pianoDiGioco = create_pianodigioco_sp();
 
     while (pianoDiGioco.is_limiteraggiunto == FALSE) {
-        print_titologioco();
-        print_menugioco();
+
         print_pezzirimanenti(tetramini_a_disposizione);
         pianoDiGioco.is_limiteraggiunto = TRUE;
     }

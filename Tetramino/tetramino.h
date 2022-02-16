@@ -1,7 +1,9 @@
 #ifndef XTETRIS_TETRAMINO_H
 #define XTETRIS_TETRAMINO_H
 
+#ifndef XTETRIS_STDIO
 #import <stdio.h>
+#endif
 #import "../Elements/colori.h"
 #import "../Elements/rotazioni.h"
 #define DIM 4
