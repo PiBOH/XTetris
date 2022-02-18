@@ -82,7 +82,16 @@
 		<Unit filename="/mnt/c/Users/agber/Desktop/XTetris/Elements/colori.h">
 			<Option target="XTetris"/>
 		</Unit>
+		<Unit filename="/mnt/c/Users/agber/Desktop/XTetris/Elements/mystring.h">
+			<Option target="XTetris"/>
+		</Unit>
 		<Unit filename="/mnt/c/Users/agber/Desktop/XTetris/Elements/rotazioni.h">
+			<Option target="XTetris"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/agber/Desktop/XTetris/GameSetting/Player/player.c">
+			<Option target="XTetris"/>
+		</Unit>
+		<Unit filename="/mnt/c/Users/agber/Desktop/XTetris/GameSetting/Player/player.h">
 			<Option target="XTetris"/>
 		</Unit>
 		<Unit filename="/mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.c">

@@ -5,9 +5,13 @@
 #import <stdio.h>
 #endif
 
+#ifndef XTETRIS_STRING
+#include "../Elements/mystring.h"
+#endif
+
 typedef
 enum scelta_t {
-    SINGLEPLAYER = 0,
+    SINGLEPLAYER = 1,
     MULTIPLAYER,
     SETTINGS
 }
@@ -22,5 +26,10 @@ void print_titologioco();
  * Metodo per stampare a terminale il menù principale del gioco
  */
 Scelta_t menu_gioco();
+
+/**
+ * Metodo per stampare il menu delle impostazioni
+ */
+void print_settingsmenu();
 
 #endif //XTETRIS_MENUS_H

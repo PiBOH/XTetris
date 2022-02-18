@@ -1,6 +1,5 @@
 #ifndef XTETRIS_COLORI_H
 #define XTETRIS_COLORI_H
-typedef char* string_t;
 
 typedef
 enum colore_t {

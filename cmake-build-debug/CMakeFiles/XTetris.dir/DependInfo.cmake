@@ -4,6 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_C
+  "/mnt/c/Users/agber/Desktop/XTetris/GameSetting/Player/player.c" "/mnt/c/Users/agber/Desktop/XTetris/cmake-build-debug/CMakeFiles/XTetris.dir/GameSetting/Player/player.c.o"
   "/mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.c" "/mnt/c/Users/agber/Desktop/XTetris/cmake-build-debug/CMakeFiles/XTetris.dir/GameSetting/menus.c.o"
   "/mnt/c/Users/agber/Desktop/XTetris/PianoDiGioco/pianodigioco.c" "/mnt/c/Users/agber/Desktop/XTetris/cmake-build-debug/CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o"
   "/mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.c" "/mnt/c/Users/agber/Desktop/XTetris/cmake-build-debug/CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o"

@@ -123,6 +123,33 @@ XTetris/fast:
 	$(MAKE) -f CMakeFiles/XTetris.dir/build.make CMakeFiles/XTetris.dir/build
 .PHONY : XTetris/fast
 
+GameSetting/Player/player.o: GameSetting/Player/player.c.o
+
+.PHONY : GameSetting/Player/player.o
+
+# target to build an object file
+GameSetting/Player/player.c.o:
+	$(MAKE) -f CMakeFiles/XTetris.dir/build.make CMakeFiles/XTetris.dir/GameSetting/Player/player.c.o
+.PHONY : GameSetting/Player/player.c.o
+
+GameSetting/Player/player.i: GameSetting/Player/player.c.i
+
+.PHONY : GameSetting/Player/player.i
+
+# target to preprocess a source file
+GameSetting/Player/player.c.i:
+	$(MAKE) -f CMakeFiles/XTetris.dir/build.make CMakeFiles/XTetris.dir/GameSetting/Player/player.c.i
+.PHONY : GameSetting/Player/player.c.i
+
+GameSetting/Player/player.s: GameSetting/Player/player.c.s
+
+.PHONY : GameSetting/Player/player.s
+
+# target to generate assembly for a file
+GameSetting/Player/player.c.s:
+	$(MAKE) -f CMakeFiles/XTetris.dir/build.make CMakeFiles/XTetris.dir/GameSetting/Player/player.c.s
+.PHONY : GameSetting/Player/player.c.s
+
 GameSetting/menus.o: GameSetting/menus.c.o
 
 .PHONY : GameSetting/menus.o
@@ -240,6 +267,9 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
 	@echo "... XTetris"
+	@echo "... GameSetting/Player/player.o"
+	@echo "... GameSetting/Player/player.i"
+	@echo "... GameSetting/Player/player.s"
 	@echo "... GameSetting/menus.o"
 	@echo "... GameSetting/menus.i"
 	@echo "... GameSetting/menus.s"

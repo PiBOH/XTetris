@@ -6,6 +6,8 @@
 
 #IncludeRegexTransform: 
 
+/mnt/c/Users/agber/Desktop/XTetris/Elements/mystring.h
+
 /mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.c
 menus.h
 /mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.h
@@ -13,4 +15,6 @@ menus.h
 /mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.h
 stdio.h
 -
+../Elements/mystring.h
+/mnt/c/Users/agber/Desktop/XTetris/Elements/mystring.h
 

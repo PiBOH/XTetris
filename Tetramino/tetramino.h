@@ -5,6 +5,7 @@
 #import <stdio.h>
 #endif
 #import "../Elements/colori.h"
+#import "../Elements/mystring.h"
 #import "../Elements/rotazioni.h"
 #define DIM 4
 #define PIECES 7
@@ -31,6 +32,12 @@ struct tetraminodigioco_t {
     int n_disponibili;
 }
 Tetraminodigioco_t;
+
+/**
+ * Metodo avente il compito di stampare ad ogni turno di gioco i tetramini rimasti per giocare
+ * @param t: array contenente le informazioni necessarie, array di tipo Tetraminodigioco_t.
+ */
+void print_pezzirimanenti(const Tetraminodigioco_t t[]);
 
 /**
  * Metodo che costruisce un nuovo tatramino del 1° tipo in accordo con lo standard definito nella documentazione fornita
@@ -86,9 +93,4 @@ void print_tetramino_basic(const Tetramino_t t);
  */
 void print_tetramino(const Tetramino_t t);
 
-/**
- * Metodo avente il compito di stampare ad ogni turno di gioco i tetramini rimasti per giocare
- * @param t: array contenente le informazioni necessarie, array di tipo Tetraminodigioco_t.
- */
-void print_pezzirimanenti(const Tetraminodigioco_t t[]);
 #endif
