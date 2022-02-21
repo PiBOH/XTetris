@@ -17,7 +17,7 @@ void __set_celle(PianoDiGioco_t* p) {
     }
 }
 
-PianoDiGioco_t create_pianodigioco_sp() {
+PianoDiGioco_t create_pianodigioco() {
     PianoDiGioco_t new_pdt;
     __set_celle(&new_pdt);
     new_pdt.is_limiteraggiunto = FALSE;
@@ -39,7 +39,7 @@ void print_pianodigioco(PianoDiGioco_t p) {
         }
         printf(" |\n");
     }
-    printf("+ - - - - - - - - - - +\n");
+    printf("+ - - - - - - - - - - +\n  0 1 2 3 4 5 6 7 8 9  \n");
 }
 
 void print_pianodigioco_basic(const PianoDiGioco_t p) {
@@ -50,8 +50,10 @@ void print_pianodigioco_basic(const PianoDiGioco_t p) {
         }
         printf("\n");
     }
+    printf("- - - - - - - - - -\n0 1 2 3 4 5 6 7 8 9\n");
 }
 
-Bool_t set_pezzosupianodigioco() {
+Bool_t set_tetraminosupianodigioco(const Tetramino_t t) {
+    int col = 0;
 
 }

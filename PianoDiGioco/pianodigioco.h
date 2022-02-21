@@ -27,7 +27,7 @@ PianoDiGioco_t;
  * Metodo in grado di creare un nuovo piano di gioco
  * @return piano di gioco con settaggio di partenza per partita singleplayer
  */
-PianoDiGioco_t create_pianodigioco_sp();
+PianoDiGioco_t create_pianodigioco();
 
 /**
  * Metodo che stampa il piano di gioco con una tecnica di stampa avanzata.
@@ -40,5 +40,13 @@ void print_pianodigioco(const PianoDiGioco_t p);
  * @param p: piano di gioco da stampare
  */
 void print_pianodigioco_basic(const PianoDiGioco_t p);
+
+/**
+ * Metodo avente il compito di posizionare effettivamente un tetramino nel piano di gioco.
+ * @param t: il tetramino da posizionare
+ * @return  true: se il tetramino è stato correttamente posizionato
+ * @return  false: se si è verificata una situazione anomala
+ */
+Bool_t set_tetraminosupianodigioco(const Tetramino_t t);
 
 #endif

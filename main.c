@@ -24,6 +24,12 @@ void set_tetraminiadisposizione(Tetraminodigioco_t* t, Scelta_t scelta) {
 }
 
 int main() {
+    PianoDiGioco_t p = create_pianodigioco();
+    print_pianodigioco_basic(p);
+    return 0;
+}
+/*
+int main() {
     Scelta_t scelta_player;
     PianoDiGioco_t pianoDiGioco;
     Tetraminodigioco_t tetramini_a_disposizione[PIECES];
@@ -69,3 +75,4 @@ int main() {
 
     return 0;
 }
+*/
