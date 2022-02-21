@@ -1,6 +1,11 @@
 #include "PianoDiGioco/pianodigioco.h"
 #include "GameSetting/menus.h"
+#include "GameSetting/Player/player.h"
 #include <unistd.h>
+#include <string.h>
+#include <stdlib.h>
+
+#define PLAYERS_FILE "./GameSetting/Player/players.txt"
 
 void set_tetraminiadisposizione(Tetraminodigioco_t* t, Scelta_t scelta) {
     int i;
@@ -18,11 +23,11 @@ void set_tetraminiadisposizione(Tetraminodigioco_t* t, Scelta_t scelta) {
     t[6].t = create_tetramino7();
 }
 
-
 int main() {
     Scelta_t scelta_player;
     PianoDiGioco_t pianoDiGioco;
     Tetraminodigioco_t tetramini_a_disposizione[PIECES];
+    Player_t pl1, pl2;
 
     print_titologioco();
  riapri_menu:
@@ -35,15 +40,32 @@ int main() {
 
     set_tetraminiadisposizione(tetramini_a_disposizione, scelta_player);
     pianoDiGioco = create_pianodigioco_sp();
+    char nome[20];
+    if (scelta_player == SINGLEPLAYER) {
+        printf("Inserisci il nome che vuoi avere durante questa partita (max 20 caratteri):\n");
+        scanf("%s", nome);
+        pl1 = get_nuovoplayer(nome);
 
-    /* scegliere utenti */
+        while (pianoDiGioco.is_limiteraggiunto == FALSE) {
 
-    while (pianoDiGioco.is_limiteraggiunto == FALSE) {
+            print_pezzirimanenti(tetramini_a_disposizione);
+            pianoDiGioco.is_limiteraggiunto = TRUE;
+        }
+    } else {
+        printf("Inserisci il nome che il PRIMO giocatore vuole avere durante questa partita (max 20 caratteri):\n");
+        scanf("%s", nome);
+        pl1 = get_nuovoplayer(nome);
 
-        print_pezzirimanenti(tetramini_a_disposizione);
-        pianoDiGioco.is_limiteraggiunto = TRUE;
+        printf("Inserisci il nome che il SECONDO giocatore vuole avere durante questa partita (max 20 caratteri):\n");
+        scanf("%s", nome);
+        pl2 = get_nuovoplayer(nome);
+
+        while (pianoDiGioco.is_limiteraggiunto == FALSE) {
+
+            print_pezzirimanenti(tetramini_a_disposizione);
+            pianoDiGioco.is_limiteraggiunto = TRUE;
+        }
     }
 
-    /* salvare su file i risultati della partita per salvataggio record */
     return 0;
 }

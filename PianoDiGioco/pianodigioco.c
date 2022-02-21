@@ -51,3 +51,7 @@ void print_pianodigioco_basic(const PianoDiGioco_t p) {
         printf("\n");
     }
 }
+
+Bool_t set_pezzosupianodigioco() {
+
+}

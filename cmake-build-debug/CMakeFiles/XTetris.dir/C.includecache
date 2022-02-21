@@ -6,15 +6,55 @@
 
 #IncludeRegexTransform: 
 
+/mnt/c/Users/agber/Desktop/XTetris/Elements/boolType.h
+
+/mnt/c/Users/agber/Desktop/XTetris/Elements/colori.h
+
 /mnt/c/Users/agber/Desktop/XTetris/Elements/mystring.h
 
-/mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.c
-menus.h
-/mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.h
+/mnt/c/Users/agber/Desktop/XTetris/Elements/rotazioni.h
+
+/mnt/c/Users/agber/Desktop/XTetris/GameSetting/Player/player.h
+malloc.h
+-
+string.h
+-
+../../Elements/mystring.h
+/mnt/c/Users/agber/Desktop/XTetris/Elements/mystring.h
 
 /mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.h
 stdio.h
 -
 ../Elements/mystring.h
 /mnt/c/Users/agber/Desktop/XTetris/Elements/mystring.h
+
+/mnt/c/Users/agber/Desktop/XTetris/PianoDiGioco/pianodigioco.h
+../Elements/boolType.h
+/mnt/c/Users/agber/Desktop/XTetris/Elements/boolType.h
+../Tetramino/tetramino.h
+/mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.h
+
+/mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.h
+stdio.h
+-
+../Elements/colori.h
+/mnt/c/Users/agber/Desktop/XTetris/Elements/colori.h
+../Elements/mystring.h
+/mnt/c/Users/agber/Desktop/XTetris/Elements/mystring.h
+../Elements/rotazioni.h
+/mnt/c/Users/agber/Desktop/XTetris/Elements/rotazioni.h
+
+/mnt/c/Users/agber/Desktop/XTetris/main.c
+PianoDiGioco/pianodigioco.h
+/mnt/c/Users/agber/Desktop/XTetris/PianoDiGioco/pianodigioco.h
+GameSetting/menus.h
+/mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.h
+GameSetting/Player/player.h
+/mnt/c/Users/agber/Desktop/XTetris/GameSetting/Player/player.h
+unistd.h
+-
+string.h
+-
+stdlib.h
+-
 

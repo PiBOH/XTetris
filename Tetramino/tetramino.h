@@ -93,4 +93,6 @@ void print_tetramino_basic(const Tetramino_t t);
  */
 void print_tetramino(const Tetramino_t t);
 
+Bool_t set_pezzosupianodigioco();
+
 #endif
