@@ -289,11 +289,15 @@ void print_possibilirotazioni(int id) {
         case 6: t = create_tetramino6(); break;
         default: t = create_tetramino7(); break;
     }
+    printf("1:\n");
     print_tetramino(t);
+    printf("2:\n");
     t.rotazione = ADD90;
     print_tetramino(t);
+    printf("3:\n");
     t.rotazione = ADD180;
     print_tetramino(t);
+    printf("4:\n");
     t.rotazione = ADD270;
     print_tetramino(t);
 }
