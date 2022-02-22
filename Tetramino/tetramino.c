@@ -277,3 +277,23 @@ void print_pezzirimanenti(const Tetraminodigioco_t t[]) {
     }
     printf("\n\n= = = = = = = = = = = = = = = = = = = = = = =\n");
 }
+
+void print_possibilirotazioni(int id) {
+    Tetramino_t t;
+    switch (id) {
+        case 1: t = create_tetramino1(); break;
+        case 2: t = create_tetramino2(); break;
+        case 3: t = create_tetramino3(); break;
+        case 4: t = create_tetramino4(); break;
+        case 5: t = create_tetramino5(); break;
+        case 6: t = create_tetramino6(); break;
+        default: t = create_tetramino7(); break;
+    }
+    print_tetramino(t);
+    t.rotazione = ADD90;
+    print_tetramino(t);
+    t.rotazione = ADD180;
+    print_tetramino(t);
+    t.rotazione = ADD270;
+    print_tetramino(t);
+}

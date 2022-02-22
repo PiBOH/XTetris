@@ -43,10 +43,11 @@ void print_pianodigioco_basic(const PianoDiGioco_t p);
 
 /**
  * Metodo avente il compito di posizionare effettivamente un tetramino nel piano di gioco.
- * @param t: il tetramino da posizionare
+ * @param t: tetramino da posizionare
+ * @param col: colonna in cui calare il tetramino
  * @return  true: se il tetramino è stato correttamente posizionato
  * @return  false: se si è verificata una situazione anomala
  */
-Bool_t set_tetraminosupianodigioco(const Tetramino_t t);
+Bool_t set_tetraminosupianodigioco(const Tetramino_t t, int col);
 
 #endif

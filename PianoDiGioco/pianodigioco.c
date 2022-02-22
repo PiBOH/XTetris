@@ -53,7 +53,6 @@ void print_pianodigioco_basic(const PianoDiGioco_t p) {
     printf("- - - - - - - - - -\n0 1 2 3 4 5 6 7 8 9\n");
 }
 
-Bool_t set_tetraminosupianodigioco(const Tetramino_t t) {
-    int col = 0;
+Bool_t set_tetraminosupianodigioco(const Tetramino_t t, int col) {
 
 }

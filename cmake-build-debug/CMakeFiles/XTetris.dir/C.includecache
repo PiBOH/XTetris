@@ -14,9 +14,19 @@
 
 /mnt/c/Users/agber/Desktop/XTetris/Elements/rotazioni.h
 
-/mnt/c/Users/agber/Desktop/XTetris/PianoDiGioco/pianodigioco.c
-pianodigioco.h
-/mnt/c/Users/agber/Desktop/XTetris/PianoDiGioco/pianodigioco.h
+/mnt/c/Users/agber/Desktop/XTetris/GameSetting/Player/player.h
+malloc.h
+-
+string.h
+-
+../../Elements/mystring.h
+/mnt/c/Users/agber/Desktop/XTetris/Elements/mystring.h
+
+/mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.h
+stdio.h
+-
+../Elements/mystring.h
+/mnt/c/Users/agber/Desktop/XTetris/Elements/mystring.h
 
 /mnt/c/Users/agber/Desktop/XTetris/PianoDiGioco/pianodigioco.h
 ../Elements/boolType.h
@@ -33,4 +43,18 @@ stdio.h
 /mnt/c/Users/agber/Desktop/XTetris/Elements/mystring.h
 ../Elements/rotazioni.h
 /mnt/c/Users/agber/Desktop/XTetris/Elements/rotazioni.h
+
+/mnt/c/Users/agber/Desktop/XTetris/main.c
+PianoDiGioco/pianodigioco.h
+/mnt/c/Users/agber/Desktop/XTetris/PianoDiGioco/pianodigioco.h
+GameSetting/menus.h
+/mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.h
+GameSetting/Player/player.h
+/mnt/c/Users/agber/Desktop/XTetris/GameSetting/Player/player.h
+unistd.h
+-
+string.h
+-
+stdlib.h
+-
 

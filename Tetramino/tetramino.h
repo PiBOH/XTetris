@@ -93,4 +93,10 @@ void print_tetramino_basic(const Tetramino_t t);
  */
 void print_tetramino(const Tetramino_t t);
 
+/**
+ * Metodo che stampa a video tutte le possibili rotazioni di un tetramino scelto dall'utente tramite id
+ * @param id: id del tetramino da stampare (ovvero l'id del tetramino scelto dall'utente)
+ */
+void print_possibilirotazioni(int id);
+
 #endif
