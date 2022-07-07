@@ -42,7 +42,8 @@ void print_pianodigioco(PianoDiGioco_t p) {
     printf("+ - - - - - - - - - - +\n  0 1 2 3 4 5 6 7 8 9  \n");
 }
 
-void print_pianodigioco_basic(const PianoDiGioco_t p) {
+void print_pianodigioco_basic(const PianoDiGioco_t p)
+{
     int i, j;
     for (i = 0; i < ROWS; ++i) {
         for (j = 0; j < COLS; ++j) {
@@ -53,6 +54,7 @@ void print_pianodigioco_basic(const PianoDiGioco_t p) {
     printf("- - - - - - - - - -\n0 1 2 3 4 5 6 7 8 9\n");
 }
 
-Bool_t set_tetraminosupianodigioco(const Tetramino_t t, int col) {
+Bool_t set_tetraminosupianodigioco(const Tetramino_t t, int col)
+{
 
 }

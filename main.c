@@ -1,19 +1,15 @@
 #include "PianoDiGioco/pianodigioco.h"
 #include "GameSetting/menus.h"
 #include "GameSetting/Player/player.h"
-#include <unistd.h>
-#include <string.h>
-#include <stdlib.h>
 
-#define PLAYERS_FILE "./GameSetting/Player/players.txt"
-
-void set_tetraminiadisposizione(Tetraminodigioco_t* t, Scelta_t scelta) {
+void set_tetraminiadisposizione(Tetraminodigioco_t* t, Mode_t scelta) {
     int i;
     for (i = 0; i < PIECES; ++i) {
         t[i].id = i + 1;
         t[i].n_disponibili = 20 * (int)scelta;
     }
 
+    // Allo stato iniziale imposto tutti i tetramini con un orientamento di 0° (ovvero allo stato di base)
     t[0].t = create_tetramino1();
     t[1].t = create_tetramino2();
     t[2].t = create_tetramino3();
@@ -30,16 +26,10 @@ Bool_t do_richiesta(const string_t richiesta) {
     return scelta;
 }
 
-int main_t() {
-    PianoDiGioco_t p = create_pianodigioco();
-    print_pianodigioco_basic(p);
-    return 0;
-}
-
 int main() {
-    Scelta_t scelta_player;
+    Mode_t scelta_player;
     PianoDiGioco_t pianoDiGioco;
-    Tetraminodigioco_t tetramini_a_disposizione[PIECES];
+    Tetraminodigioco_t tipologie_tetramini_disponibili[PIECES];
     Player_t pl1, pl2;
     Tetramino_t t;
 
@@ -47,12 +37,7 @@ int main() {
  riapri_menu:
     scelta_player = menu_gioco();
 
-    if (scelta_player == SETTINGS) {
-        print_settingsmenu();
-        goto riapri_menu;
-    }
-
-    set_tetraminiadisposizione(tetramini_a_disposizione, scelta_player);
+    set_tetraminiadisposizione(tipologie_tetramini_disponibili, scelta_player);
     pianoDiGioco = create_pianodigioco();
     char nome[20];
     if (scelta_player == SINGLEPLAYER) {
@@ -116,7 +101,6 @@ int main() {
             }
 
             set_tetraminosupianodigioco(t, col);
-
 
             pianoDiGioco.is_limiteraggiunto = TRUE;
         }

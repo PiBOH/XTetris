@@ -1,10 +1,11 @@
 #include "tetramino.h"
 
 /**
- * Metodo utilizzato per settare tutti i valori delle matrici interne al tetramino pari a 0
+ * Metodo creato per permettere di settare tutti i valori delle matrici interne al tetramino pari a 0
  * @param t: il tetramino su cui eseguire l'operazione specificata
  */
-void __set_zero_tetramino(Tetramino_t* t) {
+void __set_zero_tetramino__(Tetramino_t* t)
+{
     int i, j;
     for (i = 0; i < DIM; ++i) {
         for (j = 0; j < DIM; ++j) {
@@ -16,13 +17,18 @@ void __set_zero_tetramino(Tetramino_t* t) {
     }
 }
 
-Tetramino_t create_tetramino1() {
+/**
+ * Metodo creato per permettere di creare e ritornare un tetramino del tipo 1
+ * @return tetramino correttamente costruito
+ */
+Tetramino_t create_tetramino1()
+{
     int i, j;
     Tetramino_t new_t;
     new_t.colore = AZZURRO;
     new_t.rotazione = BASIC;
 
-    __set_zero_tetramino(&new_t);
+    __set_zero_tetramino__(&new_t);
 
     for (j = 0; j < DIM; ++j) {
         new_t.stato_BASIC  [DIM - 1][j] = 1;
@@ -38,13 +44,17 @@ Tetramino_t create_tetramino1() {
     return new_t;
 }
 
-Tetramino_t create_tetramino2() {
-    int i, j;
+/**
+ * Metodo creato per permettere di creare e ritornare un tetramino del tipo 2
+ * @return tetramino correttamente costruito
+ */
+Tetramino_t create_tetramino2()
+{
     Tetramino_t new_t;
     new_t.colore = BLU;
     new_t.rotazione = BASIC;
 
-    __set_zero_tetramino(&new_t);
+    __set_zero_tetramino__(&new_t);
 
     new_t.stato_BASIC[2][1] = 1;
     new_t.stato_BASIC[3][1] = 1;
@@ -68,13 +78,17 @@ Tetramino_t create_tetramino2() {
     return new_t;
 }
 
-Tetramino_t create_tetramino3() {
-    int i, j;
+/**
+ * Metodo creato per permettere di creare e ritornare un tetramino del tipo 3
+ * @return tetramino correttamente costruito
+ */
+Tetramino_t create_tetramino3()
+{
     Tetramino_t new_t;
     new_t.colore = ARANCIONE;
     new_t.rotazione = BASIC;
 
-    __set_zero_tetramino(&new_t);
+    __set_zero_tetramino__(&new_t);
 
     new_t.stato_BASIC[2][3] = 1;
     new_t.stato_BASIC[3][3] = 1;
@@ -99,13 +113,18 @@ Tetramino_t create_tetramino3() {
     return new_t;
 }
 
-Tetramino_t create_tetramino4() {
+/**
+ * Metodo creato per permettere di creare e ritornare un tetramino del tipo 4
+ * @return tetramino correttamente costruito
+ */
+Tetramino_t create_tetramino4()
+{
     int i, j;
     Tetramino_t new_t;
     new_t.colore = GIALLO;
     new_t.rotazione = BASIC;
 
-    __set_zero_tetramino(&new_t);
+    __set_zero_tetramino__(&new_t);
 
     new_t.stato_BASIC[2][2] = 1;
     new_t.stato_BASIC[2][3] = 1;
@@ -119,13 +138,18 @@ Tetramino_t create_tetramino4() {
     return new_t;
 }
 
-Tetramino_t create_tetramino5() {
+/**
+ * Metodo creato per permettere di creare e ritornare un tetramino del tipo 5
+ * @return tetramino correttamente costruito
+ */
+Tetramino_t create_tetramino5()
+{
     int i, j;
     Tetramino_t new_t;
     new_t.colore = VERDE;
     new_t.rotazione = BASIC;
 
-    __set_zero_tetramino(&new_t);
+    __set_zero_tetramino__(&new_t);
 
     new_t.stato_BASIC[2][3] = 1;
     new_t.stato_BASIC[2][2] = 1;
@@ -147,13 +171,17 @@ Tetramino_t create_tetramino5() {
     return new_t;
 }
 
-Tetramino_t create_tetramino6() {
-    int i, j;
+/**
+ * Metodo creato per permettere di creare e ritornare un tetramino del tipo 6
+ * @return tetramino correttamente costruito
+ */
+Tetramino_t create_tetramino6()
+{
     Tetramino_t new_t;
     new_t.colore = VIOLA;
     new_t.rotazione = BASIC;
 
-    __set_zero_tetramino(&new_t);
+    __set_zero_tetramino__(&new_t);
 
     new_t.stato_BASIC [2][2] = 1;
     new_t.stato_BASIC [3][1] = 1;
@@ -178,13 +206,18 @@ Tetramino_t create_tetramino6() {
     return new_t;
 }
 
-Tetramino_t create_tetramino7() {
+/**
+ * Metodo creato per permettere di creare e ritornare un tetramino del tipo 7
+ * @return tetramino correttamente costruito
+ */
+Tetramino_t create_tetramino7()
+{
     int i, j;
     Tetramino_t new_t;
     new_t.colore = ROSSO;
     new_t.rotazione = BASIC;
 
-    __set_zero_tetramino(&new_t);
+    __set_zero_tetramino__(&new_t);
 
     new_t.stato_BASIC [2][1] = 1;
     new_t.stato_BASIC [2][2] = 1;
@@ -206,7 +239,12 @@ Tetramino_t create_tetramino7() {
     return new_t;
 }
 
-void print_tetramino(const Tetramino_t t) {
+/**
+ * Metodo creato per permettere di stampare a video un tetramino utilizzando la stampa a colori
+ * @param t il tetramino da stampare
+ */
+void print_tetramino(const Tetramino_t t)
+{
     const string_t terminal_colors[] = { "\033[0;36m", "\033[0;34m",
                                          "", "\033[0;33m",
                                          "\033[0;31m", "\033[0;32m",
@@ -237,7 +275,12 @@ void print_tetramino(const Tetramino_t t) {
     printf(" --------- \n");
 }
 
-void print_tetramino_basic(const Tetramino_t t) {
+/**
+ * Metodo creato per permettere di fare una stampa basica a terminale di un tetramino
+ * @param t il tetramino da stampare
+ */
+void print_tetramino_basic(const Tetramino_t t)
+{
     int i, j;
     for (i = 0; i < DIM; ++i) {
         for (j = 0; j < DIM; ++j) {
@@ -256,7 +299,12 @@ void print_tetramino_basic(const Tetramino_t t) {
     }
 }
 
-void print_pezzirimanenti(const Tetraminodigioco_t t[]) {
+/**
+ *
+ * @param t
+ */
+void print_pezzirimanenti(const Tetraminodigioco_t t[])
+{
     int i;
     for (i = 0; i < PIECES; ++i) {
         printf("\n\n= = = = = = = = = = = = = = = = = = = = = = =\n");
@@ -278,7 +326,12 @@ void print_pezzirimanenti(const Tetraminodigioco_t t[]) {
     printf("\n\n= = = = = = = = = = = = = = = = = = = = = = =\n");
 }
 
-void print_possibilirotazioni(int id) {
+/**
+ * Metodo che, preso come parametro l'id di un tetramino ne stampa a video i 4 possibili tipi di rotazione.
+ * @param id identificativo del tetramino da stampare
+ */
+void print_possibilirotazioni(int id)
+{
     Tetramino_t t;
     switch (id) {
         case 1: t = create_tetramino1(); break;

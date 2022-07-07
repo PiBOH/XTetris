@@ -12,7 +12,8 @@
 #include "../../Elements/mystring.h"
 
 typedef
-struct player_t {
+struct player_t
+{
     string_t nome;
     int max_points;
 }

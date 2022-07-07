@@ -22,6 +22,12 @@ string.h
 ../../Elements/mystring.h
 /mnt/c/Users/agber/Desktop/XTetris/Elements/mystring.h
 
+/mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.c
+stdlib.h
+-
+menus.h
+/mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.h
+
 /mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.h
 stdio.h
 -
@@ -32,6 +38,10 @@ stdio.h
 ../Elements/boolType.h
 /mnt/c/Users/agber/Desktop/XTetris/Elements/boolType.h
 ../Tetramino/tetramino.h
+/mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.h
+
+/mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.c
+tetramino.h
 /mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.h
 
 /mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.h
@@ -51,10 +61,4 @@ GameSetting/menus.h
 /mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.h
 GameSetting/Player/player.h
 /mnt/c/Users/agber/Desktop/XTetris/GameSetting/Player/player.h
-unistd.h
--
-string.h
--
-stdlib.h
--
 
