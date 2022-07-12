@@ -14,22 +14,22 @@ void print_titologioco()
     printf("\n\n");
 }
 
-void print_menuiniziale()
+void __print_menuiniziale__()
 {
-    printf("Benvenuto! Cosa vuoi fare?\n   1) SinglePlayer\n   2) MultiPlayer\n");
+    printf("Benvenuto nel menù iniziale di X-Tetris! Seleziona una modalità di gioco:\n   1) SinglePlayer\n   2) MultiPlayer\n");
 }
 
 
-Scelta_t menu_gioco()
+Mode_t menu_gioco()
 {
     int scelta = 0;
-    print_menuiniziale();
+    __print_menuiniziale__();
 
     scanf("%d", &scelta);
-    while(!(scelta >= 1 && scelta <= 3))
+    while(scelta != 1 && scelta != 2)
         scanf("%d", &scelta);
 
-    if (scelta) return SINGLEPLAYER;
+    if (scelta == 1) return SINGLEPLAYER;
     else return MULTIPLAYER;
 }
 

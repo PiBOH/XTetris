@@ -17,12 +17,14 @@ enum mode_t {
 Mode_t;
 
 /**
- * Metodo per stampare a terminale il titolo del gioco
+ * Metodo per stampare a terminale il titolo del gioco con grafica ASCII-Art
  */
 void print_titologioco();
 
 /**
- * Metodo per stampare a terminale il menù principale del gioco
+ * Metodo avente il compito di stampare a video il menu di gioco e di attendere la selezione della modalità
+ * <code>SINGLEPLAYER</code> o <code>MULTIPLAYER</code> da parte dell'utente
+ * @return la modalità di gioco scelta dall'utente
  */
 Mode_t menu_gioco();
 

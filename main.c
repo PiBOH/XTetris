@@ -2,23 +2,35 @@
 #include "GameSetting/menus.h"
 #include "GameSetting/Player/player.h"
 
-void set_tetraminiadisposizione(Tetraminodigioco_t* t, Mode_t scelta) {
+/**
+ * Metodo avente il compito di impostare nelle condizioni iniziali, per iniziare la partita, l'insieme di tetramini a
+ * disposizione contandone 20 per la modalità <code>SINGLEPLAYER</code> e 40 per la <code>MULTIPLAYER</code>
+ * @param t_v: l'array di tetramini da inizializzare
+ * @param mode: la modalità di gioco scelta dall'utente
+ */
+void set_tetraminiadisposizione(Tetraminodigioco_t* t_v, Mode_t mode) {
     int i;
     for (i = 0; i < PIECES; ++i) {
-        t[i].id = i + 1;
-        t[i].n_disponibili = 20 * (int)scelta;
+        t_v[i].id = i + 1;
+        t_v[i].n_disponibili = 20 * (int)mode;
     }
 
     // Allo stato iniziale imposto tutti i tetramini con un orientamento di 0° (ovvero allo stato di base)
-    t[0].t = create_tetramino1();
-    t[1].t = create_tetramino2();
-    t[2].t = create_tetramino3();
-    t[3].t = create_tetramino4();
-    t[4].t = create_tetramino5();
-    t[5].t = create_tetramino6();
-    t[6].t = create_tetramino7();
+    t_v[0].t = create_tetramino1();
+    t_v[1].t = create_tetramino2();
+    t_v[2].t = create_tetramino3();
+    t_v[3].t = create_tetramino4();
+    t_v[4].t = create_tetramino5();
+    t_v[5].t = create_tetramino6();
+    t_v[6].t = create_tetramino7();
 }
 
+/**
+ * Metodo generico che consente di stampare a video una richiesta all'utente la cui risposta è un semplice <code>Boolean</code>
+ * del tipo <code>true/false</code> oppure scelta1 / scelta2.
+ * @param richiesta: stringa contenente il testo della richiesta da stampare a video
+ * @return la scelta impostata dall'utente, rappresentata attraverso un <code>Bool_t</code>
+ */
 Bool_t do_richiesta(const string_t richiesta) {
     Bool_t scelta = FALSE;
     printf("%s\n  1- Si\n  0- No\n", richiesta);
@@ -49,9 +61,9 @@ int main() {
             int id = -1, i, col, rotazione;
 
 
-            printf("\e[1;1H\e[2J"); // clean terminal
+            //printf("\e[1;1H\e[2J"); // clean terminal
             if (do_richiesta("Vuoi vedere i tetramini a disposizione e i relativi codici identificativi?"))
-                print_pezzirimanenti(tetramini_a_disposizione);
+                print_pezzirimanenti(tipologie_tetramini_disponibili);
         selezione_tetramino:
             printf("Scrivere il codice identificativo del tetramino che si vuole posizionare:\n");
             scanf("%d", &id);
@@ -61,13 +73,13 @@ int main() {
             }
 
             for (i = 0; i < PIECES; ++i) {
-                if(tetramini_a_disposizione[i].id == id && tetramini_a_disposizione->n_disponibili <= 0) {
+                if(tipologie_tetramini_disponibili[i].id == id && tipologie_tetramini_disponibili->n_disponibili <= 0) {
                     perror("Numero di tetramini a disposizione terminato!!!\n");
                     printf("Inserisci un nuovo tetramino valido!");
                     goto selezione_tetramino;
                 } else {
-                    t = tetramini_a_disposizione[i].t;
-                    tetramini_a_disposizione[i].n_disponibili--;
+                    t = tipologie_tetramini_disponibili[i].t;
+                    tipologie_tetramini_disponibili[i].n_disponibili--;
                     break;
                 }
             }
@@ -105,19 +117,7 @@ int main() {
             pianoDiGioco.is_limiteraggiunto = TRUE;
         }
     } else {
-        printf("Inserisci il nome che il PRIMO giocatore vuole avere durante questa partita (max 20 caratteri):\n");
-        scanf("%s", nome);
-        pl1 = get_nuovoplayer(nome);
-
-        printf("Inserisci il nome che il SECONDO giocatore vuole avere durante questa partita (max 20 caratteri):\n");
-        scanf("%s", nome);
-        pl2 = get_nuovoplayer(nome);
-
-        while (pianoDiGioco.is_limiteraggiunto == FALSE) {
-
-            print_pezzirimanenti(tetramini_a_disposizione);
-            pianoDiGioco.is_limiteraggiunto = TRUE;
-        }
+        /* Multiplayer */
     }
 
     return 0;

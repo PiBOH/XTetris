@@ -17,10 +17,7 @@ void __set_zero_tetramino__(Tetramino_t* t)
     }
 }
 
-/**
- * Metodo creato per permettere di creare e ritornare un tetramino del tipo 1
- * @return tetramino correttamente costruito
- */
+
 Tetramino_t create_tetramino1()
 {
     int i, j;
@@ -44,10 +41,7 @@ Tetramino_t create_tetramino1()
     return new_t;
 }
 
-/**
- * Metodo creato per permettere di creare e ritornare un tetramino del tipo 2
- * @return tetramino correttamente costruito
- */
+
 Tetramino_t create_tetramino2()
 {
     Tetramino_t new_t;
@@ -78,10 +72,7 @@ Tetramino_t create_tetramino2()
     return new_t;
 }
 
-/**
- * Metodo creato per permettere di creare e ritornare un tetramino del tipo 3
- * @return tetramino correttamente costruito
- */
+
 Tetramino_t create_tetramino3()
 {
     Tetramino_t new_t;
@@ -113,10 +104,7 @@ Tetramino_t create_tetramino3()
     return new_t;
 }
 
-/**
- * Metodo creato per permettere di creare e ritornare un tetramino del tipo 4
- * @return tetramino correttamente costruito
- */
+
 Tetramino_t create_tetramino4()
 {
     int i, j;
@@ -138,10 +126,7 @@ Tetramino_t create_tetramino4()
     return new_t;
 }
 
-/**
- * Metodo creato per permettere di creare e ritornare un tetramino del tipo 5
- * @return tetramino correttamente costruito
- */
+
 Tetramino_t create_tetramino5()
 {
     int i, j;
@@ -171,10 +156,7 @@ Tetramino_t create_tetramino5()
     return new_t;
 }
 
-/**
- * Metodo creato per permettere di creare e ritornare un tetramino del tipo 6
- * @return tetramino correttamente costruito
- */
+
 Tetramino_t create_tetramino6()
 {
     Tetramino_t new_t;
@@ -206,10 +188,7 @@ Tetramino_t create_tetramino6()
     return new_t;
 }
 
-/**
- * Metodo creato per permettere di creare e ritornare un tetramino del tipo 7
- * @return tetramino correttamente costruito
- */
+
 Tetramino_t create_tetramino7()
 {
     int i, j;
@@ -239,10 +218,7 @@ Tetramino_t create_tetramino7()
     return new_t;
 }
 
-/**
- * Metodo creato per permettere di stampare a video un tetramino utilizzando la stampa a colori
- * @param t il tetramino da stampare
- */
+
 void print_tetramino(const Tetramino_t t)
 {
     const string_t terminal_colors[] = { "\033[0;36m", "\033[0;34m",
@@ -275,10 +251,7 @@ void print_tetramino(const Tetramino_t t)
     printf(" --------- \n");
 }
 
-/**
- * Metodo creato per permettere di fare una stampa basica a terminale di un tetramino
- * @param t il tetramino da stampare
- */
+
 void print_tetramino_basic(const Tetramino_t t)
 {
     int i, j;
@@ -299,10 +272,7 @@ void print_tetramino_basic(const Tetramino_t t)
     }
 }
 
-/**
- *
- * @param t
- */
+
 void print_pezzirimanenti(const Tetraminodigioco_t t[])
 {
     int i;
@@ -326,10 +296,7 @@ void print_pezzirimanenti(const Tetraminodigioco_t t[])
     printf("\n\n= = = = = = = = = = = = = = = = = = = = = = =\n");
 }
 
-/**
- * Metodo che, preso come parametro l'id di un tetramino ne stampa a video i 4 possibili tipi di rotazione.
- * @param id identificativo del tetramino da stampare
- */
+
 void print_possibilirotazioni(int id)
 {
     Tetramino_t t;
