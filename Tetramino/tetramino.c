@@ -17,13 +17,14 @@ void __set_zero_tetramino__(Tetramino_t* t)
     }
 }
 
-
 Tetramino_t create_tetramino1()
 {
     int i, j;
     Tetramino_t new_t;
     new_t.colore = AZZURRO;
     new_t.rotazione = BASIC;
+    new_t.ampiezze[0] = new_t.ampiezze[2] = 4;
+    new_t.ampiezze[1] = new_t.ampiezze[3] = 1;
 
     __set_zero_tetramino__(&new_t);
 
@@ -47,6 +48,8 @@ Tetramino_t create_tetramino2()
     Tetramino_t new_t;
     new_t.colore = BLU;
     new_t.rotazione = BASIC;
+    new_t.ampiezze[0] = new_t.ampiezze[2] = 3;
+    new_t.ampiezze[1] = new_t.ampiezze[3] = 2;
 
     __set_zero_tetramino__(&new_t);
 
@@ -78,6 +81,8 @@ Tetramino_t create_tetramino3()
     Tetramino_t new_t;
     new_t.colore = ARANCIONE;
     new_t.rotazione = BASIC;
+    new_t.ampiezze[0] = new_t.ampiezze[2] = 3;
+    new_t.ampiezze[1] = new_t.ampiezze[3] = 2;
 
     __set_zero_tetramino__(&new_t);
 
@@ -111,6 +116,7 @@ Tetramino_t create_tetramino4()
     Tetramino_t new_t;
     new_t.colore = GIALLO;
     new_t.rotazione = BASIC;
+    new_t.ampiezze[0] = new_t.ampiezze[1] = new_t.ampiezze[2] = new_t.ampiezze[3] = 2;
 
     __set_zero_tetramino__(&new_t);
 
@@ -133,6 +139,8 @@ Tetramino_t create_tetramino5()
     Tetramino_t new_t;
     new_t.colore = VERDE;
     new_t.rotazione = BASIC;
+    new_t.ampiezze[0] = new_t.ampiezze[2] = 4;
+    new_t.ampiezze[1] = new_t.ampiezze[3] = 2;
 
     __set_zero_tetramino__(&new_t);
 
@@ -162,6 +170,8 @@ Tetramino_t create_tetramino6()
     Tetramino_t new_t;
     new_t.colore = VIOLA;
     new_t.rotazione = BASIC;
+    new_t.ampiezze[0] = new_t.ampiezze[2] = 3;
+    new_t.ampiezze[1] = new_t.ampiezze[3] = 2;
 
     __set_zero_tetramino__(&new_t);
 
@@ -195,6 +205,8 @@ Tetramino_t create_tetramino7()
     Tetramino_t new_t;
     new_t.colore = ROSSO;
     new_t.rotazione = BASIC;
+    new_t.ampiezze[0] = new_t.ampiezze[2] = 4;
+    new_t.ampiezze[1] = new_t.ampiezze[3] = 2;
 
     __set_zero_tetramino__(&new_t);
 
@@ -273,27 +285,27 @@ void print_tetramino_basic(const Tetramino_t t)
 }
 
 
-void print_pezzirimanenti(const Tetraminodigioco_t t[])
+void print_tetramini(const Tetraminodigioco_t t[])
 {
     int i;
     for (i = 0; i < PIECES; ++i) {
-        printf("\n\n= = = = = = = = = = = = = = = = = = = = = = =\n");
+        printf("\n\n= = = = = = = = = = = = = =\n");
         if (t[i].n_disponibili > 0) {
+            string_t val;
+
             printf("%sID tetramino: %d%s\n", "\e[1;97m", t[i].id, "\033[0m");
             print_tetramino(t[i].t);
 
-            string_t val;
-            if (t[i].n_disponibili < 5)
-                val = "\e[0;93m";
-            else
-                val = "\e[0;92m";
-            printf("A disposizione: %s%d%s", val, t[i].n_disponibili, "\033[0m");
+            if (t[i].n_disponibili < 5) val = "\e[0;93m";
+            else val = "\e[0;92m";
+
+            printf("Disponibili: %s%d%s", val, t[i].n_disponibili, "\033[0m");
         } else {
             printf("%sI PEZZI PER QUESTO TETRAMINO SONO TERMINATI !%s\n", "\e[1;91m", "\033[0m");
             print_tetramino(t[i].t);
         }
     }
-    printf("\n\n= = = = = = = = = = = = = = = = = = = = = = =\n");
+    printf("\n\n= = = = = = = = = = = = = = = =\n");
 }
 
 
@@ -320,4 +332,30 @@ void print_possibilirotazioni(int id)
     printf("4:\n");
     t.rotazione = ADD270;
     print_tetramino(t);
+}
+
+// TODO: documentazione
+int __get_altezzatetramino__(const int m[4][4]) {
+    int i, j, cont = 0;
+    for (i = 3; i >= 0; --i)
+        for (j = 0; j < 4; ++j)
+            if (m[i][j]) {
+                ++cont;
+                break;
+            }
+
+    return cont;
+}
+
+// TODO: documentazione
+int get_altezzatetramino(const Tetramino_t t)
+{
+    if (t.rotazione == BASIC)
+        return __get_altezzatetramino__(t.stato_BASIC);
+    else if (t.rotazione == ADD90)
+        return __get_altezzatetramino__(t.stato_ADD90);
+    else if (t.rotazione == ADD180)
+        return __get_altezzatetramino__(t.stato_ADD180);
+    else
+        return __get_altezzatetramino__(t.stato_ADD270);
 }

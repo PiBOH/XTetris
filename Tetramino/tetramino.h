@@ -10,10 +10,12 @@
 #define DIM 4
 #define PIECES 7
 
+// TODO: Documentazione
 typedef
 struct tetramino_t {
     Colore_t colore;
     Rotazione_t rotazione;
+    int ampiezze[4];
     int stato_BASIC  [DIM][DIM];
     int stato_ADD90  [DIM][DIM];
     int stato_ADD180 [DIM][DIM];
@@ -34,10 +36,11 @@ struct tetraminodigioco_t {
 Tetraminodigioco_t;
 
 /**
- * Metodo avente il compito di stampare ad ogni turno di gioco i tetramini rimasti per giocare
- * @param t: array contenente le informazioni necessarie, array di tipo Tetraminodigioco_t.
+ * Metodo avente il compito di stampare ad ogni turno di gioco i tetramini sia dal punto di vista grafico che integrando
+ * un'informazione relativa al numero di pezzi rimasti per ogni tipo.
+ * @param t: array contenente le informazioni necessarie relative ai tetramini in un determinato momento di esecuzione.
  */
-void print_pezzirimanenti(const Tetraminodigioco_t t[]);
+void print_tetramini(const Tetraminodigioco_t t[]);
 
 /**
  * Metodo che costruisce un nuovo tatramino del 1° tipo in accordo con lo standard definito nella documentazione fornita
@@ -98,5 +101,8 @@ void print_tetramino(const Tetramino_t t);
  * @param id: id del tetramino da stampare (ovvero l'id del tetramino scelto dall'utente)
  */
 void print_possibilirotazioni(int id);
+
+// TODO: documentazione
+int get_altezzatetramino(const Tetramino_t t);
 
 #endif

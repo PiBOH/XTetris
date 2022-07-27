@@ -11,6 +11,7 @@
 
 #include "../../Elements/mystring.h"
 
+// TODO: Documentazione
 typedef
 struct player_t
 {

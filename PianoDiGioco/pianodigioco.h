@@ -7,15 +7,17 @@
 #define ROWS 15
 #define COLS 10
 
+// TODO: Documentazione
 typedef
 struct cella_t {
     int riga;
     int colonna;
     Bool_t is_vuota;
-    Tetramino_t* tetramino_contenuto;
+    Tetramino_t tetramino_contenuto;
 }
 Cella_t;
 
+// TODO: Documentazione
 typedef
 struct pianodigioco_t {
     Cella_t matrice_di_gioco[ROWS][COLS];
@@ -42,12 +44,13 @@ void print_pianodigioco(const PianoDiGioco_t p);
 void print_pianodigioco_basic(const PianoDiGioco_t p);
 
 /**
- * Metodo avente il compito di posizionare effettivamente un tetramino nel piano di gioco.
+ * Metodo avente il compito di posizionare effettivamente un tetramino nel piano di gioco andando a settare il limite
+ * raggiunto nel caso in cui si fosse raggiunto l'apice della matrice di gioco.
  * @param t: tetramino da posizionare
  * @param col: colonna in cui calare il tetramino
- * @return  true: se il tetramino è stato correttamente posizionato
- * @return  false: se si è verificata una situazione anomala
+ * @param p: piano di gioco sul quale applicare la modifica e l'inserimento del tetramino
+ * @return <code>true</code> se e solo se il tetramino è stato posizionato correttamente, <code>false</code> altrimenti
  */
-Bool_t set_tetraminosupianodigioco(const Tetramino_t t, int col);
+Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Tetramino_t t, int col);
 
 #endif

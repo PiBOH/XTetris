@@ -9,6 +9,7 @@
 #include "../Elements/mystring.h"
 #endif
 
+// TODO: Documentazione
 typedef
 enum mode_t {
     SINGLEPLAYER = 1,
@@ -22,10 +23,8 @@ Mode_t;
 void print_titologioco();
 
 /**
- * Metodo avente il compito di stampare a video il menu di gioco e di attendere la selezione della modalità
- * <code>SINGLEPLAYER</code> o <code>MULTIPLAYER</code> da parte dell'utente
- * @return la modalità di gioco scelta dall'utente
+ * Metodo utilizzato per stampare il menu iniziale di gioco
  */
-Mode_t menu_gioco();
+void menu_gioco();
 
 #endif //XTETRIS_MENUS_H
