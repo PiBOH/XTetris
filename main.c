@@ -50,19 +50,23 @@ int main()
     pianoDiGioco = create_pianodigioco();
 
     Tetramino_t t = tipologie_tetramini_disponibili[1].t;
-    Tetramino_t t1 = tipologie_tetramini_disponibili[6].t;
+    Tetramino_t t1 = tipologie_tetramini_disponibili[0].t;
     t.rotazione = ADD270;
-    t1.rotazione = ADD270;
+    t1.rotazione = ADD90;
 
     printf("%d\n", set_tetraminosupianodigioco(&pianoDiGioco, tipologie_tetramini_disponibili[3].t, 6));
     printf("%d\n", set_tetraminosupianodigioco(&pianoDiGioco, t, 6));
     printf("%d\n", set_tetraminosupianodigioco(&pianoDiGioco, tipologie_tetramini_disponibili[3].t, 6));
-    printf("%d\n", set_tetraminosupianodigioco(&pianoDiGioco, t1, 5));
+    printf("%d\n", set_tetraminosupianodigioco(&pianoDiGioco, t1, 6));
+    printf("%d\n", set_tetraminosupianodigioco(&pianoDiGioco, t1, 6));
+    printf("%d\n", set_tetraminosupianodigioco(&pianoDiGioco, tipologie_tetramini_disponibili[1].t, 6));
     //printf("%d\n", set_tetraminosupianodigioco(&pianoDiGioco, tipologie_tetramini_disponibili[0].t, 6));
     printf("%d\n", set_tetraminosupianodigioco(&pianoDiGioco, tipologie_tetramini_disponibili[5].t, 2));
     //printf("%d\n", set_tetraminosupianodigioco(&pianoDiGioco, tipologie_tetramini_disponibili[6].t, 9));
     print_pianodigioco(pianoDiGioco);
     //print_pianodigioco(pianoDiGioco);
+
+    printf("%d\n", pianoDiGioco.is_limiteraggiunto);
 
     return 0;
 }

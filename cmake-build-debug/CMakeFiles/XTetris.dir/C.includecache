@@ -28,6 +28,10 @@ stdio.h
 ../Elements/mystring.h
 /mnt/c/Users/agber/Desktop/XTetris/Elements/mystring.h
 
+/mnt/c/Users/agber/Desktop/XTetris/PianoDiGioco/pianodigioco.c
+pianodigioco.h
+/mnt/c/Users/agber/Desktop/XTetris/PianoDiGioco/pianodigioco.h
+
 /mnt/c/Users/agber/Desktop/XTetris/PianoDiGioco/pianodigioco.h
 ../Elements/boolType.h
 /mnt/c/Users/agber/Desktop/XTetris/Elements/boolType.h

@@ -9,7 +9,6 @@
 #include "../Elements/mystring.h"
 #endif
 
-// TODO: Documentazione
 typedef
 enum mode_t {
     SINGLEPLAYER = 1,

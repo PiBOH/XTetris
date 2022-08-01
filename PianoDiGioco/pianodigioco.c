@@ -81,7 +81,13 @@ Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Tetramino_t t, int col)
         Bool_t empty_r = __check_rigavuota__(*p, i, col, t.ampiezze[t.rotazione]);
         int riga_wh_insert = i - 1;
         if (i == ROWS - 1 && empty_r) riga_wh_insert = ROWS - 1;
+
         if (!empty_r || i == ROWS - 1) {
+            if ((riga_wh_insert - get_altezzatetramino(t) + 1) < 0) {
+                p->is_limiteraggiunto = TRUE;
+                return FALSE;
+            }
+
             int k, q, i1, j1;
             for (k = riga_wh_insert, i1 = 3; k > riga_wh_insert - get_altezzatetramino(t); --k, i1--) {
                 for (q = col, j1 = 3; q > col - t.ampiezze[t.rotazione]; --q, j1--) {
