@@ -11,26 +11,22 @@
 
 #include "../../Elements/mystring.h"
 
-// TODO: Documentazione
+/* TODO: Documentazione */
 typedef
 struct player_t
 {
     string_t nome;
-    int max_points;
+    int points;
 }
 Player_t;
-
-/**
- * Metodo che memorizza all'interno di un file un nuovo giocatore
- * @param nome: il nome del giocatore da memorizzare
- */
-void save_player(string_t nome);
 
 /**
  * Metodo che, dato il nome di un giocatore, ne restituisce il rispettivo oggetto
  * @param nome: il nome del giocatore
  * @return oggetto di tipo Player_t avente nome uguale a quello fornito e punteggio massimo pari a 0
  */
-Player_t get_nuovoplayer(string_t nome);
+Player_t create_newplayer(const string_t nome);
+
+void print_player(const Player_t p);
 
 #endif //XTETRIS_PLAYER_H

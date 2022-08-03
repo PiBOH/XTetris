@@ -14,6 +14,7 @@ CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o
  /mnt/c/Users/agber/Desktop/XTetris/Elements/colori.h
  /mnt/c/Users/agber/Desktop/XTetris/Elements/mystring.h
  /mnt/c/Users/agber/Desktop/XTetris/Elements/rotazioni.h
+ /mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.h
  /mnt/c/Users/agber/Desktop/XTetris/PianoDiGioco/pianodigioco.c
  /mnt/c/Users/agber/Desktop/XTetris/PianoDiGioco/pianodigioco.h
  /mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.h
@@ -21,6 +22,7 @@ CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o
  /mnt/c/Users/agber/Desktop/XTetris/Elements/colori.h
  /mnt/c/Users/agber/Desktop/XTetris/Elements/mystring.h
  /mnt/c/Users/agber/Desktop/XTetris/Elements/rotazioni.h
+ /mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.h
  /mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.c
  /mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.h
 CMakeFiles/XTetris.dir/main.c.o

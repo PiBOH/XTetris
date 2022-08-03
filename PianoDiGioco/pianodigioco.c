@@ -58,7 +58,16 @@ void print_pianodigioco_basic(const PianoDiGioco_t p)
     printf("- - - - - - - - - -\n0 1 2 3 4 5 6 7 8 9\n");
 }
 
-// TODO: documentazione
+/**
+ * Metodo che verifica se un certo intervallo di celle di una riga della matrice di gioco è libero da eventuali tetramini.
+ * @param p : il piano di gioco su cui eseguire il controllo
+ * @param row : la riga su cui eseguire il controllo
+ * @param col : la colonna da cui partire
+ * @param amp : l'ampiezza dell'intervallo di celle da verificare (che corrisponde all'ampiezza del tetramino che si vuole
+ *            posizionare)
+ * @return <code>TRUE</code>  : se l'intervallo di celle è libero\n
+ *         <code>FALSE</code> : altrimenti
+ */
 Bool_t __check_rigavuota__(PianoDiGioco_t p, int row, int col, int amp)
 {
     int j;
@@ -70,11 +79,14 @@ Bool_t __check_rigavuota__(PianoDiGioco_t p, int row, int col, int amp)
     return TRUE;
 }
 
+/* TODO: Documentazione */
+void __check_eliminazionerighe__(PianoDiGioco_t* p, Player_t* pl) {
+    pl->points = 1927;
+}
 
-
-// TODO: Implementare
-// TODO: Documentazione
-Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Tetramino_t t, int col)
+/* TODO: Implementare */
+/* TODO: Documentazione */
+Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Player_t* player, Tetramino_t t, int col)
 {
     int i;
     for (i = 0; i < ROWS; ++i) {
@@ -82,13 +94,18 @@ Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Tetramino_t t, int col)
         int riga_wh_insert = i - 1;
         if (i == ROWS - 1 && empty_r) riga_wh_insert = ROWS - 1;
 
+        if (col - t.ampiezze[t.rotazione] < 0) {
+            return FALSE;
+        }
+
         if (!empty_r || i == ROWS - 1) {
+            int k, q, i1, j1;
+
             if ((riga_wh_insert - get_altezzatetramino(t) + 1) < 0) {
                 p->is_limiteraggiunto = TRUE;
                 return FALSE;
             }
 
-            int k, q, i1, j1;
             for (k = riga_wh_insert, i1 = 3; k > riga_wh_insert - get_altezzatetramino(t); --k, i1--) {
                 for (q = col, j1 = 3; q > col - t.ampiezze[t.rotazione]; --q, j1--) {
                     if (t.stato_BASIC[i1][j1] && t.rotazione == BASIC ||
@@ -101,6 +118,10 @@ Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Tetramino_t t, int col)
                     }
                 }
             }
+
+            /* eliminazione righe */
+            __check_eliminazionerighe__(p, player);
+
             return TRUE;
         }
     }

@@ -13,6 +13,7 @@ CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o: ../Elements/boolType.h
 CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o: ../Elements/colori.h
 CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o: ../Elements/mystring.h
 CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o: ../Elements/rotazioni.h
+CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o: ../GameSetting/menus.h
 CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o: ../PianoDiGioco/pianodigioco.c
 CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o: ../PianoDiGioco/pianodigioco.h
 CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o: ../Tetramino/tetramino.h
@@ -20,6 +21,7 @@ CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o: ../Tetramino/tetramino.h
 CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o: ../Elements/colori.h
 CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o: ../Elements/mystring.h
 CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o: ../Elements/rotazioni.h
+CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o: ../GameSetting/menus.h
 CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o: ../Tetramino/tetramino.c
 CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o: ../Tetramino/tetramino.h
 

@@ -285,7 +285,7 @@ void print_tetramino_basic(const Tetramino_t t)
 }
 
 
-void print_tetramini(const Tetraminodigioco_t t[])
+void print_settetramini(const Tetraminodigioco_t t[])
 {
     int i;
     for (i = 0; i < PIECES; ++i) {
@@ -296,7 +296,7 @@ void print_tetramini(const Tetraminodigioco_t t[])
             printf("%sID tetramino: %d%s\n", "\e[1;97m", t[i].id, "\033[0m");
             print_tetramino(t[i].t);
 
-            if (t[i].n_disponibili < 5) val = "\e[0;93m";
+            if (t[i].n_disponibili < 10) val = "\e[0;93m";
             else val = "\e[0;92m";
 
             printf("Disponibili: %s%d%s", val, t[i].n_disponibili, "\033[0m");
@@ -334,7 +334,7 @@ void print_possibilirotazioni(int id)
     print_tetramino(t);
 }
 
-// TODO: documentazione
+/* TODO: documentazione */
 int __get_altezzatetramino__(const int m[4][4]) {
     int i, j, cont = 0;
     for (i = 3; i >= 0; --i)
@@ -347,7 +347,7 @@ int __get_altezzatetramino__(const int m[4][4]) {
     return cont;
 }
 
-// TODO: documentazione
+/* TODO: documentazione */
 int get_altezzatetramino(const Tetramino_t t)
 {
     if (t.rotazione == BASIC)
@@ -358,4 +358,25 @@ int get_altezzatetramino(const Tetramino_t t)
         return __get_altezzatetramino__(t.stato_ADD180);
     else
         return __get_altezzatetramino__(t.stato_ADD270);
+}
+
+Tetraminodigioco_t* create_tetraminiset(Mode_t mode)
+{
+    int i;
+    Tetraminodigioco_t* t_v = (Tetraminodigioco_t*) malloc(sizeof(Tetraminodigioco_t) * PIECES);
+    for (i = 0; i < PIECES; ++i)
+    {
+        t_v[i].id = i + 1;
+        t_v[i].n_disponibili = 20 * (int)mode;
+    }
+
+    /* Allo stato iniziale imposto tutti i tetramini con un orientamento di 0° (ovvero allo stato di base) */
+    t_v[0].t = create_tetramino1();
+    t_v[1].t = create_tetramino2();
+    t_v[2].t = create_tetramino3();
+    t_v[3].t = create_tetramino4();
+    t_v[4].t = create_tetramino5();
+    t_v[5].t = create_tetramino6();
+    t_v[6].t = create_tetramino7();
+    return t_v;
 }

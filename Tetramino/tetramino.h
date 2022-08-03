@@ -2,15 +2,17 @@
 #define XTETRIS_TETRAMINO_H
 
 #ifndef XTETRIS_STDIO
-#import <stdio.h>
+#import <stdlib.h>
 #endif
 #import "../Elements/colori.h"
 #import "../Elements/mystring.h"
 #import "../Elements/rotazioni.h"
+#include "../GameSetting/menus.h"
+
 #define DIM 4
 #define PIECES 7
 
-// TODO: Documentazione
+/* TODO: Documentazione */
 typedef
 struct tetramino_t {
     Colore_t colore;
@@ -40,7 +42,7 @@ Tetraminodigioco_t;
  * un'informazione relativa al numero di pezzi rimasti per ogni tipo.
  * @param t: array contenente le informazioni necessarie relative ai tetramini in un determinato momento di esecuzione.
  */
-void print_tetramini(const Tetraminodigioco_t t[]);
+void print_settetramini(const Tetraminodigioco_t t[]);
 
 /**
  * Metodo che costruisce un nuovo tatramino del 1° tipo in accordo con lo standard definito nella documentazione fornita
@@ -102,7 +104,15 @@ void print_tetramino(const Tetramino_t t);
  */
 void print_possibilirotazioni(int id);
 
-// TODO: documentazione
+/* TODO: documentazione */
 int get_altezzatetramino(const Tetramino_t t);
+
+/**
+ * Metodo avente il compito di impostare nelle condizioni iniziali, per iniziare la partita, l'insieme di tetramini a
+ * disposizione contandone 20 per la modalità <code>SINGLEPLAYER</code> e 40 per la <code>MULTIPLAYER</code>
+ * @param t_v: l'array di tetramini da inizializzare
+ * @param mode: la modalità di gioco scelta dall'utente
+ */
+Tetraminodigioco_t* create_tetraminiset(Mode_t mode);
 
 #endif

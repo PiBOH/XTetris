@@ -1,7 +1,7 @@
 #ifndef XTETRIS_COLORI_H
 #define XTETRIS_COLORI_H
 
-// TODO: Documentazione
+/* TODO: Documentazione */
 typedef
 enum colore_t {
     AZZURRO = 0,

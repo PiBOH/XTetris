@@ -24,6 +24,6 @@ void print_titologioco();
 /**
  * Metodo utilizzato per stampare il menu iniziale di gioco
  */
-void menu_gioco();
+void print_menugioco();
 
-#endif //XTETRIS_MENUS_H
+#endif
