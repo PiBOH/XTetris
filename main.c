@@ -1,5 +1,8 @@
+#include <bits/ioctl-types.h>
+#include <sys/ioctl.h>
 #include "PianoDiGioco/pianodigioco.h"
 #include "GameSetting/Player/player.h"
+#include "termios.h"
 
 /**
  * Metodo generico che consente di stampare a video una richiesta all'utente la cui risposta è un semplice <code>Boolean</code>
@@ -151,6 +154,10 @@ int main() {
             Tetramino_t tetramino_scelto;
             Bool_t res; /* risultato del collocamento sul piano di gioco del tetramino */
 
+            struct winsize w;
+            ioctl(0, TIOCGWINSZ, &w);
+            int center = w.ws_col;
+
             /* Stampa piano di gioco */
             print_pianodigioco(p);
 
@@ -185,8 +192,7 @@ int main() {
                 goto selezione_rotazione;
             }
 
-            switch (rotazione)
-            {
+            switch (rotazione) {
                 case 1: tetramino_scelto.rotazione = BASIC; break;
                 case 2: tetramino_scelto.rotazione = ADD90; break;
                 case 3: tetramino_scelto.rotazione = ADD180; break;
@@ -200,8 +206,7 @@ int main() {
             printf(" - Scrivi il numero della colonna in cui vuoi calare il lato destro del tetramino.\n");
             scanf("%d", &colonna);
 
-            if(colonna < 0 || colonna > 9)
-            {
+            if(colonna < 0 || colonna > 9) {
                 perror("Valore della colonna non valido, re-inseriscine uno di corretto!!!\n");
                 goto selezione_colonna;
             }
@@ -211,7 +216,7 @@ int main() {
 
             if (res)
                 tetramini_set[id_tetramino - 1].n_disponibili--;
-            else if (!p.is_limiteraggiunto){
+            else if (!p.is_limiteraggiunto) {
                 perror("Non è stato possibile piazzare il tetramino dove hai richiesto!");
                 goto selezione_colonna;
             }

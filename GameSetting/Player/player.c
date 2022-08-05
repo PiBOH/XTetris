@@ -5,6 +5,11 @@ Player_t create_newplayer(string_t nome)
     Player_t new_player;
     new_player.nome = (string_t) malloc(sizeof(char) * 20);
     strcpy(new_player.nome, nome);
-    new_player.max_points = 0;
+    new_player.points = 0;
     return new_player;
+}
+
+void print_player(const Player_t p) {
+    printf("[###### %s ######]\n", p.nome);
+    printf("Punti: %d\n", p.points);
 }
