@@ -61,30 +61,13 @@ void print_pianodigioco_basic(const PianoDiGioco_t p)
 /* TODO: Documentazione */
 Bool_t __check_rigavuota__(PianoDiGioco_t p, int matricetetrmaino[4][4], int row, int col, int amp, int row_tetramino)
 {
-    int i, j, k = 0;
+    int j, k = 4 - amp;
 
-    for (j = col - amp + 1; j <= col; ++j)
-        if (!p.matrice_di_gioco[row][j].is_vuota && matricetetrmaino[row_tetramino][k++])
+    for (j = col - amp + 1; j <= col; ++j, ++k)
+        if (!p.matrice_di_gioco[row][j].is_vuota && matricetetrmaino[row_tetramino][k]) // cerca collisioni
             return FALSE;
 
     return TRUE;
-}
-
-/* TODO: Documentazione */
-void __check_eliminazionerighe__(PianoDiGioco_t* p, Player_t* pl) {
-    int i, j;
-    for (i = ROWS - 1; i >= 0; --i) {
-        int cont = 0;
-        for (j = 0; j < COLS; ++j)
-            if (p->matrice_di_gioco[i][j].is_vuota)
-                cont++;
-
-        if (cont == COLS - 1) {
-            /* scala tutto di 1 */
-
-        }
-    }
-    pl->points = 1927;
 }
 
 /* TODO: Implementare */
@@ -93,36 +76,39 @@ Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Player_t* player, Tetramin
 {
     int i, j;
     Bool_t empty_r = FALSE;
+    int row;
 
     for (j = ROWS - 1; j >= 0 && empty_r == FALSE; --j) {
-        int row_t = 0;
+        int row_t = 3; // riga tetramino
         empty_r = TRUE;
+        row = j;
 
-        for (i = j; i < j - 4 && empty_r; --i) {
+        for (i = j; i > j - get_altezzatetramino(t) && empty_r; --i) {
             switch (t.rotazione) {
                 case BASIC:
-                    empty_r = __check_rigavuota__(*p, t.stato_BASIC, i, col, t.ampiezze[t.rotazione], row_t++) && empty_r;
+                    empty_r = __check_rigavuota__(*p, t.stato_BASIC, i, col, t.ampiezze[t.rotazione], row_t--) && empty_r;
                     break;
                 case ADD90:
-                    empty_r = __check_rigavuota__(*p, t.stato_ADD90, i, col, t.ampiezze[t.rotazione], row_t++) && empty_r;
+                    empty_r = __check_rigavuota__(*p, t.stato_ADD90, i, col, t.ampiezze[t.rotazione], row_t--) && empty_r;
                     break;
                 case ADD180:
-                    empty_r = __check_rigavuota__(*p, t.stato_ADD180, i, col, t.ampiezze[t.rotazione], row_t++) && empty_r;
+                    empty_r = __check_rigavuota__(*p, t.stato_ADD180, i, col, t.ampiezze[t.rotazione], row_t--) && empty_r;
                     break;
                 default:
-                    empty_r = __check_rigavuota__(*p, t.stato_ADD270, i, col, t.ampiezze[t.rotazione], row_t++) && empty_r;
+                    empty_r = __check_rigavuota__(*p, t.stato_ADD270, i, col, t.ampiezze[t.rotazione], row_t--) && empty_r;
                     break;
             }
         }
 
+        i = row;
 
-        if (col - t.ampiezze[t.rotazione] < 0) {
+        if ((col + 1) - t.ampiezze[t.rotazione] < 0) {
             return FALSE;  // sfondo in ampiezza
         }
 
 
 
-        if (empty_r /* e quando perdo */) {
+        if (empty_r) {
             int k, q, i1, j1;
             if ((i - get_altezzatetramino(t) + 1) < 0) {
                 p->is_limiteraggiunto = TRUE;
@@ -140,10 +126,10 @@ Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Player_t* player, Tetramin
                     }
                 }
             }
-            __check_eliminazionerighe__(p, player);
+
             return TRUE;
         }
-
-        return FALSE;
     }
+
+    return FALSE;
 }

@@ -139,7 +139,7 @@ Tetramino_t create_tetramino5()
     Tetramino_t new_t;
     new_t.colore = VERDE;
     new_t.rotazione = BASIC;
-    new_t.ampiezze[0] = new_t.ampiezze[2] = 4;
+    new_t.ampiezze[0] = new_t.ampiezze[2] = 3;
     new_t.ampiezze[1] = new_t.ampiezze[3] = 2;
 
     __set_zero_tetramino__(&new_t);
