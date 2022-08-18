@@ -29,6 +29,6 @@ void print_titologioco();
 void print_menugioco();
 
 /* TODO: Documentazione */
-void print_titoloplayer(Player_t p);
+void print_turnoinfoplayer(Player_t p);
 
 #endif

@@ -301,7 +301,7 @@ void print_settetramini(const Tetraminodigioco_t t[])
 
             printf("Disponibili: %s%d%s", val, t[i].n_disponibili, "\033[0m");
         } else {
-            printf("%sI PEZZI PER QUESTO TETRAMINO SONO TERMINATI !%s\n", "\e[1;91m", "\033[0m");
+            printf("%sI PEZZI PER QUESTO TETRAMINO SONO TERMINATI !%s    ", "\e[1;91m", "\033[0m");
             print_tetramino(t[i].t);
         }
     }

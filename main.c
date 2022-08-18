@@ -1,5 +1,6 @@
 #include "PianoDiGioco/pianodigioco.h"
 #include "GameSetting/Player/player.h"
+#include "Elements/color_codes.h"
 
 /**
  * Metodo generico che consente di stampare a video una richiesta all'utente la cui risposta è un semplice <code>Boolean</code>
@@ -58,7 +59,7 @@ int main() {
             scanf("%d", &id_tetramino);
 
             if (id_tetramino < 1 || id_tetramino > 7) {
-                perror("Codice scorretto o disponibilità esaurita!");
+                printf("%sCodice scorretto o disponibilità esaurita!!%s\n", ROSSO, NERO);
                 goto seleziona_tetramino;
             }
 
@@ -74,7 +75,7 @@ int main() {
             scanf("%d", &rotazione);
 
             if (rotazione < 1 || rotazione > 4) {
-                perror("Valore rotazione non valido, inseriscine uno corretto!\n");
+                printf("%sValore rotazione non valido, inseriscine uno corretto!!%s\n", ROSSO, NERO);
                 goto selezione_rotazione;
             }
 
@@ -93,7 +94,7 @@ int main() {
             scanf("%d", &colonna);
 
             if(colonna < 0 || colonna > 9) {
-                perror("Valore della colonna non valido, re-inseriscine uno di corretto!!!\n");
+                printf("%sValore della colonna non valido, re-inseriscine uno di corretto!!%s\n", ROSSO, NERO);
                 goto selezione_colonna;
             }
 
@@ -103,7 +104,7 @@ int main() {
             if (res)
                 tetramini_set[id_tetramino - 1].n_disponibili--;
             else if (!p.is_limiteraggiunto) {
-                perror("Non è stato possibile piazzare il tetramino dove hai richiesto!");
+                printf("%sNon è stato possibile piazzare il tetramino dove hai richiesto!!%s\n", ROSSO, NERO);
                 goto selezione_colonna;
             }
         }
@@ -119,6 +120,7 @@ int main() {
         int id_tetramino, rotazione, colonna;
         int i;
 
+        /* inizializzo giocatori e piani di gioco dei relativi */
         p_pl1 = create_pianodigioco();
         p_pl2 = create_pianodigioco();
         player1 = create_newplayer("Player 1");
@@ -126,7 +128,8 @@ int main() {
 
         /* due giocatori */
         for (i = 1; !p_pl1.is_limiteraggiunto && !p_pl2.is_limiteraggiunto; ++i) {
-            print_titoloplayer((i % 2) ? player1 : player2);
+            /* informazioni relative al turno in corso */
+            print_turnoinfoplayer((i % 2) ? player1 : player2);
 
             /* Stampa piano di gioco */
             print_pianodigioco((i % 2) ? p_pl1 : p_pl2);
@@ -142,7 +145,7 @@ int main() {
             scanf("%d", &id_tetramino);
 
             if (id_tetramino < 1 || id_tetramino > 7) {
-                perror("Codice scorretto o disponibilità esaurita!");
+                printf("%sCodice scorretto o disponibilità esaurita!!%s\n", ROSSO, NERO);
                 goto seleziona_tetramino_mp;
             }
 
@@ -158,7 +161,7 @@ int main() {
             scanf("%d", &rotazione);
 
             if (rotazione < 1 || rotazione > 4) {
-                perror("Valore rotazione non valido, inseriscine uno corretto!\n");
+                printf("%sValore rotazione non valido, inseriscine uno corretto!%s\n", ROSSO, NERO);
                 goto selezione_rotazione_mp;
             }
 
@@ -177,7 +180,7 @@ int main() {
             scanf("%d", &colonna);
 
             if(colonna < 0 || colonna > 9) {
-                perror("Valore della colonna non valido, re-inseriscine uno di corretto!!!\n");
+                printf("%sValore della colonna non valido, re-inseriscine uno di corretto!!%s\n", ROSSO, NERO);
                 goto selezione_colonna_mp;
             }
 
@@ -188,11 +191,14 @@ int main() {
                                               colonna);
 
             if (res) {
+                Player_t p = (i % 2) ? player1 : player2;
+                printf("Punti per %s totalizzati fino ad ora: %d\n\n", p.nome, p.points);
                 tetramini_set[id_tetramino - 1].n_disponibili--;
-                if (do_richiesta("Vuoi stampare il piano di gioco per vedere il risultato delle tue modifiche?"))
+                printf("\n\n");
+                if (do_richiesta(" - Vuoi stampare il piano di gioco per vedere il risultato delle tue modifiche?"))
                     print_pianodigioco((i % 2) ? p_pl1 : p_pl2);
             } else if (!((i % 2) ? p_pl1 : p_pl2).is_limiteraggiunto) {
-                perror("Non è stato possibile piazzare il tetramino dove hai richiesto!");
+                printf("%sNon è stato possibile piazzare il tetramino dove hai richiesto!!%s\n", ROSSO, NERO);
                 goto selezione_colonna;
             }
         }

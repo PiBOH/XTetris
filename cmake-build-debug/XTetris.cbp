@@ -79,6 +79,9 @@
 		<Unit filename="/Users/alexgiulioberton/Desktop/XTetris/Elements/boolType.h">
 			<Option target="XTetris"/>
 		</Unit>
+		<Unit filename="/Users/alexgiulioberton/Desktop/XTetris/Elements/color_codes.h">
+			<Option target="XTetris"/>
+		</Unit>
 		<Unit filename="/Users/alexgiulioberton/Desktop/XTetris/Elements/colori.h">
 			<Option target="XTetris"/>
 		</Unit>
