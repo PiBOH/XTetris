@@ -18,3 +18,10 @@ void print_menugioco()
 {
     printf("Benvenuto nel menù iniziale di X-Tetris! Seleziona una modalità di gioco:\n   1) SinglePlayer\n   2) MultiPlayer\n");
 }
+
+void print_titoloplayer(Player_t p) {
+    printf("\n\n");
+    printf("Turno di:\n[\n");
+    print_player(p);
+    printf("]\n\n");
+}

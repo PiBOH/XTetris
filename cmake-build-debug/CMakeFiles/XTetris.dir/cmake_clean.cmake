@@ -1,9 +1,14 @@
 file(REMOVE_RECURSE
   "CMakeFiles/XTetris.dir/GameSetting/Player/player.c.o"
+  "CMakeFiles/XTetris.dir/GameSetting/Player/player.c.o.d"
   "CMakeFiles/XTetris.dir/GameSetting/menus.c.o"
+  "CMakeFiles/XTetris.dir/GameSetting/menus.c.o.d"
   "CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o"
+  "CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o.d"
   "CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o"
+  "CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o.d"
   "CMakeFiles/XTetris.dir/main.c.o"
+  "CMakeFiles/XTetris.dir/main.c.o.d"
   "XTetris"
   "XTetris.pdb"
 )

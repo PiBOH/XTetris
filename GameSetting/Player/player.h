@@ -2,7 +2,8 @@
 #define XTETRIS_PLAYER_H
 
 #ifndef XTETRIS_MALLOC_H
-#include <malloc.h>
+#include <stdio.h>
+#include <stdlib.h>
 #endif
 
 #ifndef XTETRIS_STRING_H

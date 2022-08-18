@@ -7,6 +7,8 @@
 
 #ifndef XTETRIS_STRING
 #include "../Elements/mystring.h"
+#include "Player/player.h"
+
 #endif
 
 typedef
@@ -25,5 +27,8 @@ void print_titologioco();
  * Metodo utilizzato per stampare il menu iniziale di gioco
  */
 void print_menugioco();
+
+/* TODO: Documentazione */
+void print_titoloplayer(Player_t p);
 
 #endif
