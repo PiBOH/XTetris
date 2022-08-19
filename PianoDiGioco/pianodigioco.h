@@ -11,8 +11,6 @@
 /* TODO: Documentazione */
 typedef
 struct cella_t {
-    int riga;
-    int colonna;
     Bool_t is_vuota;
     Tetramino_t tetramino_contenuto;
 }

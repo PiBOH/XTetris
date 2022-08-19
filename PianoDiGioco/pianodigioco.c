@@ -1,3 +1,4 @@
+#include <math.h>
 #include "pianodigioco.h"
 
 const string_t terminal_colors[] = { "\033[0;36m", "\033[0;34m",
@@ -8,11 +9,8 @@ const string_t terminal_colors[] = { "\033[0;36m", "\033[0;34m",
 void __set_celle__(PianoDiGioco_t* p) {
     int i, j;
     for (i = 0; i < ROWS; ++i) {
-        for (j = 0; j < COLS; ++j) {
+        for (j = 0; j < COLS; ++j)
             p->matrice_di_gioco[i][j].is_vuota = TRUE;
-            p->matrice_di_gioco[i][j].riga = i;
-            p->matrice_di_gioco[i][j].colonna = j;
-        }
     }
 }
 
@@ -85,6 +83,17 @@ Bool_t __check_rigavuota__(PianoDiGioco_t p, int matrice_tetramino[4][4], int ro
     return TRUE;
 }
 
+/* TODO: Documentazione */
+int __get_points__(int righe) {
+    switch (righe) {
+        case 1: return 1;
+        case 2: return 3;
+        case 3: return 6;
+        case 4: return 12;
+        default: return 0;
+    }
+}
+
 /**
  * Metodo che ha il compito di posizionare il tetramino scelto dall'utente sul piano di gioco in base alla colonna da
  * lui scelta. Viene poi anche verificato il numero di righe che sono state rimosse con l'aggiunta del tetramino stesso
@@ -139,20 +148,22 @@ Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Player_t* player, Tetramin
         i = row;
 
         /*
+             * Eseguo un'ulteriore verifica per vedere se il posizionamento mi vada a sforare verticalemente il piano
+             * di gioco. In questo caso l'utente ha perso perchè ha raggiunto il limite superiore della matrice
+             */
+        if ((i - get_altezzatetramino(t) + 1) < 0) {
+            p->is_limiteraggiunto = TRUE;
+            return FALSE;
+        }
+
+        /*
          * Se la variabile is_posizionabile è settata a true vuol dire che ho controllato tutte le righe e colonne
          * interessate e non ho trovato collisioni, quindi posso diseganare sulla matrice di gioco
          */
         if (is_posizionabile) {
             int k, q, i1, j1;
-
-            /*
-             * Eseguo un'ulteriore verifica per vedere se il posizionamento mi vada a sforare verticalemente il piano
-             * di gioco. In questo caso l'utente ha perso perchè ha raggiunto il limite superiore della matrice
-             */
-            if ((i - get_altezzatetramino(t) + 1) < 0) {
-                p->is_limiteraggiunto = TRUE;
-                return FALSE;
-            }
+            /* salvo il numero di righe che vado ad eliminare con una singola mossa */
+            int punti = 0, eliminazioni = 0;
 
             /*
              * Cella per cella verifico se essa è settata ad 1 nella matrice del tetramino scelto e di pari passo vado
@@ -173,6 +184,37 @@ Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Player_t* player, Tetramin
                 }
             }
 
+            /* controllo eliminazione righe per ricevere punteggio */
+            for (i = ROWS - 1; i >= 0;) {
+                int cont = 0;
+                for (j = 0; j < COLS; ++j)
+                    if (p->matrice_di_gioco[i][j].is_vuota == FALSE)
+                        cont++;
+
+                /* se la colonna è tutta piena la analizzo altrimenti posso salire in su di una riga */
+                if (cont == COLS) {
+                    ++eliminazioni;
+                    for (j = 0; j < COLS; ++j) {
+                        for (i1 = i; i1 > 0; --i1) {
+                            /* se sono arrivato alla fine e non ho più righe da scalare le setto tutte vuote */
+                            if (i1 - 1 < 0) p->matrice_di_gioco[i1][j].is_vuota = TRUE;
+                            else {
+                                p->matrice_di_gioco[i1][j].is_vuota = p->matrice_di_gioco[i1 - 1][j].is_vuota;
+                                p->matrice_di_gioco[i1][j].tetramino_contenuto = p->matrice_di_gioco[i1 - 1][j].tetramino_contenuto;
+                            }
+                        }
+                    }
+                } else
+                    --i;
+            }
+
+            /*
+             * aggiorno il punteggio del giocatore passato come parametro alla funzione ovvero il giocatore che ha
+             * comandato l'esecuzione della mossa specificata
+             */
+
+            if (eliminazioni)
+                player->points += __get_points__(eliminazioni);
             return TRUE;
         }
     }

@@ -28,7 +28,18 @@ void print_titologioco();
  */
 void print_menugioco();
 
-/* TODO: Documentazione */
+/**
+ * Metodo avente il compito di eseguire un pretty printing delle informazioni contenute all'interno della variabile
+ * passata come argomento. Esso comunica in primo luogo il turno della mossa e in seguito stampa le informazioni relative
+ * al giocatore
+ * @param p - il giocatore proprietario del turno corrente
+ */
 void print_turnoinfoplayer(Player_t p);
+
+/* TODO: documentazione */
+void print_losetitle(Player_t p);
+
+/* TODO: Documentazione */
+void print_wintitle(Player_t p);
 
 #endif

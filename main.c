@@ -109,7 +109,8 @@ int main() {
             }
         }
 
-        /* ha perso */
+        print_losetitle(player);
+        return 0;
     }
     else
     {
@@ -128,8 +129,17 @@ int main() {
 
         /* due giocatori */
         for (i = 1; !p_pl1.is_limiteraggiunto && !p_pl2.is_limiteraggiunto; ++i) {
+            int j, cont = 0;
+
             /* informazioni relative al turno in corso */
             print_turnoinfoplayer((i % 2) ? player1 : player2);
+
+            /* Verifico se sono rimasti tetramini */
+            for (j = 0; j < 7; ++j) {
+                if (tetramini_set[j].n_disponibili == 0) cont++;
+            }
+
+            if (cont == 7) break;
 
             /* Stampa piano di gioco */
             print_pianodigioco((i % 2) ? p_pl1 : p_pl2);
@@ -192,7 +202,7 @@ int main() {
 
             if (res) {
                 Player_t p = (i % 2) ? player1 : player2;
-                printf("Punti per %s totalizzati fino ad ora: %d\n\n", p.nome, p.points);
+                printf("   Punti per %s totalizzati fino ad ora: %d\n\n", p.nome, p.points);
                 tetramini_set[id_tetramino - 1].n_disponibili--;
                 printf("\n\n");
                 if (do_richiesta(" - Vuoi stampare il piano di gioco per vedere il risultato delle tue modifiche?"))
@@ -204,8 +214,8 @@ int main() {
         }
 
         /* qualcuno ha perso */
-
+        print_losetitle((i % 2) ? player1 : player2);
+        print_wintitle((i + 1 % 2) ? player1 : player2);
+        return 0;
     }
-
-    return 0;
 }
