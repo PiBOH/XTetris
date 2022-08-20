@@ -10,9 +10,13 @@
 #include <string.h>
 #endif
 
-#include "../../Elements/mystring.h"
+#include "../../Elements/string.h"
 
-/* TODO: Documentazione */
+/**
+ * Tipo di dato strutturato che memorizza le informazioni essenziali relative ad un videogiocatore:\n
+ *  - <b><code>nome</code></b>: il nome del giocatore\n
+ *  - <b><code>points</code></b>: i punti accumulati durante la partita
+ */
 typedef
 struct player_t
 {
@@ -28,6 +32,10 @@ Player_t;
  */
 Player_t create_newplayer(const string_t nome);
 
+/**
+ * Metodo avente il compito di stampare a video tramite pretty-printing le informazioni relative ad un giocatore.
+ * @param p - il giocatore di cui visualizzare le informazioni
+ */
 void print_player(const Player_t p);
 
-#endif //XTETRIS_PLAYER_H
+#endif

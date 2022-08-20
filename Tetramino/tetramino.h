@@ -5,14 +5,21 @@
 #import <stdlib.h>
 #endif
 #import "../Elements/colori.h"
-#import "../Elements/mystring.h"
 #import "../Elements/rotazioni.h"
 #include "../GameSetting/menus.h"
 
 #define DIM 4
 #define PIECES 7
 
-/* TODO: Documentazione */
+/**
+ * Tipo di dati strutturato avente il compito di andare a rappresentare un tetramino. Un tetramino è caratterizzato da
+ * alcune informazioni essenziali come:\n
+ *  - <code>colore</code>\n
+ *  - <code>rotazione</code> (ovvero la rotazione scelta dall'utente per poi calare il tetramino)\n
+ *  - <code>ampiezze</code> (ovvero le dimensioni orizzontali effettive di ogni tetramino)\n
+ *  - <code>stato_</code> + <code>BASIC, ADD90, ADD180, ADD270</code> (matrici che rappresentano in una matrice di interi il tetramino in ogni sua
+ *  possibile rotazione\n
+ */
 typedef
 struct tetramino_t {
     Colore_t colore;
@@ -104,7 +111,12 @@ void print_tetramino(const Tetramino_t t);
  */
 void print_possibilirotazioni(int id);
 
-/* TODO: documentazione */
+/**
+ * Metodo avente il compito di restituire l'altezza reale di un tetramino all'interno della matrice di interi che lo rappresenta:
+ * non sempre ha altezza reale pari a 4.
+ * @param t - il tetramino su cui calcolare l'altezza
+ * @return l'altezza reale del tetramino in valore intero (<code>int</code>).
+ */
 int get_altezzatetramino(const Tetramino_t t);
 
 /**

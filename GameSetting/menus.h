@@ -1,16 +1,14 @@
 #ifndef XTETRIS_MENUS_H
 #define XTETRIS_MENUS_H
-
 #ifndef XTETRIS_STDIO
 #import <stdio.h>
 #endif
-
-#ifndef XTETRIS_STRING
-#include "../Elements/mystring.h"
 #include "Player/player.h"
 
-#endif
-
+/**
+ * Tipo di dati enumerativo avente il compito di rappresentare la modalità di gioco scelta dall'utente per la partita
+ * corrente.
+ */
 typedef
 enum mode_t {
     SINGLEPLAYER = 1,
@@ -19,7 +17,7 @@ enum mode_t {
 Mode_t;
 
 /**
- * Metodo per stampare a terminale il titolo del gioco con grafica ASCII-Art
+ * Metodo per stampare a terminale il titolo del gioco (X-Tetris) con grafica ASCII-Art a colori
  */
 void print_titologioco();
 
@@ -36,10 +34,18 @@ void print_menugioco();
  */
 void print_turnoinfoplayer(Player_t p);
 
-/* TODO: documentazione */
+/**
+ * Metodo avente il compito di stampare in ASCII-Art la parola "<i>Lose</i>" e successivamente stampare le informazioni del
+ * giocatore perdente (tramite invocazione del metodo di pretty-printing <code>print_player</code>).
+ * @param p - il giocatore perdente
+ */
 void print_losetitle(Player_t p);
 
-/* TODO: Documentazione */
+/**
+ * Metodo avente il compito di stampare in ASCII-Art la parola "<i>Winner</i>" e successivamente stampare le informazioni del
+ * giocatore vincitore (tramite invocazione del metodo di pretty-printing <code>print_player</code>).
+ * @param p - il giocatore vincitore
+ */
 void print_wintitle(Player_t p);
 
 #endif

@@ -96,7 +96,7 @@ int main() {
             scanf("%d", &id_tetramino);
 
             if (id_tetramino < 1 || id_tetramino > 7) {
-                printf("%sCodice scorretto o disponibilità esaurita!!%s\n", ROSSO, NERO);
+                printf("%sCodice scorretto o disponibilità esaurita!!%s\n", ROSSO, DEFAULT);
                 goto seleziona_tetramino;
             }
 
@@ -112,7 +112,7 @@ int main() {
             scanf("%d", &rotazione);
 
             if (rotazione < 1 || rotazione > 4) {
-                printf("%sValore rotazione non valido, inseriscine uno corretto!!%s\n", ROSSO, NERO);
+                printf("%sValore rotazione non valido, inseriscine uno corretto!!%s\n", ROSSO, DEFAULT);
                 goto selezione_rotazione;
             }
 
@@ -131,7 +131,7 @@ int main() {
             scanf("%d", &colonna);
 
             if(colonna < 0 || colonna > 9) {
-                printf("%sValore della colonna non valido, re-inseriscine uno di corretto!!%s\n", ROSSO, NERO);
+                printf("%sValore della colonna non valido, re-inseriscine uno di corretto!!%s\n", ROSSO, DEFAULT);
                 goto selezione_colonna;
             }
 
@@ -141,7 +141,7 @@ int main() {
             if (res)
                 tetramini_set[id_tetramino - 1].n_disponibili--;
             else if (!p.is_limiteraggiunto) {
-                printf("%sNon è stato possibile piazzare il tetramino dove hai richiesto!!%s\n", ROSSO, NERO);
+                printf("%sNon è stato possibile piazzare il tetramino dove hai richiesto!!%s\n", ROSSO, DEFAULT);
                 goto selezione_colonna;
             }
         }
@@ -215,7 +215,7 @@ int main() {
             scanf("%d", &id_tetramino);
 
             if (id_tetramino < 1 || id_tetramino > 7) {
-                printf("%sCodice scorretto o disponibilità esaurita!!%s\n", ROSSO, NERO);
+                printf("%sCodice scorretto o disponibilità esaurita!!%s\n", ROSSO, DEFAULT);
                 goto seleziona_tetramino_mp;
             }
 
@@ -231,7 +231,7 @@ int main() {
             scanf("%d", &rotazione);
 
             if (rotazione < 1 || rotazione > 4) {
-                printf("%sValore rotazione non valido, inseriscine uno corretto!%s\n", ROSSO, NERO);
+                printf("%sValore rotazione non valido, inseriscine uno corretto!%s\n", ROSSO, DEFAULT);
                 goto selezione_rotazione_mp;
             }
 
@@ -250,7 +250,7 @@ int main() {
             scanf("%d", &colonna);
 
             if(colonna < 0 || colonna > 9) {
-                printf("%sValore della colonna non valido, re-inseriscine uno di corretto!!%s\n", ROSSO, NERO);
+                printf("%sValore della colonna non valido, re-inseriscine uno di corretto!!%s\n", ROSSO, DEFAULT);
                 goto selezione_colonna_mp;
             }
 
@@ -268,7 +268,7 @@ int main() {
                 if (do_richiesta(" - Vuoi stampare il piano di gioco per vedere il risultato delle tue modifiche?"))
                     print_pianodigioco((i % 2) ? p_pl1 : p_pl2);
             } else if (!((i % 2) ? p_pl1 : p_pl2).is_limiteraggiunto) {
-                printf("%sNon è stato possibile piazzare il tetramino dove hai richiesto!!%s\n", ROSSO, NERO);
+                printf("%sNon è stato possibile piazzare il tetramino dove hai richiesto!!%s\n", ROSSO, DEFAULT);
                 exitMode = OUT_OF_MATRIX;
                 break;
             }
@@ -280,8 +280,7 @@ int main() {
          * altrimenti
          * se si è sbagliato a posizionare un pezzo e si è andati out-of-matrix allora tale giocatore ha perso
          */
-        if ((exitMode == NO_PIECES && player1.points > player2.points) ||
-            (exitMode == OUT_OF_MATRIX && (i % 2))) {
+        if ((exitMode == NO_PIECES && player1.points > player2.points) || (exitMode == OUT_OF_MATRIX && (i % 2))) {
             print_losetitle(player1);
             print_wintitle(player2);
         } else {

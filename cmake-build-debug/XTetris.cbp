@@ -88,10 +88,10 @@
 		<Unit filename="/Users/alexgiulioberton/Desktop/XTetris/Elements/exit_modes.h">
 			<Option target="XTetris"/>
 		</Unit>
-		<Unit filename="/Users/alexgiulioberton/Desktop/XTetris/Elements/mystring.h">
+		<Unit filename="/Users/alexgiulioberton/Desktop/XTetris/Elements/rotazioni.h">
 			<Option target="XTetris"/>
 		</Unit>
-		<Unit filename="/Users/alexgiulioberton/Desktop/XTetris/Elements/rotazioni.h">
+		<Unit filename="/Users/alexgiulioberton/Desktop/XTetris/Elements/string.h">
 			<Option target="XTetris"/>
 		</Unit>
 		<Unit filename="/Users/alexgiulioberton/Desktop/XTetris/GameSetting/Player/player.c">

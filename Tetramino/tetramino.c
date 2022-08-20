@@ -1,6 +1,7 @@
 #include "tetramino.h"
 
 /**
+ * [PRIVATE]\n
  * Metodo creato per permettere di settare tutti i valori delle matrici interne al tetramino pari a 0
  * @param t: il tetramino su cui eseguire l'operazione specificata
  */
@@ -334,7 +335,13 @@ void print_possibilirotazioni(int id)
     print_tetramino(t);
 }
 
-/* TODO: documentazione */
+/**
+ * [PRIVATE]\n
+ * Metodo avente il compito di restituire l'altezza reale di un tetramino (definito all'interno di una matrice di interi
+ * 4x4.
+ * @param m - la matrice contenente il tetramino
+ * @return valore intero indicante l'altezza reale, o effettiva, del tetramino.
+ */
 int __get_altezzatetramino__(const int m[4][4]) {
     int i, j, cont = 0;
     for (i = 3; i >= 0; --i)
@@ -347,7 +354,6 @@ int __get_altezzatetramino__(const int m[4][4]) {
     return cont;
 }
 
-/* TODO: documentazione */
 int get_altezzatetramino(const Tetramino_t t)
 {
     if (t.rotazione == BASIC)

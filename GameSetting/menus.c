@@ -1,4 +1,3 @@
-#include <stdlib.h>
 #include "menus.h"
 #include "../Elements/color_codes.h"
 

@@ -1,4 +1,3 @@
-#include <math.h>
 #include "pianodigioco.h"
 
 const string_t terminal_colors[] = { "\033[0;36m", "\033[0;34m",
@@ -6,7 +5,13 @@ const string_t terminal_colors[] = { "\033[0;36m", "\033[0;34m",
                                      "\033[0;31m", "\033[0;32m",
                                      "\033[0;35m" };
 
-void __set_celle__(PianoDiGioco_t* p) {
+/**
+ * [PRIVATE]\n
+ * Metodo avente il compito di impostare tutta la <code>matrice_di_gioco</code> del piano di gioco con celle vuote (condizione
+ * di partenza del gioco).
+ * @param p - il piano di gioco contenente la matrice su cui svolgere l'operazione.
+ */
+void __set_cellevuote__(PianoDiGioco_t* p) {
     int i, j;
     for (i = 0; i < ROWS; ++i) {
         for (j = 0; j < COLS; ++j)
@@ -16,7 +21,7 @@ void __set_celle__(PianoDiGioco_t* p) {
 
 PianoDiGioco_t create_pianodigioco() {
     PianoDiGioco_t new_pdt;
-    __set_celle__(&new_pdt);
+    __set_cellevuote__(&new_pdt);
     new_pdt.is_limiteraggiunto = FALSE;
     return new_pdt;
 }
@@ -57,6 +62,7 @@ void print_pianodigioco_basic(const PianoDiGioco_t p)
 }
 
 /**
+ * [PRIVATE]\n
  * Il metodo ha il compito di verificare, scorrendo la matrice del piano di gioco fornita come parametro se
  * nell'intervallo definito dalla colonna di partenza (ovvero quella data dalla sottrazione tra la colonna selezionata
  * e l'ampiezza del tetramino scelto) e quella di fine (che quindi diventa la colonna scelta) esistono dei punti di
@@ -83,7 +89,18 @@ Bool_t __check_rigavuota__(PianoDiGioco_t p, int matrice_tetramino[4][4], int ro
     return TRUE;
 }
 
-/* TODO: Documentazione */
+/**
+ * [PRIVATE]\n
+ * Metodo avente il compito di restituire il punteggio attribuito ad ogni giocatore in seguito all'eliminazione di un
+ * certo numero di righe.\n
+ * Le regole di assegnazione sono successivamente riportate.\n
+ * 1 riga -> 1 punto\n
+ * 2 righe -> 3 punti\n
+ * 3 righe -> 6 punti\n
+ * 4 righe -> 12 punti\n
+ * @param righe - numero di righe eliminate con un singolo tetramino
+ * @return punti ricevuti in formato intero (<code>int</code>).
+ */
 int __get_points__(int righe) {
     switch (righe) {
         case 1: return 1;
@@ -95,14 +112,9 @@ int __get_points__(int righe) {
 }
 
 /**
- * Metodo che ha il compito di posizionare il tetramino scelto dall'utente sul piano di gioco in base alla colonna da
+ * Metodo avente il compito di posizionare il tetramino scelto dall'utente sul piano di gioco in base alla colonna da
  * lui scelta. Viene poi anche verificato il numero di righe che sono state rimosse con l'aggiunta del tetramino stesso
- * e in base ad esse viene attribuito un punteggio (vedi poi) all'utente passato come parametro del metodo.\n
- * \n
- * 1 riga -> 1 punto\n
- * 2 righe -> 3 punti\n
- * 3 righe -> 6 punti\n
- * 4 righe -> 12 punti\n
+ * e in base ad esse viene attribuito un punteggio all'utente passato come parametro del metodo.\n
  * @param p il piano di gioco contenente la matrice di gioco su cui posizionare il tetramino
  * @param player il giocatore che ha effettuato la mossa in analisi
  * @param t il tetramino da posizionare
@@ -148,9 +160,9 @@ Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Player_t* player, Tetramin
         i = row;
 
         /*
-             * Eseguo un'ulteriore verifica per vedere se il posizionamento mi vada a sforare verticalemente il piano
-             * di gioco. In questo caso l'utente ha perso perchè ha raggiunto il limite superiore della matrice
-             */
+         * Eseguo un'ulteriore verifica per vedere se il posizionamento mi vada a sforare verticalemente il piano
+         * di gioco. In questo caso l'utente ha perso perchè ha raggiunto il limite superiore della matrice
+         */
         if ((i - get_altezzatetramino(t) + 1) < 0) {
             p->is_limiteraggiunto = TRUE;
             return FALSE;
@@ -163,7 +175,7 @@ Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Player_t* player, Tetramin
         if (is_posizionabile) {
             int k, q, i1, j1;
             /* salvo il numero di righe che vado ad eliminare con una singola mossa */
-            int punti = 0, eliminazioni = 0;
+            int eliminazioni = 0;
 
             /*
              * Cella per cella verifico se essa è settata ad 1 nella matrice del tetramino scelto e di pari passo vado
@@ -212,12 +224,10 @@ Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Player_t* player, Tetramin
              * aggiorno il punteggio del giocatore passato come parametro alla funzione ovvero il giocatore che ha
              * comandato l'esecuzione della mossa specificata
              */
+            if (eliminazioni) player->points += __get_points__(eliminazioni);
 
-            if (eliminazioni)
-                player->points += __get_points__(eliminazioni);
             return TRUE;
         }
     }
-
     return FALSE;
 }

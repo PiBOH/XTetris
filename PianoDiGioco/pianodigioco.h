@@ -5,10 +5,20 @@
 #include "../Tetramino/tetramino.h"
 #include "../GameSetting/Player/player.h"
 
+/** Numero di righe della matrice di gioco */
 #define ROWS 15
+/** Numero di colonne della matrice di gioco */
 #define COLS 10
 
-/* TODO: Documentazione */
+/**
+ * Tipo di dato strutturato avente il compito di rappresentare una cella della matrice di gioco. Ciascuna cella deve
+ * memorizzare al proprio interno lo stato della cella stessa (ovvero se è piena o vuota) e in caso sia piena che
+ * tetramino essa sta contenendo.\n
+ * I dati memorizzati al suo interno sono quindi due variabili:\n
+ *  - <b><code>is_vuota</code></b>: tipo <code>Bool_t</code>, da me specificato e documentato, per informare sullo stato della cella\n
+ *  - <b><code>tetramino_contenuto</code></b>: tipo <code>Tetramino_t</code>, da me specificato e documentato, che memorizza
+ *  informazioni relative al tetramino contenuto nella determinata cella.
+ */
 typedef
 struct cella_t {
     Bool_t is_vuota;
@@ -16,7 +26,11 @@ struct cella_t {
 }
 Cella_t;
 
-/* TODO: Documentazione */
+/**
+ * Tipo di dato strutturato di fondamentale importanza per l'intero progetto. Esso contiene la <code><b>matrice_di_gioco</b></code>,
+ * matrice <code>ROWS x COLS</code> di variabili di tipo <code>Cella_t</code>, e una variabile di tipo <code>Bool_t</code>,
+ * <b><code>is_limiteraggiunto</code></b> utile per riconoscere se si è superato il limite superiore della <code>matrice_di_gioco</code>.
+ */
 typedef
 struct pianodigioco_t {
     Cella_t matrice_di_gioco[ROWS][COLS];
