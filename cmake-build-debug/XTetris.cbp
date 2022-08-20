@@ -85,6 +85,9 @@
 		<Unit filename="/Users/alexgiulioberton/Desktop/XTetris/Elements/colori.h">
 			<Option target="XTetris"/>
 		</Unit>
+		<Unit filename="/Users/alexgiulioberton/Desktop/XTetris/Elements/exit_modes.h">
+			<Option target="XTetris"/>
+		</Unit>
 		<Unit filename="/Users/alexgiulioberton/Desktop/XTetris/Elements/mystring.h">
 			<Option target="XTetris"/>
 		</Unit>

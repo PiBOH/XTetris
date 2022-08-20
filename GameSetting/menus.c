@@ -5,19 +5,22 @@
 void print_titologioco()
 {
     printf("\n\n");
-    printf("%s██╗  ██╗%s      %s████████╗%s███████╗%s████████╗%s██████╗ %s██╗%s███████╗%s\n", ROSSO, BIANCO, BIANCO, GIALLO, VERDE, AZZURRO, VIOLA, BLU, DEFAULT);
-    printf("%s╚██╗██╔╝%s      %s╚══██╔══╝%s██╔════╝%s╚══██╔══╝%s██╔══██╗%s██║%s██╔════╝%s\n", ROSSO, BIANCO, BIANCO, GIALLO, VERDE, AZZURRO, VIOLA, BLU, DEFAULT);
-    printf("%s ╚███╔╝ %s█████╗%s   ██║   %s█████╗  %s   ██║   %s██████╔╝%s██║%s███████╗%s\n", ROSSO, BIANCO, BIANCO, GIALLO, VERDE, AZZURRO, VIOLA, BLU, DEFAULT);
-    printf("%s ██╔██╗ %s╚════╝%s   ██║   %s██╔══╝  %s   ██║   %s██╔══██╗%s██║%s╚════██║%s\n", ROSSO, BIANCO, BIANCO, GIALLO, VERDE, AZZURRO, VIOLA, BLU, DEFAULT);
-    printf("%s██╔╝ ██╗%s      %s   ██║   %s███████╗%s   ██║   %s██║  ██║%s██║%s███████║%s\n", ROSSO, BIANCO, BIANCO, GIALLO, VERDE, AZZURRO, VIOLA, BLU, DEFAULT);
-    printf("%s╚═╝  ╚═╝%s      %s   ╚═╝   %s╚══════╝%s   ╚═╝   %s╚═╝  ╚═╝%s╚═╝%s╚══════╝%s\n", ROSSO, BIANCO, BIANCO, GIALLO, VERDE, AZZURRO, VIOLA, BLU, DEFAULT);
+    printf("%s██╗  ██╗%s      %s████████╗%s███████╗%s████████╗%s██████╗ %s██╗%s███████╗%s\n", ROSSO, DEFAULT, BIANCO, GIALLO, VERDE, AZZURRO, VIOLA, BLU, DEFAULT);
+    printf("%s╚██╗██╔╝%s      %s╚══██╔══╝%s██╔════╝%s╚══██╔══╝%s██╔══██╗%s██║%s██╔════╝%s\n", ROSSO, DEFAULT, BIANCO, GIALLO, VERDE, AZZURRO, VIOLA, BLU, DEFAULT);
+    printf("%s ╚███╔╝ %s█████╗%s   ██║   %s█████╗  %s   ██║   %s██████╔╝%s██║%s███████╗%s\n", ROSSO, DEFAULT, BIANCO, GIALLO, VERDE, AZZURRO, VIOLA, BLU, DEFAULT);
+    printf("%s ██╔██╗ %s╚════╝%s   ██║   %s██╔══╝  %s   ██║   %s██╔══██╗%s██║%s╚════██║%s\n", ROSSO, DEFAULT, BIANCO, GIALLO, VERDE, AZZURRO, VIOLA, BLU, DEFAULT);
+    printf("%s██╔╝ ██╗%s      %s   ██║   %s███████╗%s   ██║   %s██║  ██║%s██║%s███████║%s\n", ROSSO, DEFAULT, BIANCO, GIALLO, VERDE, AZZURRO, VIOLA, BLU, DEFAULT);
+    printf("%s╚═╝  ╚═╝%s      %s   ╚═╝   %s╚══════╝%s   ╚═╝   %s╚═╝  ╚═╝%s╚═╝%s╚══════╝%s\n", ROSSO, DEFAULT, BIANCO, GIALLO, VERDE, AZZURRO, VIOLA, BLU, DEFAULT);
     printf("Berton Alex Giulio - 884378\n");
     printf("\n\n");
 }
 
 void print_menugioco()
 {
-    printf("Benvenuto nel menù iniziale di X-Tetris! Seleziona una modalità di gioco:\n   1) SinglePlayer\n   2) MultiPlayer\n");
+    printf("Benvenuto nel menù iniziale di X-Tetris! Seleziona una modalità di gioco:\n"
+           "   1) SinglePlayer\n"
+           "   2) MultiPlayer\n"
+           "   3) Esci\n");
 }
 
 void print_turnoinfoplayer(Player_t p) {
