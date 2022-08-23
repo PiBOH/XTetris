@@ -1,4 +1,5 @@
 #include "pianodigioco.h"
+#include "../Elements/color_codes.h"
 
 const string_t terminal_colors[] = { "\033[0;36m", "\033[0;34m",
                                      "\033[0;37m", "\033[0;33m",
@@ -216,7 +217,7 @@ Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Player_t* player, Tetramin
 
             if (eliminazioni) {
                 printf("\n\n");
-                printf("   Eliminazione di %d riga/righe con una sola mossa!\n", eliminazioni);
+                printf("%sEliminazione di %d riga/righe con una sola mossa!%s", AZZURROB, eliminazioni, RESET);
                 player->points += __get_points__(eliminazioni);
             }
 

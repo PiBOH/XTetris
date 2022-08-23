@@ -24,9 +24,8 @@ void print_menugioco()
 
 void print_turnoinfoplayer(Player_t p) {
     printf("\n\n");
-    printf("Turno di:\n[\n");
+    printf("Turno di: ");
     print_player(p);
-    printf("]\n\n");
 }
 
 void print_losetitle(Player_t p) {

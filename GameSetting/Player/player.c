@@ -10,6 +10,5 @@ Player_t create_newplayer(string_t nome)
 }
 
 void print_player(const Player_t p) {
-    printf("    [###### %s ######]\n", p.nome);
-    printf("    Punti: %d\n", p.points);
+    printf("[%s - %d punti]\n", p.nome, p.points);
 }

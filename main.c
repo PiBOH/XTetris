@@ -84,7 +84,6 @@ Tetramino_t ask_tetramino(int* id) {
 /* TODO: Documentazione */
 int ask_colonna() {
     int colonna;
-    printf("\n+ - - - - - - - - +\n| SCEGLI  COLONNA |\n+ - - - - - - - - +\n");
 
     codice_colonna:
     printf(" - Scrivi il numero della colonna in cui vuoi calare il lato destro del tetramino.\n");
@@ -203,10 +202,10 @@ int main() {
             if (res) {
                 /* se il giocatore ha ottenuto punti con questo tetramino mostro il punteggio aggiornato */
                 if (old_points < player.points) {
-                    delay(15000);
                     printf("\n");
                     print_player(player);
                     printf("\n");
+                    delay(30000);
                 }
 
                 tetramini_set[id_tetramino - 1].n_disponibili--;
@@ -293,6 +292,7 @@ int main() {
             }
 
             /* Chiedi colonna */
+            printf("\n+ - - - - - - - - +\n| SCEGLI  COLONNA |\n+ - - - - - - - - +\n");
             selezione_colonna_mp:
             colonna = ask_colonna();
 
@@ -303,12 +303,10 @@ int main() {
                                               colonna);
 
             if (res) {
-                Player_t p = (i % 2) ? player1 : player2;
-                printf("   Punti per %s totalizzati fino ad ora: %d\n\n", p.nome, p.points);
                 tetramini_set[id_tetramino - 1].n_disponibili--;
-                printf("\n\n");
-                if (do_richiesta(" - Vuoi stampare il piano di gioco per vedere il risultato delle tue modifiche?"))
-                    print_pianodigioco((i % 2) ? p_pl1 : p_pl2);
+                printf("\n");
+                print_pianodigioco((i % 2) ? p_pl1 : p_pl2);
+                delay(30000);
             } else if (!((i % 2) ? p_pl1 : p_pl2).is_limiteraggiunto) {
                 printf("%sNon è stato possibile piazzare il tetramino dove hai richiesto!!%s\n", ROSSO, DEFAULT);
                 goto selezione_colonna_mp;
