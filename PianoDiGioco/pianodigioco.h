@@ -57,13 +57,15 @@ void print_pianodigioco(const PianoDiGioco_t p);
 void print_pianodigioco_basic(const PianoDiGioco_t p);
 
 /**
- * Metodo avente il compito di posizionare effettivamente un tetramino nel piano di gioco andando a settare il limite
- * raggiunto nel caso in cui si fosse raggiunto l'apice della matrice di gioco.
- * @param p: piano di gioco sul quale applicare la modifica e l'inserimento del tetramino
- * @param player: giocatore corrente al quale assegnare punti per eventuali eliminazioni di riga
- * @param t: tetramino da posizionare
- * @param col: colonna in cui calare il tetramino
- * @return <code>true</code> se e solo se il tetramino è stato posizionato correttamente, <code>false</code> altrimenti
+ * Metodo avente il compito di posizionare il tetramino scelto dall'utente sul piano di gioco in base alla colonna da
+ * lui scelta. Viene poi anche verificato il numero di righe che sono state rimosse con l'aggiunta del tetramino stesso
+ * e in base ad esse viene attribuito un punteggio all'utente passato come parametro del metodo.\n
+ * @param p il piano di gioco contenente la matrice di gioco su cui posizionare il tetramino
+ * @param player il giocatore che ha effettuato la mossa in analisi
+ * @param t il tetramino da posizionare
+ * @param col la colonna di partenza della matrice di gioco (sulla quale basarsi per il posizionamento)
+ * @return <code>TRUE</code> - se il tetramino è stato correttamente posizionato\n
+ *         <code>FALSE</code> - in caso di qualsiasi errore (tetramino non posizionabile nella colonna scelta)
  */
 Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Player_t* player, Tetramino_t t, int col);
 

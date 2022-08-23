@@ -239,7 +239,7 @@ void print_tetramino(const Tetramino_t t)
                                          "\033[0;31m", "\033[0;32m",
                                          "\033[0;35m" };
     int i, j;
-    printf(" _________ \n");
+    printf("  _ _ _ _  \n");
     for (i = 0; i < DIM; ++i) {
         printf("| ");
         for (j = 0; j < DIM; ++j) {
@@ -261,7 +261,7 @@ void print_tetramino(const Tetramino_t t)
         }
         printf("|\n");
     }
-    printf(" --------- \n");
+    printf("  - - - -  \n");
 }
 
 

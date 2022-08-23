@@ -13,6 +13,7 @@ typedef
 enum mode_t {
     SINGLEPLAYER = 1,
     MULTIPLAYER,
+    TRICKYMODE
 }
 Mode_t;
 
@@ -47,5 +48,10 @@ void print_losetitle(Player_t p);
  * @param p - il giocatore vincitore
  */
 void print_wintitle(Player_t p);
+
+/**
+ * Metodo avente il compito di stampare in ASCII-Art la parola "<i>Finish</i>"
+ */
+void print_finishtitle();
 
 #endif

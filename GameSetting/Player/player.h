@@ -1,15 +1,9 @@
 #ifndef XTETRIS_PLAYER_H
 #define XTETRIS_PLAYER_H
 
-#ifndef XTETRIS_MALLOC_H
 #include <stdio.h>
 #include <stdlib.h>
-#endif
-
-#ifndef XTETRIS_STRING_H
 #include <string.h>
-#endif
-
 #include "../../Elements/string.h"
 
 /**

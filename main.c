@@ -1,8 +1,12 @@
+#include <time.h>
 #include "PianoDiGioco/pianodigioco.h"
 #include "GameSetting/Player/player.h"
 #include "Elements/color_codes.h"
 #include "Elements/exit_modes.h"
-#include<stdlib.h>
+
+#define NTETRAMINI 7
+
+Tetraminodigioco_t* tetramini_set;
 
 /**
  * Metodo utilizzato per generare un delay a terminale mediante l'utilizzo della tecnica del busy waiting (che però
@@ -24,21 +28,96 @@ void delay(int time) {
  */
 Bool_t do_richiesta(const string_t richiesta)
 {
-    Bool_t scelta = FALSE;
+    int scelta;
     printf("%s\n\t1- Si\n\t0- No\n", richiesta);
     scanf("%d", &scelta);
-    return scelta;
+    if (scelta) return TRUE;
+    return FALSE;
+}
+
+/* TODO: Documentazione */
+Tetramino_t ask_tetramino(int* id) {
+    Tetramino_t tetramino_scelto;
+    int id_tetramino;
+    int rotazione;
+    printf("\n+ - - - - - - - - - +\n| SCEGLI  TETRAMINO |\n+ - - - - - - - - - +\n");
+
+    if (do_richiesta(" - Vuoi stampare tutto il set di tetramini con le relative disponibilità per una migliore scelta?"))
+        print_settetramini(tetramini_set);
+
+    seleziona_tetramino:
+    printf(" - Quale tetramino hai scelto? (Scrivi il suo id)\n");
+    scanf("%d", &id_tetramino);
+
+    if (id_tetramino < 1 || id_tetramino > NTETRAMINI) {
+        printf("%sCodice scorretto o disponibilità esaurita!!%s\n", ROSSO, DEFAULT);
+        goto seleziona_tetramino;
+    }
+
+    tetramino_scelto = tetramini_set[id_tetramino - 1].t;
+
+    /* Chiedi rotazione */
+    printf("\n+ - - - - - - - - - +\n| SCEGLI  ROTAZIONE |\n+ - - - - - - - - - +\n");
+    if (do_richiesta(" - Vuoi stampare tutte le possibili rotazioni del tetramino scelto per una migliore scelta?"))
+        print_possibilirotazioni(id_tetramino);
+
+    selezione_rotazione:
+    printf("- Quale rotazione hai scelto? (Scrivi il suo id)\n");
+    scanf("%d", &rotazione);
+
+    if (rotazione < 1 || rotazione > 4) {
+        printf("%sValore rotazione non valido, inseriscine uno corretto!!%s\n", ROSSO, DEFAULT);
+        goto selezione_rotazione;
+    }
+
+    switch (rotazione) {
+        case 1: tetramino_scelto.rotazione = BASIC; break;
+        case 2: tetramino_scelto.rotazione = ADD90; break;
+        case 3: tetramino_scelto.rotazione = ADD180; break;
+        default: tetramino_scelto.rotazione = ADD270; break;
+    }
+
+    *id = id_tetramino;
+    return tetramino_scelto;
+}
+
+/* TODO: Documentazione */
+int ask_colonna() {
+    int colonna;
+    printf("\n+ - - - - - - - - +\n| SCEGLI  COLONNA |\n+ - - - - - - - - +\n");
+
+    codice_colonna:
+    printf(" - Scrivi il numero della colonna in cui vuoi calare il lato destro del tetramino.\n");
+    scanf("%d", &colonna);
+
+    if(colonna < 0 || colonna > 9) {
+        printf("%sValore della colonna non valido, re-inseriscine uno di corretto!!%s\n", ROSSO, DEFAULT);
+        goto codice_colonna;
+    }
+
+    return colonna;
+}
+
+/* TODO: Documentazione */
+Bool_t thereis_tetramini() {
+    int j, cont = 0;
+    /* Verifico se sono rimasti tetramini */
+    for (j = 0; j < NTETRAMINI; ++j)
+        if (tetramini_set[j].n_disponibili == 0) cont++;
+
+    if (cont == NTETRAMINI) return FALSE;
+    return TRUE;
 }
 
 int main() {
     Mode_t mod_gioco;
-    Tetraminodigioco_t* tetramini_set;
     int scelta_modgioco;
+    Bool_t trickymode = FALSE;
+    srand(time(NULL));
 
     menu_iniziale:
     print_titologioco();
     print_menugioco();
-
 
     /* scelta della modalità di gioco */
     seleziona_modalita:
@@ -53,6 +132,10 @@ int main() {
     /* creazione del set di tetramini sulla base della modalià di gioco scelta */
     tetramini_set = create_tetraminiset(mod_gioco);
 
+    printf("\n\n");
+    if (do_richiesta(" - Vuoi entrare nella tricky mode?"))
+        trickymode = TRUE;
+
     if (mod_gioco == SINGLEPLAYER)
     {
         PianoDiGioco_t p;
@@ -65,90 +148,81 @@ int main() {
         player = create_newplayer(nome);
         p = create_pianodigioco();
 
+        delay(15000);
+
+        printf("\n\n");
+        printf("Loading...");
+        printf("\n\n");
+
+        delay(10000);
+
+        printf("\n");
+        print_player(player);
+        printf("\n");
+
         while (!p.is_limiteraggiunto) {
-            int id_tetramino, rotazione, colonna;
+            int id_tetramino, colonna, old_points;
             Tetramino_t tetramino_scelto;
             Bool_t res; /* risultato del collocamento sul piano di gioco del tetramino */
 
+            old_points = player.points;
+
+            if (!thereis_tetramini()) break;
+
             delay(20000);
-
-            printf("\n\n");
-            printf("Loading...");
-            printf("\n\n");
-
-            delay(15000);
-
-            print_player(player);
-
-            delay(30000);
 
             /* Stampa piano di gioco */
             print_pianodigioco(p);
 
             /* Chiedi tetramino */
-            printf("\n+ - - - - - - - - - +\n| SCEGLI  TETRAMINO |\n+ - - - - - - - - - +\n");
+            if (!trickymode)
+                tetramino_scelto = ask_tetramino(&id_tetramino);
+            else {
+                int rotazione = rand() % 4 + 1;
+                id_tetramino = rand() % NTETRAMINI + 1;
+                tetramino_scelto = tetramini_set[id_tetramino - 1].t;
+                switch (rotazione) {
+                    case 1: tetramino_scelto.rotazione = BASIC; break;
+                    case 2: tetramino_scelto.rotazione = ADD90; break;
+                    case 3: tetramino_scelto.rotazione = ADD180; break;
+                    default: tetramino_scelto.rotazione = ADD270; break;
+                }
 
-            if (do_richiesta(" - Vuoi stampare tutto il set di tetramini con le relative disponibilità per una migliore scelta?"))
-                print_settetramini(tetramini_set);
-
-            seleziona_tetramino:
-            printf(" - Quale tetramino hai scelto? (Scrivi il suo id)\n");
-            scanf("%d", &id_tetramino);
-
-            if (id_tetramino < 1 || id_tetramino > 7) {
-                printf("%sCodice scorretto o disponibilità esaurita!!%s\n", ROSSO, DEFAULT);
-                goto seleziona_tetramino;
-            }
-
-            tetramino_scelto = tetramini_set[id_tetramino - 1].t;
-
-            /* Chiedi rotazione */
-            printf("\n+ - - - - - - - - - +\n| SCEGLI  ROTAZIONE |\n+ - - - - - - - - - +\n");
-            if (do_richiesta(" - Vuoi stampare tutte le possibili rotazioni del tetramino scelto per una migliore scelta?"))
-                print_possibilirotazioni(id_tetramino);
-
-            selezione_rotazione:
-            printf("- Quale rotazione hai scelto? (Scrivi il suo id)\n");
-            scanf("%d", &rotazione);
-
-            if (rotazione < 1 || rotazione > 4) {
-                printf("%sValore rotazione non valido, inseriscine uno corretto!!%s\n", ROSSO, DEFAULT);
-                goto selezione_rotazione;
-            }
-
-            switch (rotazione) {
-                case 1: tetramino_scelto.rotazione = BASIC; break;
-                case 2: tetramino_scelto.rotazione = ADD90; break;
-                case 3: tetramino_scelto.rotazione = ADD180; break;
-                default: tetramino_scelto.rotazione = ADD270; break;
+                printf("\n\n");
+                printf("Tetramino randomico:\n");
+                print_tetramino(tetramino_scelto);
             }
 
             /* Chiedi colonna */
-            printf("\n+ - - - - - - - - +\n| SCEGLI  COLONNA |\n+ - - - - - - - - +\n");
-
-        selezione_colonna:
-            printf(" - Scrivi il numero della colonna in cui vuoi calare il lato destro del tetramino.\n");
-            scanf("%d", &colonna);
-
-            if(colonna < 0 || colonna > 9) {
-                printf("%sValore della colonna non valido, re-inseriscine uno di corretto!!%s\n", ROSSO, DEFAULT);
-                goto selezione_colonna;
-            }
+            selezione_colonna:
+            colonna = ask_colonna();
 
             /* posiziona sul piano di gioco e vedi se si possono eliminare righe */
             res = set_tetraminosupianodigioco(&p, &player, tetramino_scelto, colonna);
 
-            if (res)
+            if (res) {
+                /* se il giocatore ha ottenuto punti con questo tetramino mostro il punteggio aggiornato */
+                if (old_points < player.points) {
+                    delay(15000);
+                    printf("\n");
+                    print_player(player);
+                    printf("\n");
+                }
+
                 tetramini_set[id_tetramino - 1].n_disponibili--;
-            else if (!p.is_limiteraggiunto) {
+            } else if (!p.is_limiteraggiunto) {
                 printf("%sNon è stato possibile piazzare il tetramino dove hai richiesto!!%s\n", ROSSO, DEFAULT);
                 goto selezione_colonna;
             }
         }
 
-        print_losetitle(player);
+        print_finishtitle();
 
-        delay(40000);
+        if (!thereis_tetramini()) printf("%sI tetramini erano finiti!!!%s", ROSSO, DEFAULT);
+
+        print_player(player);
+
+        delay(50000);
 
         goto menu_iniziale;
     }
@@ -159,7 +233,7 @@ int main() {
         Player_t player1, player2;
         ExitMode_t exitMode = NONE; /* modalità di terminazione della partita */
         Bool_t res; /* risultato del collocamento sul piano di gioco del tetramino */
-        int id_tetramino, rotazione, colonna;
+        int id_tetramino, colonna;
         char nome1[20];
         char nome2[20];
         int i;
@@ -179,19 +253,16 @@ int main() {
         player1 = create_newplayer(nome1);
         player2 = create_newplayer(nome2);
 
+        delay(20000);
+
+        printf("\n\n");
+        printf("Loading...");
+        printf("\n\n");
+
         /* due giocatori */
         for (i = 1; !p_pl1.is_limiteraggiunto && !p_pl2.is_limiteraggiunto; ++i) {
-            int j, cont = 0;
-
             /* Verifico se sono rimasti tetramini */
-            for (j = 0; j < 7; ++j)
-                if (tetramini_set[j].n_disponibili == 0) cont++;
-
-            delay(20000);
-
-            printf("\n\n");
-            printf("Loading...");
-            printf("\n\n");
+            if (!thereis_tetramini()) { exitMode = NO_PIECES; break; }
 
             delay(15000);
 
@@ -199,60 +270,31 @@ int main() {
             print_turnoinfoplayer((i % 2) ? player1 : player2);
 
 
-            if (cont == 7) { exitMode = NO_PIECES; break; }
-
             /* Stampa piano di gioco */
             print_pianodigioco((i % 2) ? p_pl1 : p_pl2);
 
             /* Chiedi tetramino */
-            printf("\n+ - - - - - - - - - +\n| SCEGLI  TETRAMINO |\n+ - - - - - - - - - +\n");
+            if (!trickymode)
+                tetramino_scelto = ask_tetramino(&id_tetramino);
+            else {
+                int rotazione = rand() % 4 + 1;
+                id_tetramino = rand() % NTETRAMINI + 1;
+                tetramino_scelto = tetramini_set[id_tetramino - 1].t;
+                switch (rotazione) {
+                    case 1: tetramino_scelto.rotazione = BASIC; break;
+                    case 2: tetramino_scelto.rotazione = ADD90; break;
+                    case 3: tetramino_scelto.rotazione = ADD180; break;
+                    default: tetramino_scelto.rotazione = ADD270; break;
+                }
 
-            if (do_richiesta(" - Vuoi stampare tutto il set di tetramini con le relative disponibilità per una migliore scelta?"))
-                print_settetramini(tetramini_set);
-
-        seleziona_tetramino_mp:
-            printf(" - Quale tetramino hai scelto? (Scrivi il suo id)\n");
-            scanf("%d", &id_tetramino);
-
-            if (id_tetramino < 1 || id_tetramino > 7) {
-                printf("%sCodice scorretto o disponibilità esaurita!!%s\n", ROSSO, DEFAULT);
-                goto seleziona_tetramino_mp;
-            }
-
-            tetramino_scelto = tetramini_set[id_tetramino - 1].t;
-
-            /* Chiedi rotazione */
-            printf("\n+ - - - - - - - - - +\n| SCEGLI  ROTAZIONE |\n+ - - - - - - - - - +\n");
-            if (do_richiesta(" - Vuoi stampare tutte le possibili rotazioni del tetramino scelto per una migliore scelta?"))
-                print_possibilirotazioni(id_tetramino);
-
-        selezione_rotazione_mp:
-            printf("- Quale rotazione hai scelto? (Scrivi il suo id)\n");
-            scanf("%d", &rotazione);
-
-            if (rotazione < 1 || rotazione > 4) {
-                printf("%sValore rotazione non valido, inseriscine uno corretto!%s\n", ROSSO, DEFAULT);
-                goto selezione_rotazione_mp;
-            }
-
-            switch (rotazione) {
-                case 1: tetramino_scelto.rotazione = BASIC; break;
-                case 2: tetramino_scelto.rotazione = ADD90; break;
-                case 3: tetramino_scelto.rotazione = ADD180; break;
-                default: tetramino_scelto.rotazione = ADD270; break;
+                printf("\n\n");
+                printf("Tetramino randomico:\n");
+                print_tetramino(tetramino_scelto);
             }
 
             /* Chiedi colonna */
-            printf("\n+ - - - - - - - - +\n| SCEGLI  COLONNA |\n+ - - - - - - - - +\n");
-
-        selezione_colonna_mp:
-            printf(" - Scrivi il numero della colonna in cui vuoi calare il lato destro del tetramino.\n");
-            scanf("%d", &colonna);
-
-            if(colonna < 0 || colonna > 9) {
-                printf("%sValore della colonna non valido, re-inseriscine uno di corretto!!%s\n", ROSSO, DEFAULT);
-                goto selezione_colonna_mp;
-            }
+            selezione_colonna_mp:
+            colonna = ask_colonna();
 
             /* posiziona sul piano di gioco e vedi se si possono eliminare righe */
             res = set_tetraminosupianodigioco((i % 2) ? &p_pl1 : &p_pl2,
@@ -269,9 +311,9 @@ int main() {
                     print_pianodigioco((i % 2) ? p_pl1 : p_pl2);
             } else if (!((i % 2) ? p_pl1 : p_pl2).is_limiteraggiunto) {
                 printf("%sNon è stato possibile piazzare il tetramino dove hai richiesto!!%s\n", ROSSO, DEFAULT);
+                goto selezione_colonna_mp;
+            } else
                 exitMode = OUT_OF_MATRIX;
-                break;
-            }
         }
 
         /*
