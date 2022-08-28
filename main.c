@@ -193,6 +193,7 @@ int main() {
             }
 
             /* Chiedi colonna */
+            printf("\n+ - - - - - - - - +\n| SCEGLI  COLONNA |\n+ - - - - - - - - +\n");
             selezione_colonna:
             colonna = ask_colonna();
 
