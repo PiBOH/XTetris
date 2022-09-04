@@ -49,7 +49,7 @@ Tetramino_t ask_tetramino(int* id) {
     printf(" - Quale tetramino hai scelto? (Scrivi il suo id)\n");
     scanf("%d", &id_tetramino);
 
-    if (id_tetramino < 1 || id_tetramino > NTETRAMINI) {
+    if (id_tetramino < 1 || id_tetramino > NTETRAMINI || tetramini_set[id_tetramino - 1].n_disponibili == 0) {
         printf("%sCodice scorretto o disponibilità esaurita!!%s\n", ROSSO, DEFAULT);
         goto seleziona_tetramino;
     }
@@ -179,8 +179,14 @@ int main() {
                 tetramino_scelto = ask_tetramino(&id_tetramino);
             else {
                 int rotazione = rand() % 4 + 1;
+                genera_nuovo_tetramino:
                 id_tetramino = rand() % NTETRAMINI + 1;
-                tetramino_scelto = tetramini_set[id_tetramino - 1].t;
+
+                if (tetramini_set[id_tetramino - 1].n_disponibili)
+                    tetramino_scelto = tetramini_set[id_tetramino - 1].t;
+                else
+                    goto genera_nuovo_tetramino;
+
                 switch (rotazione) {
                     case 1: tetramino_scelto.rotazione = BASIC; break;
                     case 2: tetramino_scelto.rotazione = ADD90; break;

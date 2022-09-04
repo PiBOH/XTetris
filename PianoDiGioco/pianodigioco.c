@@ -29,9 +29,9 @@ PianoDiGioco_t create_pianodigioco() {
 
 void print_pianodigioco(PianoDiGioco_t p) {
     int i, j;
-    printf("+ - + - + - + - + - + - + - + - + - + - +\n");
+    printf("  -   -   -   -   -   -   -   -   -   -  \n");
     for (i = 0; i < ROWS; ++i) {
-        printf("|");
+        printf("\n|");
         for (j = 0; j < COLS; ++j) {
             if(p.matrice_di_gioco[i][j].is_vuota) {
                 printf("   ");
@@ -51,7 +51,7 @@ void print_pianodigioco(PianoDiGioco_t p) {
         }
         printf(" \n");
     }
-    printf("+ - + - + - + - + - + - + - + - + - + - +\n  0   1   2   3   4   5   6   7   8   9  \n");
+    printf("  -   -   -   -   -   -   -   -   -   -  \n  0   1   2   3   4   5   6   7   8   9  \n");
 }
 
 void print_pianodigioco_basic(const PianoDiGioco_t p)
