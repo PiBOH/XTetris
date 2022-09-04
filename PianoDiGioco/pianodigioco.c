@@ -29,20 +29,29 @@ PianoDiGioco_t create_pianodigioco() {
 
 void print_pianodigioco(PianoDiGioco_t p) {
     int i, j;
-    printf("+ - - - - - - - - - - +\n");
+    printf("+ - + - + - + - + - + - + - + - + - + - +\n");
     for (i = 0; i < ROWS; ++i) {
         printf("|");
         for (j = 0; j < COLS; ++j) {
-            if(p.matrice_di_gioco[i][j].is_vuota) printf("  ");
-            else {
+            if(p.matrice_di_gioco[i][j].is_vuota) {
+                printf("   ");
+            } else {
                 printf("%s", terminal_colors[p.matrice_di_gioco[i][j].tetramino_contenuto.colore]);
-                printf(" #");
-                printf("\033[0m");
+                printf(" # ");
+                printf(DEFAULT);
             }
+            if (j + 1 != COLS) {
+                printf(NERO);
+                printf(":");
+            } else {
+                printf(BIANCO);
+                printf("|");
+            }
+            printf(DEFAULT);
         }
-        printf(" |\n");
+        printf(" \n");
     }
-    printf("+ - - - - - - - - - - +\n  0 1 2 3 4 5 6 7 8 9  \n");
+    printf("+ - + - + - + - + - + - + - + - + - + - +\n  0   1   2   3   4   5   6   7   8   9  \n");
 }
 
 void print_pianodigioco_basic(const PianoDiGioco_t p)

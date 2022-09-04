@@ -1,18 +1,19 @@
-
-# Consider dependencies only in project.
-set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
-
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
+  "C"
   )
+# The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_C
+  "/mnt/c/Users/agber/Desktop/XTetris/GameSetting/Player/player.c" "/mnt/c/Users/agber/Desktop/XTetris/cmake-build-debug/CMakeFiles/XTetris.dir/GameSetting/Player/player.c.o"
+  "/mnt/c/Users/agber/Desktop/XTetris/GameSetting/menus.c" "/mnt/c/Users/agber/Desktop/XTetris/cmake-build-debug/CMakeFiles/XTetris.dir/GameSetting/menus.c.o"
+  "/mnt/c/Users/agber/Desktop/XTetris/PianoDiGioco/pianodigioco.c" "/mnt/c/Users/agber/Desktop/XTetris/cmake-build-debug/CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o"
+  "/mnt/c/Users/agber/Desktop/XTetris/Tetramino/tetramino.c" "/mnt/c/Users/agber/Desktop/XTetris/cmake-build-debug/CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o"
+  "/mnt/c/Users/agber/Desktop/XTetris/main.c" "/mnt/c/Users/agber/Desktop/XTetris/cmake-build-debug/CMakeFiles/XTetris.dir/main.c.o"
+  )
+set(CMAKE_C_COMPILER_ID "GNU")
 
-# The set of dependency files which are needed:
-set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/Users/alexgiulioberton/Desktop/XTetris/GameSetting/Player/player.c" "CMakeFiles/XTetris.dir/GameSetting/Player/player.c.o" "gcc" "CMakeFiles/XTetris.dir/GameSetting/Player/player.c.o.d"
-  "/Users/alexgiulioberton/Desktop/XTetris/GameSetting/menus.c" "CMakeFiles/XTetris.dir/GameSetting/menus.c.o" "gcc" "CMakeFiles/XTetris.dir/GameSetting/menus.c.o.d"
-  "/Users/alexgiulioberton/Desktop/XTetris/PianoDiGioco/pianodigioco.c" "CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o" "gcc" "CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.o.d"
-  "/Users/alexgiulioberton/Desktop/XTetris/Tetramino/tetramino.c" "CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o" "gcc" "CMakeFiles/XTetris.dir/Tetramino/tetramino.c.o.d"
-  "/Users/alexgiulioberton/Desktop/XTetris/main.c" "CMakeFiles/XTetris.dir/main.c.o" "gcc" "CMakeFiles/XTetris.dir/main.c.o.d"
+# The include file search paths:
+set(CMAKE_C_TARGET_INCLUDE_PATH
   )
 
 # Targets to which this target links.

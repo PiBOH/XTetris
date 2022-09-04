@@ -131,7 +131,7 @@ int main() {
     /* creazione del set di tetramini sulla base della modalià di gioco scelta */
     tetramini_set = create_tetraminiset(mod_gioco);
 
-    printf("\n\n");
+    printf("\n");
     if (do_richiesta(" - Vuoi entrare nella tricky mode?"))
         trickymode = TRUE;
 
@@ -141,6 +141,7 @@ int main() {
         Player_t player;
         char nome[20];
 
+        printf("\n");
         printf(" - Inserisci il tuo nome (non superiore ai 20 caratteri):\n");
         scanf("%s", nome);
 
