@@ -121,7 +121,7 @@ int __get_points__(int righe) {
     }
 }
 
-Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Player_t* player, Tetramino_t t, int col)
+Bool_t set_tetraminosupianodigioco_sp(PianoDiGioco_t* p, Player_t* player, Tetramino_t t, int col, int* righe_eliminate)
 {
     int i, j;
     Bool_t is_posizionabile = FALSE;
@@ -220,6 +220,13 @@ Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Player_t* player, Tetramin
             }
 
             /*
+             * salvo il numero di righe eliminate se e solo se l'int pointer passato è valido e quindi non è impostato
+             * a NULL
+             */
+            if (righe_eliminate)
+                *righe_eliminate = eliminazioni;
+
+            /*
              * aggiorno il punteggio del giocatore passato come parametro alla funzione ovvero il giocatore che ha
              * comandato l'esecuzione della mossa specificata
              */
@@ -234,4 +241,26 @@ Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Player_t* player, Tetramin
         }
     }
     return FALSE;
+}
+
+Bool_t set_tetraminosupianodigioco_mp(PianoDiGioco_t* p, PianoDiGioco_t* other, Player_t* player, Tetramino_t t, int col) {
+    Bool_t res;
+    int r_el;
+
+    res = set_tetraminosupianodigioco_sp(p, player, t, col, &r_el);
+
+    if (res && r_el >= 3) {
+        int i, j;
+        for (i = ROWS - 1; i >= ROWS - r_el; --i) {
+            for (j = 0; j < COLS; j++) {
+                if (other->matrice_di_gioco[i][j].is_vuota == TRUE) {
+                    other->matrice_di_gioco[i][j].is_vuota = FALSE;
+                    other->matrice_di_gioco[i][j].tetramino_contenuto = create_tetramino3();
+                } else
+                    other->matrice_di_gioco[i][j].is_vuota = TRUE;
+            }
+        }
+    }
+
+    return res;
 }

@@ -204,8 +204,8 @@ int main() {
             selezione_colonna:
             colonna = ask_colonna();
 
-            /* posiziona sul piano di gioco e vedi se si possono eliminare righe */
-            res = set_tetraminosupianodigioco(&p, &player, tetramino_scelto, colonna);
+            /* posiziona sul piano di gioco e vedi se si possono eliminare righe non interessa il numero di celle eliminate */
+            res = set_tetraminosupianodigioco_sp(&p, &player, tetramino_scelto, colonna, NULL);
 
             if (res) {
                 /* se il giocatore ha ottenuto punti con questo tetramino mostro il punteggio aggiornato */
@@ -243,19 +243,21 @@ int main() {
         int id_tetramino, colonna;
         char nome1[20];
         char nome2[20];
+        char c;
         int i;
 
         /* inizializzo giocatori e piani di gioco dei relativi */
         p_pl1 = create_pianodigioco();
         p_pl2 = create_pianodigioco();
 
-
-        printf(" - Inserisci il nome del giocatore 1 (non superiore ai 20 caratteri):\n");
-        scanf("%s", nome1);
+        scanf("%c",&c);
+        printf(" - Inserisci il nome del giocatore 1 senza spazi (non superiore ai 20 caratteri):\n");
+        scanf("%[^\n]", nome1);
 
         printf("\n");
-        printf(" - Inserisci il nome del giocatore 2 (non superiore ai 20 caratteri):\n");
-        scanf("%s", nome2);
+        scanf("%c",&c);
+        printf(" - Inserisci il nome del giocatore 2 senza spazi (non superiore ai 20 caratteri):\n");
+        scanf("%[^\n]", nome2);
 
         player1 = create_newplayer(nome1);
         player2 = create_newplayer(nome2);
@@ -304,8 +306,8 @@ int main() {
             selezione_colonna_mp:
             colonna = ask_colonna();
 
-            /* posiziona sul piano di gioco e vedi se si possono eliminare righe */
-            res = set_tetraminosupianodigioco((i % 2) ? &p_pl1 : &p_pl2,
+            /* posiziona sul piano di gioco e vedi se si possono eliminare righe, non interessa il numero di righe eliminate */
+            res = set_tetraminosupianodigioco_mp((i % 2) ? &p_pl1 : &p_pl2, (i + 1 % 2) ? &p_pl2 : &p_pl1,
                                               (i % 2) ? &player1 : &player2,
                                               tetramino_scelto,
                                               colonna);

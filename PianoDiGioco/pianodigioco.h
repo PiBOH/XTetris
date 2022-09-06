@@ -48,18 +48,19 @@ PianoDiGioco_t create_pianodigioco();
  * Metodo che stampa il piano di gioco con una tecnica di stampa avanzata.
  * @param p: piano di gioco da stampare
  */
-void print_pianodigioco(const PianoDiGioco_t p);
+void print_pianodigioco(const PianoDiGioco_t);
 
 /**
  * Metodo che stampa il piano di gioco con una tecnica di stampa basilare (zeri e uni).
  * @param p: piano di gioco da stampare
  */
-void print_pianodigioco_basic(const PianoDiGioco_t p);
+void print_pianodigioco_basic(const PianoDiGioco_t);
 
 /**
  * Metodo avente il compito di posizionare il tetramino scelto dall'utente sul piano di gioco in base alla colonna da
- * lui scelta. Viene poi anche verificato il numero di righe che sono state rimosse con l'aggiunta del tetramino stesso
- * e in base ad esse viene attribuito un punteggio all'utente passato come parametro del metodo.\n
+ * lui scelta in modalità SinglePlayer. Viene poi anche verificato il numero di righe che sono state rimosse con
+ * l'aggiunta del tetramino stesso e in base ad esse viene attribuito un punteggio all'utente passato come parametro
+ * del metodo.\n
  * @param p il piano di gioco contenente la matrice di gioco su cui posizionare il tetramino
  * @param player il giocatore che ha effettuato la mossa in analisi
  * @param t il tetramino da posizionare
@@ -67,6 +68,10 @@ void print_pianodigioco_basic(const PianoDiGioco_t p);
  * @return <code>TRUE</code> - se il tetramino è stato correttamente posizionato\n
  *         <code>FALSE</code> - in caso di qualsiasi errore (tetramino non posizionabile nella colonna scelta)
  */
-Bool_t set_tetraminosupianodigioco(PianoDiGioco_t* p, Player_t* player, Tetramino_t t, int col);
+Bool_t set_tetraminosupianodigioco_sp(PianoDiGioco_t*, Player_t*, Tetramino_t, int, int*);
+
+/* TODO: Documentazione */
+Bool_t set_tetraminosupianodigioco_mp(PianoDiGioco_t*, PianoDiGioco_t*, Player_t*, Tetramino_t, int);
+
 
 #endif
