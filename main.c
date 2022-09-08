@@ -243,7 +243,7 @@ int main() {
         PianoDiGioco_t p_pl1, p_pl2;
         Tetramino_t tetramino_scelto;
         Player_t player1, player2;
-        ExitMode_t exitMode = NONE; /* modalità di terminazione della partita */
+        ExitMode_t exitMode = NONE; /* come termina la partita */
         Bool_t res; /* risultato del collocamento sul piano di gioco del tetramino */
         int id_tetramino, colonna;
         char nome1[20];
@@ -284,68 +284,49 @@ int main() {
                 break;
             }
 
-            delay(15000);
+            if (scelta_modgioco != 3 && !(i % 2))
+                delay(15000);
 
             /* informazioni relative al turno in corso */
             print_turnoinfoplayer((i % 2) ? player1 : player2);
 
             /* Stampa piano di gioco di entrambi se i giocatori sono veri, altrimenti il pc non ha bisogno di vedere
              * prima la situazione */
-            if (scelta_modgioco == 2)
-                print_pianodigioco((i % 2) ? p_pl1 : p_pl2);
+            if (scelta_modgioco == 2) print_pianodigioco((i % 2) ? p_pl1 : p_pl2);
             else if (i % 2) print_pianodigioco(p_pl1);
 
-            if (scelta_modgioco == 2) {
-                /* Chiedi tetramino o generalo se sei in tricky mode */
-                if (!trickymode)
-                    tetramino_scelto = ask_tetramino(&id_tetramino);
-                else {
-                    int rotazione = rand() % 4 + 1;
-                    id_tetramino = rand() % NTETRAMINI + 1;
+            /* Chiedi tetramino o generalo se sei in tricky mode */
+            if (!trickymode && scelta_modgioco == 2 || scelta_modgioco == 3 && (i % 2) && !trickymode)
+                tetramino_scelto = ask_tetramino(&id_tetramino);
+            else {
+                int rotazione;
+                genera:
+                rotazione = rand() % 4 + 1;
+                id_tetramino = rand() % NTETRAMINI + 1;
+                if (tetramini_set[id_tetramino - 1].n_disponibili == 0) goto genera;
                     tetramino_scelto = tetramini_set[id_tetramino - 1].t;
-                    switch (rotazione) {
-                        case 1:
-                            tetramino_scelto.rotazione = BASIC;
-                            break;
-                        case 2:
-                            tetramino_scelto.rotazione = ADD90;
-                            break;
-                        case 3:
-                            tetramino_scelto.rotazione = ADD180;
-                            break;
-                        default:
-                            tetramino_scelto.rotazione = ADD270;
-                            break;
-                    }
+                switch (rotazione) {
+                    case 1:
+                        tetramino_scelto.rotazione = BASIC;
+                        break;
+                    case 2:
+                        tetramino_scelto.rotazione = ADD90;
+                        break;
+                    case 3:
+                        tetramino_scelto.rotazione = ADD180;
+                        break;
+                    default:
+                        tetramino_scelto.rotazione = ADD270;
+                        break;
+                }
 
+                /* Se è la modalità vs PC ed è il suo turno non serve che mostro il tetramino */
+                if (scelta_modgioco == 3 && (i % 2) || scelta_modgioco == 2) {
                     printf("\n\n");
                     printf("Tetramino randomico:\n");
                     print_tetramino(tetramino_scelto);
                 }
-            } else {
-                if (i % 2) {
-                    tetramino_scelto = ask_tetramino(&id_tetramino);
-                } else {
-                    int rotazione = rand() % 4 + 1;
-                    id_tetramino = rand() % NTETRAMINI + 1;
-                    tetramino_scelto = tetramini_set[id_tetramino - 1].t;
-                    switch (rotazione) {
-                        case 1:
-                            tetramino_scelto.rotazione = BASIC;
-                            break;
-                        case 2:
-                            tetramino_scelto.rotazione = ADD90;
-                            break;
-                        case 3:
-                            tetramino_scelto.rotazione = ADD180;
-                            break;
-                        default:
-                            tetramino_scelto.rotazione = ADD270;
-                            break;
-                    }
-                }
             }
-
 
             if (i % 2 && scelta_modgioco == 3 || scelta_modgioco == 2) {
                 /* Chiedi colonna */
