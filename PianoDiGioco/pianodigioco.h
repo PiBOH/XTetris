@@ -59,22 +59,31 @@ void print_pianodigioco_basic(const PianoDiGioco_t);
 /**
  * Metodo avente il compito di posizionare il tetramino scelto dall'utente sul piano di gioco in base alla colonna da
  * lui scelta in modalità SinglePlayer. Viene poi anche verificato il numero di righe che sono state rimosse con
- * l'aggiunta del tetramino stesso e in base ad esse viene attribuito un punteggio all'utente passato come parametro
+ * l'aggiunta del tetramino e in base ad esse viene attribuito un punteggio all'utente passato come parametro
  * del metodo.\n
  * @param p il piano di gioco contenente la matrice di gioco su cui posizionare il tetramino
  * @param player il giocatore che ha effettuato la mossa in analisi
  * @param t il tetramino da posizionare
  * @param col la colonna di partenza della matrice di gioco (sulla quale basarsi per il posizionamento)
+ * @param righe_eliminate puntatore per poter memorizzare al suo interno il numero di righe che sono state eliminate con una singola mossa
  * @return <code>TRUE</code> - se il tetramino è stato correttamente posizionato\n
  *         <code>FALSE</code> - in caso di qualsiasi errore (tetramino non posizionabile nella colonna scelta)
  */
- /* TODO: Documentazione */
-Bool_t set_tetraminosupianodigioco_sp(PianoDiGioco_t*, Player_t*, Tetramino_t, int, int*, int*, Bool_t);
+Bool_t set_tetraminosupianodigioco_sp(PianoDiGioco_t* p, Player_t* player, Tetramino_t t, int col, int* righe_eliminate);
 
-/* TODO: Documentazione */
-Bool_t set_tetraminosupianodigioco_mp(PianoDiGioco_t*, PianoDiGioco_t*, Player_t*, Tetramino_t, int);
-
-/* TODO: Documentazione */
-int get_bestcolonna(const PianoDiGioco_t* p, Tetramino_t t);
+/**
+ * Metodo avente il compito di posizionare il tetramino scelto dall'utente sul piano di gioco in base alla colonna da
+ * lui scelta in modalità Multiplayer. Viene poi anche verificato il numero di righe che sono state rimosse con
+ * l'aggiunta del tetramino e in base ad esse viene attribuito un punteggio all'utente passato come parametro
+ * del metodo e in aggiunta, se il numero di righe eliminate è 3 o 4, verranno invertite le corrispettive righe nella parte
+ * inferiore del piano di gioco dell'avversario.\n
+ * @param p il piano di gioco contenente la matrice di gioco su cui posizionare il tetramino
+ * @param other il piano di gioco dell'avversario
+ * @param player il giocatore che ha effettuato la mossa in analisi
+ * @param t il tetramino da posizionare
+ * @param col la colonna di partenza della matrice di gioco (sulla quale basarsi per il posizionamento)
+ * @return
+ */
+Bool_t set_tetraminosupianodigioco_mp(PianoDiGioco_t* p, PianoDiGioco_t* other, Player_t* player, Tetramino_t t, int col);
 
 #endif

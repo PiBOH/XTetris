@@ -12,4 +12,4 @@ enum ExitMode
     NONE
 }
 ExitMode_t;
-#endif //XTETRIS_EXIT_MODES_H
+#endif

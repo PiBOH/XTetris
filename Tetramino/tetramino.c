@@ -2,7 +2,7 @@
 
 /**
  * [PRIVATE]\n
- * Metodo creato per permettere di settare tutti i valori delle matrici interne al tetramino pari a 0
+ * Metodo creato per settare tutti i valori delle matrici, interne al tetramino, pari a 0
  * @param t: il tetramino su cui eseguire l'operazione specificata
  */
 void __set_zero_tetramino__(Tetramino_t* t)
@@ -302,7 +302,7 @@ void print_settetramini(const Tetraminodigioco_t t[])
 
             printf("Disponibili: %s%d%s", val, t[i].n_disponibili, "\033[0m");
         } else {
-            printf("%sI PEZZI PER QUESTO TETRAMINO SONO TERMINATI !%s    ", "\e[1;91m", "\033[0m");
+            printf("%sI PEZZI PER QUESTO TETRAMINO SONO TERMINATI !%s\n", "\e[1;91m", "\033[0m");
             print_tetramino(t[i].t);
         }
     }

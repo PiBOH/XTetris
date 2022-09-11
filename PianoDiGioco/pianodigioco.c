@@ -121,7 +121,7 @@ int __get_points__(int righe) {
     }
 }
 
-Bool_t set_tetraminosupianodigioco_sp(PianoDiGioco_t* p, Player_t* player, Tetramino_t t, int col, int* righe_eliminate, int* da_riga, Bool_t posiziona)
+Bool_t set_tetraminosupianodigioco_sp(PianoDiGioco_t* p, Player_t* player, Tetramino_t t, int col, int* righe_eliminate)
 {
     int i, j;
     Bool_t is_posizionabile = FALSE;
@@ -157,8 +157,6 @@ Bool_t set_tetraminosupianodigioco_sp(PianoDiGioco_t* p, Player_t* player, Tetra
 
         /* Mi ri-posiziono nella riga da cui sono partito (quella dettata dal for esterno) */
         i = row;
-        if (da_riga)
-            *da_riga = i;
 
         /*
          * Eseguo un'ulteriore verifica per vedere se il posizionamento mi vada a sforare verticalemente il piano
@@ -173,7 +171,7 @@ Bool_t set_tetraminosupianodigioco_sp(PianoDiGioco_t* p, Player_t* player, Tetra
          * Se la variabile is_posizionabile è settata a true vuol dire che ho controllato tutte le righe e colonne
          * interessate e non ho trovato collisioni, quindi posso diseganare sulla matrice di gioco
          */
-        if (is_posizionabile && posiziona) {
+        if (is_posizionabile) {
             int k, q, i1, j1;
             /* salvo il numero di righe che vado ad eliminare con una singola mossa */
             int eliminazioni = 0;
@@ -247,9 +245,9 @@ Bool_t set_tetraminosupianodigioco_sp(PianoDiGioco_t* p, Player_t* player, Tetra
 
 Bool_t set_tetraminosupianodigioco_mp(PianoDiGioco_t* p, PianoDiGioco_t* other, Player_t* player, Tetramino_t t, int col) {
     Bool_t res;
-    int r_el, riga;
+    int r_el;
 
-    res = set_tetraminosupianodigioco_sp(p, player, t, col, &r_el, &riga, TRUE);
+    res = set_tetraminosupianodigioco_sp(p, player, t, col, &r_el);
 
     if (res && r_el >= 3) {
         int i, j;
