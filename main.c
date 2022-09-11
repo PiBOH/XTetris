@@ -126,7 +126,16 @@ int main() {
 
     if (scelta_modgioco == 4) return 0;
 
-    mod_gioco = (scelta_modgioco == 1) ? SINGLEPLAYER : MULTIPLAYER;
+    switch (scelta_modgioco) {
+        case 1:
+            mod_gioco = SINGLEPLAYER; break;
+        case 2:
+            mod_gioco = MULTIPLAYER_PL; break;
+        case 3:
+            mod_gioco = MULTIPLAYER_PC; break;
+        default:
+            return 0;
+    }
 
     /* creazione del set di tetramini sulla base della modalià di gioco scelta */
     tetramini_set = create_tetraminiset(mod_gioco);
@@ -135,7 +144,7 @@ int main() {
     if (do_richiesta(" - Vuoi entrare nella tricky mode?"))
         trickymode = TRUE;
 
-    if (scelta_modgioco == 1) {
+    if (mod_gioco == SINGLEPLAYER) {
         PianoDiGioco_t p;
         Player_t player;
         char nome[20];
@@ -212,7 +221,7 @@ int main() {
             colonna = ask_colonna();
 
             /* posiziona sul piano di gioco e vedi se si possono eliminare righe non interessa il numero di celle eliminate */
-            res = set_tetraminosupianodigioco_sp(&p, &player, tetramino_scelto, colonna, NULL);
+            res = set_tetraminosupianodigioco_sp(&p, &player, tetramino_scelto, colonna, NULL, NULL, TRUE);
 
             if (res) {
                 /* se il giocatore ha ottenuto punti con questo tetramino mostro il punteggio aggiornato */
@@ -260,7 +269,7 @@ int main() {
         player1 = create_newplayer(nome1);
 
         /* filtro tra modalità vs persona e vs pc */
-        if (scelta_modgioco == 2) {
+        if (mod_gioco == MULTIPLAYER_PL) {
             printf("\n");
             scanf("%c", &c);
             printf(" - Inserisci il nome del giocatore 2 senza spazi (non superiore ai 20 caratteri):\n");
@@ -284,7 +293,7 @@ int main() {
                 break;
             }
 
-            if (scelta_modgioco != 3 && !(i % 2))
+            if (mod_gioco == MULTIPLAYER_PL)
                 delay(15000);
 
             /* informazioni relative al turno in corso */
@@ -292,11 +301,11 @@ int main() {
 
             /* Stampa piano di gioco di entrambi se i giocatori sono veri, altrimenti il pc non ha bisogno di vedere
              * prima la situazione */
-            if (scelta_modgioco == 2) print_pianodigioco((i % 2) ? p_pl1 : p_pl2);
+            if (mod_gioco == MULTIPLAYER_PL) print_pianodigioco((i % 2) ? p_pl1 : p_pl2);
             else if (i % 2) print_pianodigioco(p_pl1);
 
             /* Chiedi tetramino o generalo se sei in tricky mode */
-            if (!trickymode && scelta_modgioco == 2 || scelta_modgioco == 3 && (i % 2) && !trickymode)
+            if (!trickymode && mod_gioco == MULTIPLAYER_PL || mod_gioco == MULTIPLAYER_PC && (i % 2) && !trickymode)
                 tetramino_scelto = ask_tetramino(&id_tetramino);
             else {
                 int rotazione;
@@ -320,22 +329,22 @@ int main() {
                         break;
                 }
 
-                /* Se è la modalità vs PC ed è il suo turno non serve che mostro il tetramino */
-                if (scelta_modgioco == 3 && (i % 2) || scelta_modgioco == 2) {
+                /* Se è la modalità vs PC ed è il suo turno non serve che mostro il tetramino altrimenti si */
+                if (mod_gioco == MULTIPLAYER_PC && (i % 2) || mod_gioco == MULTIPLAYER_PL) {
                     printf("\n\n");
                     printf("Tetramino randomico:\n");
                     print_tetramino(tetramino_scelto);
                 }
             }
 
-            if (i % 2 && scelta_modgioco == 3 || scelta_modgioco == 2) {
+            if (i % 2 && mod_gioco == MULTIPLAYER_PC || mod_gioco == MULTIPLAYER_PL) {
                 /* Chiedi colonna */
                 printf("\n+ - - - - - - - - +\n| SCEGLI  COLONNA |\n+ - - - - - - - - +\n");
                 selezione_colonna_mp:
                 colonna = ask_colonna();
             } else {
                 genera_colonna:
-                colonna = (rand() % 100) % 9;
+                colonna = (rand()%1000) % 9;
             }
 
 
@@ -351,14 +360,16 @@ int main() {
                 print_pianodigioco((i % 2) ? p_pl1 : p_pl2);
                 delay(30000);
             } else if (!((i % 2) ? p_pl1 : p_pl2).is_limiteraggiunto) {
-                if (i % 2 && scelta_modgioco == 3 || scelta_modgioco == 2) {
+                if (i % 2 && mod_gioco == MULTIPLAYER_PC || mod_gioco == MULTIPLAYER_PL) {
                     printf("%sNon è stato possibile piazzare il tetramino dove hai richiesto!!%s\n", ROSSO,
                            DEFAULT);
                     goto selezione_colonna_mp;
                 } else goto genera_colonna;
             } else
                 exitMode = OUT_OF_MATRIX;
+
         }
+
 
         /*
          * Qualcuno ha perso:

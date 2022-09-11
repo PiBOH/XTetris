@@ -12,8 +12,8 @@
 typedef
 enum mode_t {
     SINGLEPLAYER = 1,
-    MULTIPLAYER,
-    TRICKYMODE
+    MULTIPLAYER_PL,
+    MULTIPLAYER_PC
 }
 Mode_t;
 

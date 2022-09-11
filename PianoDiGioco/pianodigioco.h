@@ -68,10 +68,13 @@ void print_pianodigioco_basic(const PianoDiGioco_t);
  * @return <code>TRUE</code> - se il tetramino è stato correttamente posizionato\n
  *         <code>FALSE</code> - in caso di qualsiasi errore (tetramino non posizionabile nella colonna scelta)
  */
-Bool_t set_tetraminosupianodigioco_sp(PianoDiGioco_t*, Player_t*, Tetramino_t, int, int*);
+ /* TODO: Documentazione */
+Bool_t set_tetraminosupianodigioco_sp(PianoDiGioco_t*, Player_t*, Tetramino_t, int, int*, int*, Bool_t);
 
 /* TODO: Documentazione */
 Bool_t set_tetraminosupianodigioco_mp(PianoDiGioco_t*, PianoDiGioco_t*, Player_t*, Tetramino_t, int);
 
+/* TODO: Documentazione */
+int get_bestcolonna(const PianoDiGioco_t* p, Tetramino_t t);
 
 #endif
