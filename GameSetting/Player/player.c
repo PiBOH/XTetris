@@ -1,6 +1,6 @@
 #include "player.h"
 
-Player_t create_newplayer(string_t nome)
+Player_t create_newplayer(const string_t nome)
 {
     Player_t new_player;
     new_player.nome = (string_t) malloc(sizeof(char) * 20);

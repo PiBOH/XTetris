@@ -40,7 +40,7 @@ PianoDiGioco_t;
 
 /**
  * Metodo in grado di creare un nuovo piano di gioco
- * @return piano di gioco con settaggio di partenza per partita singleplayer
+ * @return piano di gioco con settaggio iniziale
  */
 PianoDiGioco_t create_pianodigioco();
 
@@ -82,7 +82,8 @@ Bool_t set_tetraminosupianodigioco_sp(PianoDiGioco_t* p, Player_t* player, Tetra
  * @param player il giocatore che ha effettuato la mossa in analisi
  * @param t il tetramino da posizionare
  * @param col la colonna di partenza della matrice di gioco (sulla quale basarsi per il posizionamento)
- * @return
+ * @return <code>TRUE</code> - se il tetramino è stato correttamente posizionato\n
+ *         <code>FALSE</code> - in caso di qualsiasi errore (tetramino non posizionabile nella colonna scelta)
  */
 Bool_t set_tetraminosupianodigioco_mp(PianoDiGioco_t* p, PianoDiGioco_t* other, Player_t* player, Tetramino_t t, int col);
 

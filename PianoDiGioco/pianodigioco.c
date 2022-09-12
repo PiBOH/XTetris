@@ -27,7 +27,7 @@ PianoDiGioco_t create_pianodigioco() {
     return new_pdt;
 }
 
-void print_pianodigioco(PianoDiGioco_t p) {
+void print_pianodigioco(const PianoDiGioco_t p) {
     int i, j;
     printf("  -   -   -   -   -   -   -   -   -   -  \n");
     for (i = 0; i < ROWS; ++i) {
@@ -88,7 +88,7 @@ void print_pianodigioco_basic(const PianoDiGioco_t p)
  * @return <code>TRUE</code> - se la riga è valida per un inserimento\n
  *         <code>FALSE</code> - se nella riga non è possibile posizionare nulla
  */
-Bool_t __check_rigavuota__(PianoDiGioco_t p, int matrice_tetramino[4][4], int row, int col, int amp, int row_tetramino)
+Bool_t __check_rigavuota__(const PianoDiGioco_t p, int matrice_tetramino[4][4], int row, int col, int amp, int row_tetramino)
 {
     int j, k = 4 - amp;
 

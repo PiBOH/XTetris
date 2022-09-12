@@ -265,27 +265,6 @@ void print_tetramino(const Tetramino_t t)
 }
 
 
-void print_tetramino_basic(const Tetramino_t t)
-{
-    int i, j;
-    for (i = 0; i < DIM; ++i) {
-        for (j = 0; j < DIM; ++j) {
-            if(t.rotazione == BASIC) {
-                printf("%d ", t.stato_BASIC[i][j]);
-            } else if(t.rotazione == ADD90) {
-                printf("%d ", t.stato_ADD90[i][j]);
-            } else if(t.rotazione == ADD180) {
-                printf("%d ", t.stato_ADD180[i][j]);
-            } else if(t.rotazione == ADD270) {
-                printf("%d ", t.stato_ADD270[i][j]);
-            }
-        }
-
-        printf("\n");
-    }
-}
-
-
 void print_settetramini(const Tetraminodigioco_t t[])
 {
     int i;
@@ -338,7 +317,7 @@ void print_possibilirotazioni(int id)
 /**
  * [PRIVATE]\n
  * Metodo avente il compito di restituire l'altezza reale di un tetramino (definito all'interno di una matrice di interi
- * 4x4.
+ * 4x4).
  * @param m - la matrice contenente il tetramino
  * @return valore intero indicante l'altezza reale, o effettiva, del tetramino.
  */

@@ -1,14 +1,14 @@
 #ifndef XTETRIS_TETRAMINO_H
 #define XTETRIS_TETRAMINO_H
 
-#ifndef XTETRIS_STDIO
 #import <stdlib.h>
-#endif
 #import "../Elements/colori.h"
 #import "../Elements/rotazioni.h"
 #include "../GameSetting/menus.h"
 
+/** Dimensioni della matrice che rappresenta un tetramino */
 #define DIM 4
+/** Numero massimo di tetramini definiti all'interno del gioco XTetris */
 #define PIECES 7
 
 /**
@@ -52,52 +52,46 @@ Tetraminodigioco_t;
 void print_settetramini(const Tetraminodigioco_t t[]);
 
 /**
- * Metodo che costruisce un nuovo tatramino del 1° tipo in accordo con lo standard definito nella documentazione fornita
+ * Metodo che costruisce un nuovo tatramino del 1° tipo
  * @return nuovo tetramino (Tetramino_t) avente le informazioni corrette per rappresentarlo
  */
 Tetramino_t create_tetramino1();
 
 /**
- * Metodo che costruisce un nuovo tatramino del 2° tipo in accordo con lo standard definito nella documentazione fornita
+ * Metodo che costruisce un nuovo tatramino del 2° tipo
  * @return nuovo tetramino (Tetramino_t) avente le informazioni corrette per rappresentarlo
  */
 Tetramino_t create_tetramino2();
 
 /**
- * Metodo che costruisce un nuovo tatramino del 3° tipo in accordo con lo standard definito nella documentazione fornita
+ * Metodo che costruisce un nuovo tatramino del 3° tipo
  * @return nuovo tetramino (Tetramino_t) avente le informazioni corrette per rappresentarlo
  */
 Tetramino_t create_tetramino3();
 
 /**
- * Metodo che costruisce un nuovo tatramino del 4° tipo in accordo con lo standard definito nella documentazione fornita
+ * Metodo che costruisce un nuovo tatramino del 4° tipo
  * @return nuovo tetramino (Tetramino_t) avente le informazioni corrette per rappresentarlo
  */
 Tetramino_t create_tetramino4();
 
 /**
- * Metodo che costruisce un nuovo tatramino del 5° tipo in accordo con lo standard definito nella documentazione fornita
+ * Metodo che costruisce un nuovo tatramino del 5° tipo
  * @return nuovo tetramino (Tetramino_t) avente le informazioni corrette per rappresentarlo
  */
 Tetramino_t create_tetramino5();
 
 /**
- * Metodo che costruisce un nuovo tatramino del 6° tipo in accordo con lo standard definito nella documentazione fornita
+ * Metodo che costruisce un nuovo tatramino del 6° tipo
  * @return nuovo tetramino (Tetramino_t) avente le informazioni corrette per rappresentarlo
  */
 Tetramino_t create_tetramino6();
 
 /**
- * Metodo che costruisce un nuovo tatramino del 7° tipo in accordo con lo standard definito nella documentazione fornita
+ * Metodo che costruisce un nuovo tatramino del 7° tipo
  * @return nuovo tetramino (Tetramino_t) avente le informazioni corrette per rappresentarlo
  */
 Tetramino_t create_tetramino7();
-
-/**
- * Metodo avente il compito di stampare un tetramino passato come parametro in maniera basica (usando zeri e uni)
- * @param t: il tetramino da stampare passato come parametro costante
- */
-void print_tetramino_basic(const Tetramino_t t);
 
 /**
  * Metodo avente il compito di stampare, con una tecnica avanazata, un tetramino passato come parametro
@@ -122,8 +116,8 @@ int get_altezzatetramino(const Tetramino_t t);
 /**
  * Metodo avente il compito di impostare nelle condizioni iniziali, per iniziare la partita, l'insieme di tetramini a
  * disposizione contandone 20 per la modalità <code>SINGLEPLAYER</code> e 40 per la <code>MULTIPLAYER</code>
- * @param t_v: l'array di tetramini da inizializzare
  * @param mode: la modalità di gioco scelta dall'utente
+ * @returns puntatore ad array di tetramini di gioco correttamente definiti per la partita in corso
  */
 Tetraminodigioco_t* create_tetraminiset(Mode_t mode);
 

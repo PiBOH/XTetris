@@ -23,13 +23,13 @@ void print_menugioco()
            "   4) Esci\n");
 }
 
-void print_turnoinfoplayer(Player_t p) {
+void print_turnoinfoplayer(const Player_t p) {
     printf("\n\n");
     printf("Turno di: ");
     print_player(p);
 }
 
-void print_losetitle(Player_t p) {
+void print_losetitle(const Player_t p) {
     printf("\n\n\n\n");
     printf("  _      ____   _____ ______   _ \n"
            " | |    / __ \\ / ____|  ____| | |\n"
@@ -41,7 +41,7 @@ void print_losetitle(Player_t p) {
     print_player(p);
 }
 
-void print_wintitle(Player_t p) {
+void print_wintitle(const Player_t p) {
     printf("\n\n\n\n");
     printf(" __          _______ _   _ _   _ ______ _____      _ \n"
            " \\ \\        / /_   _| \\ | | \\ | |  ____|  __ \\    | |\n"

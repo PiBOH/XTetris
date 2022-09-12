@@ -11,7 +11,7 @@ Tetraminodigioco_t* tetramini_set;
 /**
  * Metodo utilizzato per generare un delay a terminale mediante l'utilizzo della tecnica del busy waiting (che però
  * consuma inutilmente tempo di CPU).
- * @param time - per quante volte ciclare a vuoto
+ * @param time - durata del ciclo a vuoto
  */
 void delay(int time) {
     int i, j;
@@ -63,7 +63,7 @@ Tetramino_t ask_tetramino(int* id) {
 
     /* Chiedi rotazione */
     printf("\n+ - - - - - - - - - +\n| SCEGLI  ROTAZIONE |\n+ - - - - - - - - - +\n");
-    if (do_richiesta(" - Vuoi stampare tutte le possibili rotazioni del tetramino scelto per una migliore scelta?"))
+    if (do_richiesta(" - Vuoi stampare tutte le possibili rotazioni del tetramino per una migliore scelta?"))
         print_possibilirotazioni(id_tetramino);
 
     selezione_rotazione:
@@ -151,7 +151,7 @@ int main() {
             return 0;
     }
 
-    /* creazione del set di tetramini sulla base della modalià di gioco scelta */
+    /* creazione del set di tetramini sulla base della modalità di gioco scelta */
     if (mod_gioco == SINGLEPLAYER || mod_gioco == MULTIPLAYER_PL)
         tetramini_set = create_tetraminiset(mod_gioco);
     else tetramini_set = create_tetraminiset(MULTIPLAYER_PL);
@@ -288,7 +288,6 @@ int main() {
             scanf("%[^\n]", nome2);
         }
 
-
         player2 = create_newplayer(nome2);
 
         delay(20000);
@@ -322,7 +321,8 @@ int main() {
                 rotazione = rand() % 4 + 1;
                 id_tetramino = rand() % NTETRAMINI + 1;
                 if (tetramini_set[id_tetramino - 1].n_disponibili == 0) goto genera;
-                    tetramino_scelto = tetramini_set[id_tetramino - 1].t;
+
+                tetramino_scelto = tetramini_set[id_tetramino - 1].t;
                 switch (rotazione) {
                     case 1:
                         tetramino_scelto.rotazione = BASIC;
@@ -355,8 +355,7 @@ int main() {
                 colonna = (rand()%1000) % 9;
             }
 
-
-            /* posiziona sul piano di gioco e vedi se si possono eliminare righe, non interessa il numero di righe eliminate */
+            /* posiziona sul piano di gioco e vedi se si possono eliminare righe */
             res = set_tetraminosupianodigioco_mp((i % 2) ? &p_pl1 : &p_pl2, (i + 1 % 2) ? &p_pl2 : &p_pl1,
                                                  (i % 2) ? &player1 : &player2,
                                                  tetramino_scelto,
@@ -375,7 +374,6 @@ int main() {
                 } else goto genera_colonna;
             } else
                 exitMode = OUT_OF_MATRIX;
-
         }
 
         if (exitMode == OUT_OF_MATRIX) {
@@ -387,9 +385,17 @@ int main() {
                 print_wintitle(player1);
             }
         } else {
-            print_finishtitle();
-            print_player(player1);
-            print_player(player2);
+            if (player1.points > player2.points) {
+                print_wintitle(player1);
+                print_losetitle(player2);
+            } else if (player2.points > player1.points) {
+                print_wintitle(player2);
+                print_losetitle(player1);
+            } else {
+                print_finishtitle();
+                print_player(player1);
+                print_player(player2);
+            }
         }
 
         delay(40000);

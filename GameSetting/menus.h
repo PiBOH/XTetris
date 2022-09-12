@@ -1,8 +1,6 @@
 #ifndef XTETRIS_MENUS_H
 #define XTETRIS_MENUS_H
-#ifndef XTETRIS_STDIO
 #import <stdio.h>
-#endif
 #include "Player/player.h"
 
 /**
@@ -33,21 +31,21 @@ void print_menugioco();
  * al giocatore
  * @param p - il giocatore proprietario del turno corrente
  */
-void print_turnoinfoplayer(Player_t p);
+void print_turnoinfoplayer(const Player_t p);
 
 /**
  * Metodo avente il compito di stampare in ASCII-Art la parola "<i>Lose</i>" e successivamente stampare le informazioni del
  * giocatore perdente (tramite invocazione del metodo di pretty-printing <code>print_player</code>).
- * @param p - il giocatore perdente
+ * @param p - il giocatore sconfitto
  */
-void print_losetitle(Player_t p);
+void print_losetitle(const Player_t p);
 
 /**
  * Metodo avente il compito di stampare in ASCII-Art la parola "<i>Winner</i>" e successivamente stampare le informazioni del
  * giocatore vincitore (tramite invocazione del metodo di pretty-printing <code>print_player</code>).
  * @param p - il giocatore vincitore
  */
-void print_wintitle(Player_t p);
+void print_wintitle(const Player_t p);
 
 /**
  * Metodo avente il compito di stampare in ASCII-Art la parola "<i>Finish</i>"

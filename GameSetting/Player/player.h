@@ -20,9 +20,9 @@ struct player_t
 Player_t;
 
 /**
- * Metodo che, dato il nome di un giocatore, ne restituisce il rispettivo oggetto
+ * Metodo che, dato il nome di un giocatore, ne crea un oggetto e lo restituisce
  * @param nome: il nome del giocatore
- * @return oggetto di tipo Player_t avente nome uguale a quello fornito e punteggio massimo pari a 0
+ * @return oggetto di tipo Player_t avente nome uguale a quello fornito e punteggio pari a 0
  */
 Player_t create_newplayer(const string_t nome);
 
