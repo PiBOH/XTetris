@@ -34,30 +34,134 @@ jobs:
         with:
           version: latest
 
-      - name: Build XTetris for WebAssembly
+      - name: Prepare web-specific patches and UI
         shell: bash
         run: |
           set -euxo pipefail
 
           mkdir -p site
 
-          # Disattiva i busy-wait delay nel build web, per evitare blocchi/freezing del browser
           python3 <<'PY'
           from pathlib import Path
           import re
 
-          main_c = Path("main.c")
-          text = main_c.read_text()
+          def ensure_replace(text, old, new, label):
+              if new in text:
+                  return text
+              if old not in text:
+                  raise SystemExit(f"Patch non applicabile: {label}")
+              return text.replace(old, new, 1)
 
-          text, _ = re.subn(
-              r'void delay\(int time\)\s*\{.*?\n\}',
-              'void delay(int time) {\n    (void)time;\n}\n',
-              text,
-              count=1,
-              flags=re.S
+          def replace_all_if_present(text, old, new):
+              if old in text:
+                  text = text.replace(old, new)
+              return text
+
+          # -------------------------
+          # Patch main.c
+          # -------------------------
+          main_path = Path("main.c")
+          main = main_path.read_text()
+
+          # Include webio.h
+          if '#include "webio.h"\n' not in main:
+              marker = '#include "Elements/exit_modes.h"\n'
+              if marker not in main:
+                  raise SystemExit("Impossibile inserire #include webio.h in main.c")
+              main = main.replace(marker, marker + '#include "webio.h"\n', 1)
+
+          # Disattiva busy-wait delay per il browser
+          if 'void delay(int time) {\n    (void)time;\n}\n' not in main:
+              main, n = re.subn(
+                  r'void delay\(int time\)\s*\{.*?\n\}',
+                  'void delay(int time) {\n    (void)time;\n}\n',
+                  main,
+                  count=1,
+                  flags=re.S
+              )
+              if n != 1:
+                  raise SystemExit("Impossibile patchare delay() in main.c")
+
+          # Rimuove i scanf("%c", &c) usati solo per consumare newline in terminale
+          main = main.replace('        scanf("%c", &c);\n', '')
+          main = main.replace('            scanf("%c", &c);\n', '')
+
+          # Corregge le chiamate che passano PianoDiGioco_t by value
+          main = ensure_replace(
+              main,
+              '            print_pianodigioco(p);\n',
+              '            print_pianodigioco(&p);\n',
+              'print_pianodigioco singleplayer'
+          )
+          main = ensure_replace(
+              main,
+              '            if (mod_gioco == MULTIPLAYER_PL) print_pianodigioco((i % 2) ? p_pl1 : p_pl2);\n',
+              '            if (mod_gioco == MULTIPLAYER_PL) print_pianodigioco((i % 2) ? &p_pl1 : &p_pl2);\n',
+              'print_pianodigioco multiplayer 1'
+          )
+          main = ensure_replace(
+              main,
+              '            else if (i % 2) print_pianodigioco(p_pl1);\n',
+              '            else if (i % 2) print_pianodigioco(&p_pl1);\n',
+              'print_pianodigioco multiplayer 2'
+          )
+          main = ensure_replace(
+              main,
+              '                print_pianodigioco((i % 2) ? p_pl1 : p_pl2);\n',
+              '                print_pianodigioco((i % 2) ? &p_pl1 : &p_pl2);\n',
+              'print_pianodigioco multiplayer 3'
           )
 
-          main_c.write_text(text)
+          main_path.write_text(main)
+
+          # -------------------------
+          # Patch PianoDiGioco/pianodigioco.h
+          # -------------------------
+          h_path = Path("PianoDiGioco/pianodigioco.h")
+          h = h_path.read_text()
+          h = ensure_replace(
+              h,
+              'void print_pianodigioco(const PianoDiGioco_t);',
+              'void print_pianodigioco(const PianoDiGioco_t* p);',
+              'signature print_pianodigioco'
+          )
+          h = ensure_replace(
+              h,
+              'void print_pianodigioco_basic(const PianoDiGioco_t);',
+              'void print_pianodigioco_basic(const PianoDiGioco_t* p);',
+              'signature print_pianodigioco_basic'
+          )
+          h_path.write_text(h)
+
+          # -------------------------
+          # Patch PianoDiGioco/pianodigioco.c
+          # -------------------------
+          c_path = Path("PianoDiGioco/pianodigioco.c")
+          c = c_path.read_text()
+
+          c = ensure_replace(
+              c,
+              'void print_pianodigioco(const PianoDiGioco_t p) {',
+              'void print_pianodigioco(const PianoDiGioco_t* p) {',
+              'signature print_pianodigioco impl'
+          )
+          c = ensure_replace(
+              c,
+              'void print_pianodigioco_basic(const PianoDiGioco_t p)\n',
+              'void print_pianodigioco_basic(const PianoDiGioco_t* p)\n',
+              'signature print_pianodigioco_basic impl'
+          )
+          c = ensure_replace(
+              c,
+              'Bool_t __check_rigavuota__(const PianoDiGioco_t p, int matrice_tetramino[4][4], int row, int col, int amp, int row_tetramino)\n',
+              'Bool_t __check_rigavuota__(const PianoDiGioco_t* p, int matrice_tetramino[4][4], int row, int col, int amp, int row_tetramino)\n',
+              'signature __check_rigavuota__'
+          )
+
+          c = replace_all_if_present(c, 'p.matrice_di_gioco', 'p->matrice_di_gioco')
+          c = replace_all_if_present(c, '__check_rigavuota__(*p,', '__check_rigavuota__(p,')
+
+          c_path.write_text(c)
           PY
 
           # Disattiva i codici colore ANSI nel build web
@@ -86,7 +190,134 @@ jobs:
           #endif
           EOF
 
-          # Shell HTML minimale per visualizzare stdout/stderr nel browser
+          # Header per sostituire scanf nel build web
+          cat > webio.h <<'EOF'
+          #ifndef XTETRIS_WEBIO_H
+          #define XTETRIS_WEBIO_H
+
+          #ifdef __EMSCRIPTEN__
+          int web_scanf(const char* format, ...);
+          #define scanf web_scanf
+          #endif
+
+          #endif
+          EOF
+
+          # Implementazione scanf custom per browser
+          cat > webio.c <<'EOF'
+          #include "webio.h"
+
+          #ifdef __EMSCRIPTEN__
+          #include <emscripten.h>
+          #include <stdarg.h>
+          #include <stdlib.h>
+          #include <string.h>
+          #include <ctype.h>
+          #include <stdio.h>
+
+          static const char* skip_spaces(const char* s) {
+              while (*s && isspace((unsigned char)*s)) s++;
+              return s;
+          }
+
+          EM_JS(void, xt_set_waiting, (int waiting), {
+              if (window.XTetrisIO && window.XTetrisIO.setWaiting) {
+                  window.XTetrisIO.setWaiting(!!waiting);
+              }
+          });
+
+          EM_ASYNC_JS(char*, xt_read_line, (), {
+              if (!window.XTetrisIO || !window.XTetrisIO.readLine) {
+                  return 0;
+              }
+
+              const line = await window.XTetrisIO.readLine();
+              const value = (line ?? "");
+              const len = lengthBytesUTF8(value) + 1;
+              const ptr = _malloc(len);
+              stringToUTF8(value, ptr, len);
+              return ptr;
+          });
+
+          int web_scanf(const char* format, ...) {
+              va_list args;
+              int assigned = 0;
+              char* line = NULL;
+              const char* fmt;
+
+              xt_set_waiting(1);
+              line = xt_read_line();
+              xt_set_waiting(0);
+
+              if (!line) {
+                  return EOF;
+              }
+
+              va_start(args, format);
+              fmt = format;
+
+              while (*fmt) {
+                  if (*fmt != '%') {
+                      fmt++;
+                      continue;
+                  }
+
+                  fmt++;
+
+                  switch (*fmt) {
+                      case 'd': {
+                          int* out = va_arg(args, int*);
+                          const char* p = skip_spaces(line);
+                          char* endptr = NULL;
+                          long value;
+
+                          *out = 0;
+                          value = strtol(p, &endptr, 10);
+                          if (endptr != p) {
+                              *out = (int)value;
+                              assigned++;
+                          }
+                          break;
+                      }
+
+                      case 'c': {
+                          char* out = va_arg(args, char*);
+                          *out = line[0] ? line[0] : '\n';
+                          assigned++;
+                          break;
+                      }
+
+                      case '[': {
+                          char* out = va_arg(args, char*);
+                          strcpy(out, line);
+                          assigned++;
+                          while (*fmt && *fmt != ']') fmt++;
+                          break;
+                      }
+
+                      case 's': {
+                          char* out = va_arg(args, char*);
+                          const char* p = skip_spaces(line);
+                          strcpy(out, p);
+                          assigned++;
+                          break;
+                      }
+
+                      default:
+                          break;
+                  }
+
+                  if (*fmt) fmt++;
+              }
+
+              va_end(args);
+              free(line);
+              return assigned;
+          }
+          #endif
+          EOF
+
+          # Pagina HTML con output e input integrati
           cat > shell.html <<'HTML'
           <!DOCTYPE html>
           <html lang="it">
@@ -98,46 +329,110 @@ jobs:
               :root {
                 color-scheme: dark;
               }
+
+              * {
+                box-sizing: border-box;
+              }
+
               body {
                 margin: 0;
                 font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
                 background: #0f172a;
                 color: #e2e8f0;
               }
+
               main {
-                max-width: 980px;
+                max-width: 1100px;
                 margin: 0 auto;
                 padding: 24px;
               }
+
               h1 {
-                margin-top: 0;
+                margin: 0 0 12px;
                 font-size: 2rem;
               }
+
               .note {
                 background: #1e293b;
                 border: 1px solid #334155;
-                border-radius: 10px;
+                border-radius: 12px;
                 padding: 16px;
                 margin-bottom: 16px;
+                line-height: 1.45;
               }
-              #status {
-                font-size: 0.95rem;
-                color: #93c5fd;
+
+              .statusbar {
+                display: flex;
+                gap: 12px;
+                flex-wrap: wrap;
+                align-items: center;
                 margin-bottom: 12px;
               }
+
+              #status,
+              #waiting {
+                background: #111827;
+                border: 1px solid #334155;
+                border-radius: 999px;
+                padding: 8px 12px;
+                font-size: 0.92rem;
+              }
+
+              #waiting {
+                color: #86efac;
+              }
+
               textarea {
                 width: 100%;
-                min-height: 70vh;
-                box-sizing: border-box;
+                min-height: 60vh;
                 background: #020617;
                 color: #e2e8f0;
                 border: 1px solid #334155;
-                border-radius: 10px;
+                border-radius: 12px;
                 padding: 14px;
                 resize: vertical;
                 font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
                 font-size: 14px;
-                line-height: 1.4;
+                line-height: 1.45;
+                margin-bottom: 14px;
+              }
+
+              form {
+                display: flex;
+                gap: 10px;
+                flex-wrap: wrap;
+              }
+
+              input[type="text"] {
+                flex: 1 1 380px;
+                min-width: 240px;
+                background: #111827;
+                color: #f8fafc;
+                border: 1px solid #334155;
+                border-radius: 10px;
+                padding: 12px 14px;
+                font-size: 15px;
+              }
+
+              button {
+                border: 0;
+                border-radius: 10px;
+                padding: 12px 18px;
+                font-size: 15px;
+                font-weight: 600;
+                cursor: pointer;
+                background: #2563eb;
+                color: white;
+              }
+
+              button:hover {
+                background: #1d4ed8;
+              }
+
+              .hint {
+                margin-top: 10px;
+                color: #93c5fd;
+                font-size: 0.95rem;
               }
             </style>
           </head>
@@ -146,29 +441,103 @@ jobs:
               <h1>XTetris (WebAssembly)</h1>
 
               <div class="note">
-                Questa è una build WebAssembly del progetto originale C da terminale.<br />
-                Quando il gioco richiede input, il browser potrebbe mostrare finestre di prompt.
+                Questa versione gira direttamente nel browser tramite WebAssembly.<br />
+                <strong>Niente popup:</strong> quando il gioco richiede input, scrivilo nel campo qui sotto e premi <strong>Invia</strong>.<br />
+                Ogni invio corrisponde a una richiesta del programma originale (<code>scanf</code>).
               </div>
 
-              <div id="status">Caricamento...</div>
+              <div class="statusbar">
+                <div id="status">Inizializzazione runtime...</div>
+                <div id="waiting">Pronto</div>
+              </div>
+
               <textarea id="output" readonly></textarea>
+
+              <form id="stdin-form">
+                <input
+                  id="stdin"
+                  type="text"
+                  autocomplete="off"
+                  spellcheck="false"
+                  placeholder="Scrivi qui il prossimo input richiesto dal gioco"
+                />
+                <button type="submit">Invia</button>
+              </form>
+
+              <div class="hint">
+                Esempi: <code>1</code>, <code>0</code>, <code>Alex</code>, <code>4</code>, ecc.
+              </div>
             </main>
 
             <script>
+              window.XTetrisIO = (() => {
+                const queue = [];
+                let resolver = null;
+
+                const output = document.getElementById('output');
+                const input = document.getElementById('stdin');
+                const form = document.getElementById('stdin-form');
+                const waiting = document.getElementById('waiting');
+
+                function appendLine(text, prefix = '') {
+                  output.value += prefix + String(text ?? '') + "\n";
+                  output.scrollTop = output.scrollHeight;
+                }
+
+                function setWaiting(isWaiting) {
+                  waiting.textContent = isWaiting ? 'In attesa di input...' : 'Pronto';
+                  waiting.style.color = isWaiting ? '#fbbf24' : '#86efac';
+                  if (isWaiting) {
+                    input.focus();
+                  }
+                }
+
+                form.addEventListener('submit', (event) => {
+                  event.preventDefault();
+
+                  const value = input.value;
+                  appendLine(value, '› ');
+                  input.value = '';
+                  input.focus();
+
+                  if (resolver) {
+                    const resolve = resolver;
+                    resolver = null;
+                    resolve(value);
+                  } else {
+                    queue.push(value);
+                  }
+                });
+
+                return {
+                  setWaiting,
+                  readLine() {
+                    if (queue.length > 0) {
+                      return Promise.resolve(queue.shift());
+                    }
+
+                    return new Promise((resolve) => {
+                      resolver = resolve;
+                      input.focus();
+                    });
+                  }
+                };
+              })();
+
               var Module = {
                 preRun: [],
                 postRun: [],
                 setStatus: function (text) {
-                  var status = document.getElementById('status');
-                  if (status) status.textContent = text || '';
+                  const el = document.getElementById('status');
+                  if (el) el.textContent = text || '';
                 },
                 print: function (text) {
                   if (arguments.length > 1) {
                     text = Array.prototype.slice.call(arguments).join(' ');
                   }
-                  var output = document.getElementById('output');
+                  const output = document.getElementById('output');
                   if (output) {
-                    output.value += text + "\n";
+                    output.value += String(text ?? '') + "\n";
                     output.scrollTop = output.scrollHeight;
                   }
                   console.log(text);
@@ -177,12 +546,20 @@ jobs:
                   if (arguments.length > 1) {
                     text = Array.prototype.slice.call(arguments).join(' ');
                   }
-                  var output = document.getElementById('output');
+                  const output = document.getElementById('output');
                   if (output) {
-                    output.value += "[stderr] " + text + "\n";
+                    output.value += "[stderr] " + String(text ?? '') + "\n";
                     output.scrollTop = output.scrollHeight;
                   }
                   console.error(text);
+                },
+                onRuntimeInitialized: function () {
+                  Module.setStatus('Runtime pronto');
+                  if (window.XTetrisIO && window.XTetrisIO.setWaiting) {
+                    window.XTetrisIO.setWaiting(false);
+                  }
+                  const input = document.getElementById('stdin');
+                  if (input) input.focus();
                 }
               };
             </script>
@@ -192,13 +569,21 @@ jobs:
           </html>
           HTML
 
+      - name: Build XTetris for WebAssembly
+        shell: bash
+        run: |
+          set -euxo pipefail
+
           emcc \
             main.c \
             Tetramino/tetramino.c \
             PianoDiGioco/pianodigioco.c \
             GameSetting/menus.c \
             GameSetting/Player/player.c \
+            webio.c \
             -O2 \
+            -sASYNCIFY \
+            -sASYNCIFY_STACK_SIZE=65536 \
             -sSTACK_SIZE=2097152 \
             -sINITIAL_MEMORY=67108864 \
             -sALLOW_MEMORY_GROWTH=1 \
