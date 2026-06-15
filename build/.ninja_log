@@ -1,7 +1,0 @@
-# ninja log v7
-77	598	8032577682707885	CMakeFiles/XTetris.dir/GameSetting/Player/player.c.obj	8c3ca1132263cc22
-66	609	8032577682583989	CMakeFiles/XTetris.dir/GameSetting/menus.c.obj	b9c6cca01848f87c
-55	614	8032577682483663	CMakeFiles/XTetris.dir/PianoDiGioco/pianodigioco.c.obj	8062d8dd2e6a7554
-44	639	8032577682372994	CMakeFiles/XTetris.dir/Tetramino/tetramino.c.obj	918255262599580
-33	671	8032577682268441	CMakeFiles/XTetris.dir/main.c.obj	145f8d8e47bcb433
-672	981	8032577688639998	XTetris.exe	80d4f0ca7d4802ab

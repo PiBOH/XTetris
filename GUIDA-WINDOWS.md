@@ -29,16 +29,16 @@ Per eseguirlo in locale ti consiglio di usare:
 
 - **Windows Terminal** oppure **PowerShell**
 - **Git** (opzionale, se devi clonare il repository)
-- **[CMake](https://cmake.org/download/)**
-- **[MinGW-w64 / GCC](https://gcc-mcf.lhmouse.com/)**
+- **CMake**
+- **MinGW-w64 / GCC**
 
 ### Configurazione consigliata
 
 La combinazione più semplice e compatibile è:
 
 - **Git for Windows**
-- **[CMake](https://cmake.org/download/)**
-- **[MSYS2](https://www.msys2.org/) + [MinGW-w64 GCC](https://gcc-mcf.lhmouse.com/)**
+- **CMake**
+- **MSYS2 + MinGW-w64 GCC**
 
 > Consiglio importante: per questo progetto è meglio usare **GCC/MinGW** invece di **MSVC/Visual Studio compiler**, perché il codice è chiaramente pensato per una toolchain C classica stile GCC/CMake.
 
@@ -59,7 +59,7 @@ Se invece hai già scaricato il repository come ZIP, estrailo e apri il terminal
 
 ## 4. Metodo consigliato: compilazione con CMake
 
-Il repository contiene già un file `CMakeLists.txt`, quindi il modo più pulito per compilare è usare **[CMake](https://cmake.org/download/)**.
+Il repository contiene già un file `CMakeLists.txt`, quindi il modo più pulito per compilare è usare **CMake**.
 
 ### 4.1 Crea una cartella di build
 
@@ -313,7 +313,7 @@ XTetris/
 
 Se vuoi la versione più semplice possibile su Windows:
 
-1. installa **Git**, **[CMake](https://cmake.org/download/)**, **MinGW-w64**;
+1. installa **Git**, **CMake**, **MinGW-w64**;
 2. clona il repo;
 3. apri il terminale nella cartella del progetto;
 4. esegui:
@@ -342,6 +342,4 @@ Se vuoi, nel prossimo messaggio posso anche prepararti una seconda guida:
 - **GUIDA-WINDOWS-RAPIDA.md** super corta, oppure
 - una guida con **screenshots/step numerati** per utenti non tecnici.
 
-***
-> [!NOTE]
-> Queste istruzioni sono AI Generated.
+<!-- File Generato con Arena AI (https://arena.ai/) -->

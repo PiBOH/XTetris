@@ -85,3 +85,5 @@ Per fare tutto automaticamente su Windows:
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\installa-compila-windows.ps1
 ```
+
+<!-- File Generato con Arena AI (https://arena.ai/) -->
