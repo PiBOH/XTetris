@@ -341,5 +341,7 @@ Se vuoi, nel prossimo messaggio posso anche prepararti una seconda guida:
 
 - **GUIDA-WINDOWS-RAPIDA.md** super corta, oppure
 - una guida con **screenshots/step numerati** per utenti non tecnici.
-
+***
+> [!NOTE]
+> File genereted whit [Arena AI](https://arena.ai/)
 <!-- File Generato con Arena AI (https://arena.ai/) -->

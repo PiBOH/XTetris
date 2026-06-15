@@ -109,5 +109,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\installa-compila-windows.ps1
 ```
 
 Questo installerà i prerequisiti principali e compilerà il progetto.
-
+***
+> [!NOTE]
+> File genereted whit [Arena AI](https://arena.ai/)
 <!-- File Generato con Arena AI (https://arena.ai/) -->

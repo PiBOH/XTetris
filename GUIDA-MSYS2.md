@@ -120,5 +120,7 @@ Se vuoi evitare questi passaggi manuali, puoi usare lo script PowerShell fornito
 ```powershell
 powershell -ExecutionPolicy Bypass -File .\scripts\installa-compila-windows.ps1
 ```
-
+***
+> [!NOTE]
+> File genereted whit [Arena AI](https://arena.ai/)
 <!-- File Generato con Arena AI (https://arena.ai/) -->

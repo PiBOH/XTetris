@@ -197,5 +197,7 @@ AVVIA-XTETRIS-WINDOWS.bat
 ```
 
 È il modo più vicino possibile a un install/build automatico per usare XTetris originale su Windows.
-
+***
+> [!NOTE]
+> File genereted whit [Arena AI](https://arena.ai/)
 <!-- File Generato con Arena AI (https://arena.ai/) -->
