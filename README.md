@@ -90,7 +90,7 @@ Il punteggio viene assegnato in base al numero di righe eliminate in una singola
 └── main.c                    # Entry point del gioco
 ```
 
-## Esecuzione locale
+## Esecuzione locale 
 
 ### Requisiti
 
@@ -107,6 +107,11 @@ cmake --build .
 ```
 
 Poi esegui il binario generato.
+
+> [!NOTE]
+> clicca [qui](https://github.com/PiBOH/XTetris/blob/main/GUIDA-WINDOWS.md) per maggiori dettagli.
+
+***
 
 ## Versione web
 
