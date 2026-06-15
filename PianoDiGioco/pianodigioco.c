@@ -27,16 +27,16 @@ PianoDiGioco_t create_pianodigioco() {
     return new_pdt;
 }
 
-void print_pianodigioco(const PianoDiGioco_t p) {
+void print_pianodigioco(const PianoDiGioco_t* p) {
     int i, j;
     printf("  -   -   -   -   -   -   -   -   -   -  \n");
     for (i = 0; i < ROWS; ++i) {
         printf("\n|");
         for (j = 0; j < COLS; ++j) {
-            if(p.matrice_di_gioco[i][j].is_vuota) {
+            if(p->matrice_di_gioco[i][j].is_vuota) {
                 printf("   ");
             } else {
-                printf("%s", terminal_colors[p.matrice_di_gioco[i][j].tetramino_contenuto.colore]);
+                printf("%s", terminal_colors[p->matrice_di_gioco[i][j].tetramino_contenuto.colore]);
                 printf(" # ");
                 printf(DEFAULT);
             }
@@ -54,17 +54,17 @@ void print_pianodigioco(const PianoDiGioco_t p) {
     printf("  -   -   -   -   -   -   -   -   -   -  \n  0   1   2   3   4   5   6   7   8   9  \n");
 }
 
-void print_pianodigioco_basic(const PianoDiGioco_t p)
+void print_pianodigioco_basic(const PianoDiGioco_t* p)
 {
     int i, j;
     for (i = 0; i < ROWS; ++i) {
         for (j = 0; j < COLS; ++j) {
-            if (p.matrice_di_gioco[i][j].is_vuota) {
+            if (p->matrice_di_gioco[i][j].is_vuota) {
                 printf("\033[0;30m");
-                printf("%d ", !p.matrice_di_gioco[i][j].is_vuota);
+                printf("%d ", !p->matrice_di_gioco[i][j].is_vuota);
                 printf("\033[0m");
             } else
-                printf("%d ", !p.matrice_di_gioco[i][j].is_vuota);
+                printf("%d ", !p->matrice_di_gioco[i][j].is_vuota);
         }
         printf("\n");
     }
@@ -88,12 +88,12 @@ void print_pianodigioco_basic(const PianoDiGioco_t p)
  * @return <code>TRUE</code> - se la riga è valida per un inserimento\n
  *         <code>FALSE</code> - se nella riga non è possibile posizionare nulla
  */
-Bool_t __check_rigavuota__(const PianoDiGioco_t p, int matrice_tetramino[4][4], int row, int col, int amp, int row_tetramino)
+Bool_t __check_rigavuota__(const PianoDiGioco_t* p, int matrice_tetramino[4][4], int row, int col, int amp, int row_tetramino)
 {
     int j, k = 4 - amp;
 
     for (j = col - amp + 1; j <= col; ++j, ++k)
-        if (!p.matrice_di_gioco[row][j].is_vuota && matrice_tetramino[row_tetramino][k]) // cerca collisioni
+        if (!p->matrice_di_gioco[row][j].is_vuota && matrice_tetramino[row_tetramino][k]) // cerca collisioni
             return FALSE;
 
     return TRUE;
@@ -141,16 +141,16 @@ Bool_t set_tetraminosupianodigioco_sp(PianoDiGioco_t* p, Player_t* player, Tetra
         for (i = j; i > j - get_altezzatetramino(t) && is_posizionabile; --i) {
             switch (t.rotazione) {
                 case BASIC:
-                    is_posizionabile = __check_rigavuota__(*p, t.stato_BASIC, i, col, t.ampiezze[t.rotazione], row_t--);
+                    is_posizionabile = __check_rigavuota__(p, t.stato_BASIC, i, col, t.ampiezze[t.rotazione], row_t--);
                     break;
                 case ADD90:
-                    is_posizionabile = __check_rigavuota__(*p, t.stato_ADD90, i, col, t.ampiezze[t.rotazione], row_t--);
+                    is_posizionabile = __check_rigavuota__(p, t.stato_ADD90, i, col, t.ampiezze[t.rotazione], row_t--);
                     break;
                 case ADD180:
-                    is_posizionabile = __check_rigavuota__(*p, t.stato_ADD180, i, col, t.ampiezze[t.rotazione], row_t--);
+                    is_posizionabile = __check_rigavuota__(p, t.stato_ADD180, i, col, t.ampiezze[t.rotazione], row_t--);
                     break;
                 default:
-                    is_posizionabile = __check_rigavuota__(*p, t.stato_ADD270, i, col, t.ampiezze[t.rotazione], row_t--);
+                    is_posizionabile = __check_rigavuota__(p, t.stato_ADD270, i, col, t.ampiezze[t.rotazione], row_t--);
                     break;
             }
         }

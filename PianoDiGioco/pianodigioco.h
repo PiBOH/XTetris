@@ -48,13 +48,13 @@ PianoDiGioco_t create_pianodigioco();
  * Metodo che stampa il piano di gioco con una tecnica di stampa avanzata.
  * @param p: piano di gioco da stampare
  */
-void print_pianodigioco(const PianoDiGioco_t);
+void print_pianodigioco(const PianoDiGioco_t* p);
 
 /**
  * Metodo che stampa il piano di gioco con una tecnica di stampa basilare (zeri e uni).
  * @param p: piano di gioco da stampare
  */
-void print_pianodigioco_basic(const PianoDiGioco_t);
+void print_pianodigioco_basic(const PianoDiGioco_t* p);
 
 /**
  * Metodo avente il compito di posizionare il tetramino scelto dall'utente sul piano di gioco in base alla colonna da

@@ -197,7 +197,7 @@ int main() {
 
             delay(20000);
 
-            print_pianodigioco(p);
+            print_pianodigioco(&p);
 
             if (!trickymode)
                 tetramino_scelto = ask_tetramino(&id_tetramino);
@@ -310,8 +310,8 @@ int main() {
 
             /* Stampa piano di gioco di entrambi se i giocatori sono veri, altrimenti il pc non ha bisogno di vedere
              * prima la situazione */
-            if (mod_gioco == MULTIPLAYER_PL) print_pianodigioco((i % 2) ? p_pl1 : p_pl2);
-            else if (i % 2) print_pianodigioco(p_pl1);
+            if (mod_gioco == MULTIPLAYER_PL) print_pianodigioco((i % 2) ? &p_pl1 : &p_pl2);
+            else if (i % 2) print_pianodigioco(&p_pl1);
 
             if (!trickymode && mod_gioco == MULTIPLAYER_PL || mod_gioco == MULTIPLAYER_PC && (i % 2) && !trickymode)
                 tetramino_scelto = ask_tetramino(&id_tetramino);
@@ -364,7 +364,7 @@ int main() {
             if (res) {
                 tetramini_set[id_tetramino - 1].n_disponibili--;
                 printf("\n");
-                print_pianodigioco((i % 2) ? p_pl1 : p_pl2);
+                print_pianodigioco((i % 2) ? &p_pl1 : &p_pl2);
                 delay(30000);
             } else if (!((i % 2) ? p_pl1 : p_pl2).is_limiteraggiunto) {
                 if (i % 2 && mod_gioco == MULTIPLAYER_PC || mod_gioco == MULTIPLAYER_PL) {

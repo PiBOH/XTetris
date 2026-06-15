@@ -199,6 +199,8 @@ jobs:
             GameSetting/menus.c \
             GameSetting/Player/player.c \
             -O2 \
+            -sSTACK_SIZE=2097152 \
+            -sINITIAL_MEMORY=67108864 \
             -sALLOW_MEMORY_GROWTH=1 \
             -sEXIT_RUNTIME=1 \
             -sASSERTIONS=1 \
