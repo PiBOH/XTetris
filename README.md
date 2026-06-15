@@ -160,5 +160,5 @@ Se vuoi, posso anche prepararti una seconda versione del README più:
 - **da progetto open-source professionale**, con badge, sezione installazione, roadmap e contributor guide.
 
 ***
-> [! NOTE]
+> [!NOTE]
 > README.md genereted whit AI.
