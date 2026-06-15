@@ -8,10 +8,12 @@ Questa guida spiega come usare lo script automatico incluso nel repository per:
 4. compilare XTetris;
 5. ottenere l'eseguibile pronto all'uso.
 
-## Versione attuale degli script
+## Versioni attuali degli script
 
 ```text
-1.0.21-STABLE
+Menu: 1.0.22
+Installatore: 1.0.9k
+Disinstallatore: 1.0.22
 ```
 
 ## File disponibili
@@ -76,7 +78,7 @@ Oppure, se vuoi compilare e avviare subito il gioco:
 
 - `AVVIA-XTETRIS-WINDOWS.bat`
 
-Questi file richiamano automaticamente **PowerShell 7 (`pwsh`)**. Se `pwsh` non è installato, tentano prima di installarlo.
+Questi file richiamano automaticamente **PowerShell 7 (`pwsh`)**. Se `pwsh` non è installato, tentano prima di installarlo. Le opzioni di avvio del gioco dal menu vengono eseguite in una finestra separata e, alla chiusura del gioco, il controllo torna al menu principale. Inoltre il menu prova a pulire l'input residuo della console prima di tornare operativo.
 
 ---
 

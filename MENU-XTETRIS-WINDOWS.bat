@@ -1,13 +1,14 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 chcp 65001 >nul 2>nul
-set "SCRIPT_VERSION=1.0.19r-STABLE"
+set "SCRIPT_VERSION=1.0.22"
 set "LOG_DIR=%~dp0piboh-script\log"
 if not exist "%LOG_DIR%" mkdir "%LOG_DIR%" >nul 2>nul
 set "LOG_FILE=%LOG_DIR%\menu.log"
 >> "%LOG_FILE%" echo [%date% %time%] Avvio MENU-XTETRIS-WINDOWS.bat
 
 :menu
+call :flush_input
 cls
 echo ===============================================
 echo         XTetris Windows Menu %SCRIPT_VERSION%
@@ -20,7 +21,8 @@ echo  4. Disinstalla dipendenze / rimuovi build e file compilati di XTetris
 echo  5. Apri una guida in Notepad++
 echo  6. Esci
 echo.
-set /p CHOICE=Seleziona un'opzione [1-6]: 
+choice /c 123456 /n /m "Seleziona un'opzione [1-6]: "
+set "CHOICE=%ERRORLEVEL%"
 >> "%LOG_FILE%" echo [%date% %time%] Scelta menu principale: %CHOICE%
 
 if "%CHOICE%"=="1" goto install_build
@@ -38,6 +40,7 @@ goto menu
 :install_build
 if exist "%~dp0piboh-script\installa-compila-windows.bat" (
   call "%~dp0piboh-script\installa-compila-windows.bat"
+  call :flush_input
 ) else (
   echo.
   echo ERRORE: file non trovato: piboh-script\installa-compila-windows.bat
@@ -47,11 +50,13 @@ goto menu
 
 :build_and_run
 if exist "%~dp0AVVIA-XTETRIS-WINDOWS.bat" (
-  call "%~dp0AVVIA-XTETRIS-WINDOWS.bat"
+  start "XTetris Quick Start" /wait "%ComSpec%" /c ""%~dp0AVVIA-XTETRIS-WINDOWS.bat""
+  call :flush_input
 ) else if exist "%~dp0piboh-script\installa-compila-windows.bat" (
   echo.
   echo AVVIA-XTETRIS-WINDOWS.bat non trovato, uso il fallback automatico...
-  call "%~dp0piboh-script\installa-compila-windows.bat" -RunAfterBuild
+  start "XTetris Build and Run" /wait "%ComSpec%" /c ""%~dp0piboh-script\installa-compila-windows.bat" -RunAfterBuild"
+  call :flush_input
 ) else (
   echo.
   echo ERRORE: file non trovato: AVVIA-XTETRIS-WINDOWS.bat
@@ -62,16 +67,19 @@ goto menu
 
 :run_game
 if exist "%~dp0AVVIA GIOCO.bat" (
-  call "%~dp0AVVIA GIOCO.bat"
+  start "XTetris Run" /wait "%ComSpec%" /c ""%~dp0AVVIA GIOCO.bat""
+  call :flush_input
 ) else (
   echo.
   echo AVVIA GIOCO.bat non trovato.
   echo Provo con AVVIA-XTETRIS-WINDOWS.bat...
   if exist "%~dp0AVVIA-XTETRIS-WINDOWS.bat" (
-    call "%~dp0AVVIA-XTETRIS-WINDOWS.bat"
+    start "XTetris Quick Start" /wait "%ComSpec%" /c ""%~dp0AVVIA-XTETRIS-WINDOWS.bat""
+    call :flush_input
   ) else if exist "%~dp0piboh-script\installa-compila-windows.bat" (
     echo Uso il fallback automatico tramite piboh-script\installa-compila-windows.bat -RunAfterBuild
-    call "%~dp0piboh-script\installa-compila-windows.bat" -RunAfterBuild
+    start "XTetris Build and Run" /wait "%ComSpec%" /c ""%~dp0piboh-script\installa-compila-windows.bat" -RunAfterBuild"
+    call :flush_input
   ) else (
     echo.
     echo ERRORE: nessun launcher disponibile.
@@ -83,6 +91,7 @@ goto menu
 :uninstall_all
 if exist "%~dp0piboh-script\disinstalla-dipendenze-windows.bat" (
   call "%~dp0piboh-script\disinstalla-dipendenze-windows.bat"
+  call :flush_input
 ) else (
   echo.
   echo ERRORE: file non trovato: piboh-script\disinstalla-dipendenze-windows.bat
@@ -105,7 +114,8 @@ echo  6. GUIDA-VSCODE-WINDOWS.md
 echo  7. GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md
 echo  8. Torna al menu principale
 echo.
-set /p GUIDE_CHOICE=Seleziona una guida [1-8]: 
+choice /c 12345678 /n /m "Seleziona una guida [1-8]: "
+set "GUIDE_CHOICE=%ERRORLEVEL%"
 >> "%LOG_FILE%" echo [%date% %time%] Scelta menu guide: %GUIDE_CHOICE%
 
 if "%GUIDE_CHOICE%"=="1" set "GUIDE_FILE=%~dp0README.md" & goto open_guide
@@ -170,10 +180,25 @@ if exist "%LOCALAPPDATA%\Programs\Notepad++\notepad++.exe" (
 )
 goto :eof
 
+:flush_input
+set "FLUSH_HOST="
+where pwsh >nul 2>nul
+if not errorlevel 1 (
+  set "FLUSH_HOST=pwsh"
+) else if exist "%ProgramFiles%\PowerShell\7\pwsh.exe" (
+  set "FLUSH_HOST=%ProgramFiles%\PowerShell\7\pwsh.exe"
+) else if exist "%ProgramFiles%\PowerShell\7-preview\pwsh.exe" (
+  set "FLUSH_HOST=%ProgramFiles%\PowerShell\7-preview\pwsh.exe"
+) else (
+  set "FLUSH_HOST=powershell"
+)
+"%FLUSH_HOST%" -NoProfile -Command "try { $Host.UI.RawUI.FlushInputBuffer() } catch { }" >nul 2>nul
+goto :eof
+
 :end
 echo.
 echo Chiusura menu XTetris.
 exit /b 0
 
-REM Versione script: 1.0.19r-STABLE
+REM Versione script: 1.0.22
 REM File Generato con Arena AI (https://arena.ai/)
