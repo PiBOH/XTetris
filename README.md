@@ -1,104 +1,35 @@
 # XTetris
 
-XTetris è un progetto in **C** che implementa una variante testuale di **Tetris** eseguita da terminale, con una successiva adattazione per il web tramite **WebAssembly** e deploy automatico su **GitHub Pages**.
+[![Deploy GitHub Pages](https://github.com/PiBOH/XTetris/actions/workflows/deploy.yml/badge.svg)](https://github.com/PiBOH/XTetris/actions/workflows/deploy.yml)
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-online-blue)](https://piboh.github.io/XTetris/)
+[![License](https://img.shields.io/github/license/PiBOH/XTetris)](LICENSE)
+[![Last Commit](https://img.shields.io/github/last-commit/PiBOH/XTetris)](https://github.com/PiBOH/XTetris/commits/main)
+[![Top Language](https://img.shields.io/github/languages/top/PiBOH/XTetris)](https://github.com/PiBOH/XTetris)
 
-## Scopo del repository
+XTetris è un gioco **Tetris testuale in C**.
 
-Questo repository serve a:
+## Uso rapido
 
-1. contenere il codice sorgente del gioco;
-2. compilare ed eseguire XTetris in locale come programma C;
-3. pubblicare una versione giocabile nel browser tramite GitHub Actions + Emscripten.
+### Windows
+Esegui uno di questi file:
 
-In pratica, il progetto nasce come applicazione da console e simula una partita a Tetris basata su input testuale dell'utente.
+- `MENU-XTETRIS-WINDOWS.bat`
+- `piboh-script/installa-compila-windows.bat`
+- `AVVIA-XTETRIS-WINDOWS.bat`
 
-## Cosa fa il gioco
+Il repository include anche **Notepad++ Portable**, utile per aprire e leggere i file **Markdown** del progetto.
 
-All'avvio, XTetris mostra un menu iniziale con diverse modalità:
+Per rimuovere in seguito le dipendenze installate, usa:
 
-- **SinglePlayer**
-- **Multiplayer vs persona**
-- **Multiplayer vs PC**
-- **Uscita**
+- `piboh-script/disinstalla-dipendenze-windows.bat`
 
-Durante la partita il giocatore:
+La rimozione opzionale di XTetris elimina la cartella `build`, gli eventuali file compilati presenti nella root del progetto e il launcher generato `AVVIA GIOCO.bat`.
 
-- sceglie un tetramino tra quelli disponibili;
-- sceglie la rotazione del tetramino;
-- sceglie la colonna in cui farlo cadere;
-- cerca di completare righe per ottenere punti.
+I log degli script vengono salvati in:
 
-Il gioco mantiene uno stato interno della griglia, verifica se un pezzo può essere posizionato, elimina le righe complete e aggiorna il punteggio.
+- `piboh-script/log/`
 
-## Funzionalità principali
-
-### 1. Gestione del piano di gioco
-
-Il modulo `PianoDiGioco/` gestisce:
-
-- la matrice di gioco;
-- le celle vuote/piene;
-- il posizionamento dei tetramini;
-- la verifica delle collisioni;
-- l'eliminazione delle righe complete;
-- la condizione di fine partita quando si supera il limite superiore.
-
-### 2. Gestione dei tetramini
-
-Il modulo `Tetramino/` definisce:
-
-- i 7 tipi di tetramino;
-- le loro rotazioni;
-- le dimensioni reali dei pezzi;
-- la stampa dei pezzi a terminale;
-- il set di pezzi disponibili durante la partita.
-
-### 3. Modalità di gioco
-
-Il file `main.c` gestisce il flusso principale del gioco:
-
-- selezione modalità;
-- inizializzazione giocatori;
-- input utente;
-- turni di gioco;
-- calcolo del vincitore o della sconfitta.
-
-### 4. Punteggio
-
-Il punteggio viene assegnato in base al numero di righe eliminate in una singola mossa:
-
-- **1 riga** → 1 punto
-- **2 righe** → 3 punti
-- **3 righe** → 6 punti
-- **4 righe** → 12 punti
-
-### 5. Tricky mode
-
-È presente una modalità opzionale chiamata **tricky mode** in cui il tetramino non viene scelto manualmente, ma viene generato casualmente.
-
-## Struttura del repository
-
-```text
-.
-├── .github/workflows/        # Workflow GitHub Actions per build/deploy web
-├── Elements/                 # Tipi di supporto, colori, rotazioni, utility
-├── GameSetting/              # Menu, giocatori e logica di interazione
-│   └── Player/
-├── PianoDiGioco/             # Gestione della griglia e della logica di posizionamento
-├── Tetramino/                # Definizione e gestione dei tetramini
-├── CMakeLists.txt            # Configurazione build locale con CMake
-└── main.c                    # Entry point del gioco
-```
-
-## Esecuzione locale 
-
-### Requisiti
-
-- compilatore C
-- CMake (opzionale ma consigliato)
-
-### Build con CMake
-
+### Build manuale
 ```bash
 mkdir build
 cd build
@@ -106,64 +37,98 @@ cmake ..
 cmake --build .
 ```
 
-Poi esegui il binario generato.
+## Guide
 
-> [!NOTE]
-> clicca [qui](https://github.com/PiBOH/XTetris/blob/main/GUIDA-WINDOWS.md) per maggiori dettagli.
+- [Guida Windows](guide/GUIDA-WINDOWS.md)
+- [Guida rapida](guide/GUIDA-WINDOWS-RAPIDA.md)
+- [Guida script automatico](guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md)
+- [Guida MSYS2](guide/GUIDA-MSYS2.md)
+- [Guida CLion](guide/GUIDA-CLION-WINDOWS.md)
+- [Guida VS Code](guide/GUIDA-VSCODE-WINDOWS.md)
 
-***
+## Web
 
-## Versione web
+Il repository pubblica anche una versione browser tramite **GitHub Pages**.
 
-Il repository include anche un workflow GitHub Actions che:
+## Struttura del repository
 
-1. installa **Emscripten**;
-2. compila XTetris in **WebAssembly**;
-3. genera una pagina HTML con interfaccia base;
-4. pubblica il risultato su **GitHub Pages**.
+<details>
+<summary>Apri per vedere la struttura completa del repository</summary>
 
-Questa versione web è un adattamento del programma originale da terminale. Non è una riscrittura grafica completa del gioco: il motore resta quello testuale, ma viene eseguito nel browser.
+### Struttura base (senza build)
 
-## Limiti attuali della versione web
+```text
+XTetris/
+├── .github/
+│   └── workflows/
+├── .idea/
+├── Elements/
+│   ├── boolType.h
+│   ├── color_codes.h
+│   ├── colori.h
+│   ├── exit_modes.h
+│   ├── rotazioni.h
+│   └── string.h
+├── GameSetting/
+│   ├── Player/
+│   │   ├── player.c
+│   │   └── player.h
+│   ├── menus.c
+│   └── menus.h
+├── PianoDiGioco/
+│   ├── pianodigioco.c
+│   └── pianodigioco.h
+├── Tetramino/
+│   ├── tetramino.c
+│   └── tetramino.h
+├── guide/
+│   ├── GUIDA-CLION-WINDOWS.md
+│   ├── GUIDA-MSYS2.md
+│   ├── GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md
+│   ├── GUIDA-VSCODE-WINDOWS.md
+│   ├── GUIDA-WINDOWS-RAPIDA.md
+│   └── GUIDA-WINDOWS.md
+├── piboh-portable/
+│   └── Notepad++Portable/
+├── piboh-script/
+│   ├── disinstalla-dipendenze-windows.bat
+│   ├── disinstalla-dipendenze-windows.ps1
+│   ├── installa-compila-windows.bat
+│   └── installa-compila-windows.ps1
+├── .gitignore
+├── AVVIA-XTETRIS-WINDOWS.bat
+├── CMakeLists.txt
+├── MENU-XTETRIS-WINDOWS.bat
+├── README.md
+└── main.c
+```
 
-Poiché il progetto è nato per terminale:
+### Struttura tipica dopo la compilazione
 
-- l'interazione è ancora basata su input sequenziali;
-- il rendering è principalmente testuale;
-- l'esperienza utente non è equivalente a una vera interfaccia grafica da browser.
+```text
+XTetris/
+├── build/
+│   ├── XTetris.exe
+│   └── ...
+├── cmake-build-debug/
+├── AVVIA GIOCO.bat
+├── main.o
+├── menus.o
+├── player.o
+├── tetramino.o
+├── AVVIA-XTETRIS-WINDOWS.bat
+├── MENU-XTETRIS-WINDOWS.bat
+├── guide/
+├── piboh-portable/
+│   └── Notepad++Portable/
+├── piboh-script/
+└── ...
+```
 
-In altre parole, la versione web serve soprattutto a:
+</details>
 
-- dimostrare il funzionamento del gioco;
-- pubblicarlo online;
-- rendere il progetto facilmente accessibile senza compilazione locale.
+## Thanks to
 
-## Obiettivo complessivo del progetto
+- [AlexGiulioBerton](https://github.com/AlexGiulioBerton)
 
-In sintesi, questo repo dovrebbe:
-
-- implementare una versione testuale di Tetris in C;
-- supportare partite singleplayer e multiplayer;
-- gestire tetramini, rotazioni, punteggi e fine partita;
-- poter essere eseguito sia localmente sia nel browser tramite GitHub Pages.
-
-## Possibili evoluzioni future
-
-Alcuni miglioramenti naturali del progetto potrebbero essere:
-
-- una vera UI web grafica;
-- controlli più naturali da tastiera;
-- salvataggio punteggi;
-- refactoring del codice C per separare meglio logica e interfaccia;
-- test automatici per la logica di gioco.
-
----
-
-Se vuoi, posso anche prepararti una seconda versione del README più:
-
-- **accademica/formale**, oppure
-- **da progetto open-source professionale**, con badge, sezione installazione, roadmap e contributor guide.
-
-***
-> [!NOTE]
-> README.md genereted whit AI.
+<!-- File Generato con Arena AI (https://arena.ai/) -->

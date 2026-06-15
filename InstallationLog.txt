@@ -1,0 +1,11 @@
+************************************* Invoked: Mon Jun 15 23:34:43 2026
+[0] Arguments: C:\Users\Utente\AppData\Local\Temp\WinGet\MSYS2.MSYS2.20260611\msys2-x86_64-20260611.exe, install, --confirm-command, --root, C:\msys64
+[8] Operations sanity check succeeded.
+[14] Using metadata cache from "C:/Users/Utente/AppData/Local/cache\\qt-installer-framework\\d75f1c19-3379-3717-ae8d-1404b51494a9"
+[14] Found 0 cached items.
+[18] Loaded control script ":/metadata/installer-config/control_js"
+[18] OverwriteTargetDirectory : Warning : You have selected an existing, non-empty directory for installation.
+Note that it will be completely wiped on uninstallation of this application.
+It is not advisable to install into this directory as installation might fail.
+Do you want to continue? Yes|No
+[38688] Invalid answer, please retry
