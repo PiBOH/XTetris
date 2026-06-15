@@ -204,7 +204,118 @@ jobs:
           EOF
 
           # Implementazione scanf custom per browser
-          cat > webio.c <<'EOF'
+                    cat > webio.c <<'EOF'
+          #include "webio.h"
+
+          #ifdef __EMSCRIPTEN__
+          #include <emscripten.h>
+          #include <stdarg.h>
+          #include <stdlib.h>
+          #include <string.h>
+          #include <ctype.h>
+          #include <stdio.h>
+
+          static const char* skip_spaces(const char* s) {
+              while (*s && isspace((unsigned char)*s)) s++;
+              return s;
+          }
+
+          EM_JS(void, xt_set_waiting, (int waiting), {
+              if (window.XTetrisIO && window.XTetrisIO.setWaiting) {
+                  window.XTetrisIO.setWaiting(!!waiting);
+              }
+          });
+
+          EM_ASYNC_JS(char*, xt_read_line, (), {
+              if (!window.XTetrisIO || !window.XTetrisIO.readLine) {
+                  return 0;
+              }
+
+              const line = await window.XTetrisIO.readLine();
+              const value = (line ?? "");
+              const bytes = new TextEncoder().encode(value + "\0");
+              const ptr = _malloc(bytes.length);
+              HEAPU8.set(bytes, ptr);
+              return ptr;
+          });
+
+          int web_scanf(const char* format, ...) {
+              va_list args;
+              int assigned = 0;
+              char* line = NULL;
+              const char* fmt;
+
+              xt_set_waiting(1);
+              line = xt_read_line();
+              xt_set_waiting(0);
+
+              if (!line) {
+                  return EOF;
+              }
+
+              va_start(args, format);
+              fmt = format;
+
+              while (*fmt) {
+                  if (*fmt != '%') {
+                      fmt++;
+                      continue;
+                  }
+
+                  fmt++;
+
+                  switch (*fmt) {
+                      case 'd': {
+                          int* out = va_arg(args, int*);
+                          const char* p = skip_spaces(line);
+                          char* endptr = NULL;
+                          long value;
+
+                          *out = 0;
+                          value = strtol(p, &endptr, 10);
+                          if (endptr != p) {
+                              *out = (int)value;
+                              assigned++;
+                          }
+                          break;
+                      }
+
+                      case 'c': {
+                          char* out = va_arg(args, char*);
+                          *out = line[0] ? line[0] : '\n';
+                          assigned++;
+                          break;
+                      }
+
+                      case '[': {
+                          char* out = va_arg(args, char*);
+                          strcpy(out, line);
+                          assigned++;
+                          while (*fmt && *fmt != ']') fmt++;
+                          break;
+                      }
+
+                      case 's': {
+                          char* out = va_arg(args, char*);
+                          const char* p = skip_spaces(line);
+                          strcpy(out, p);
+                          assigned++;
+                          break;
+                      }
+
+                      default:
+                          break;
+                  }
+
+                  if (*fmt) fmt++;
+              }
+
+              va_end(args);
+              free(line);
+              return assigned;
+          }
+          #endif
+          EOF
           #include "webio.h"
 
           #ifdef __EMSCRIPTEN__
