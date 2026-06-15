@@ -1,7 +1,7 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 chcp 65001 >nul 2>nul
-set "SCRIPT_VERSION=1.0.23.2"
+set "SCRIPT_VERSION=1.0.24"
 set "LOG_DIR=%~dp0piboh-script\log"
 if not exist "%LOG_DIR%" mkdir "%LOG_DIR%" >nul 2>nul
 set "LOG_FILE=%LOG_DIR%\menu.log"
@@ -11,7 +11,7 @@ set "LOG_FILE=%LOG_DIR%\menu.log"
 call :flush_input
 cls
 echo ===============================================
-echo         XTetris Windows Menu %SCRIPT_VERSION%
+echo         XTetris Windows Pre-Menu %SCRIPT_VERSION%
 echo ===============================================
 echo.
 echo  1. Installa prerequisiti e compila XTetris
@@ -21,8 +21,8 @@ echo  4. Disinstalla dipendenze / rimuovi build e file compilati di XTetris
 echo  5. Apri una guida in Notepad++
 echo  6. Esci
 echo.
-choice /c 123456 /n /m "Seleziona un'opzione [1-6]: "
-set "CHOICE=%ERRORLEVEL%"
+set "CHOICE="
+set /p CHOICE=Seleziona un'opzione [1-6]: 
 >> "%LOG_FILE%" echo [%date% %time%] Scelta menu principale: %CHOICE%
 
 if "%CHOICE%"=="1" goto install_build
@@ -33,7 +33,7 @@ if "%CHOICE%"=="5" goto guides_launcher
 if "%CHOICE%"=="6" goto end
 
 echo.
-echo Opzione non valida.
+echo Opzione non valida. Inserisci un numero da 1 a 6.
 pause
 goto menu
 
@@ -130,5 +130,5 @@ echo.
 echo Chiusura menu XTetris.
 exit /b 0
 
-REM Versione script: 1.0.23.2
+REM Versione script: 1.0.24
 REM File Generato con Arena AI (https://arena.ai/)
