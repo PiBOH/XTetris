@@ -26,6 +26,7 @@ Nel repository trovi:
 - `piboh-script/installa-compila-windows.bat` → launcher batch di installazione e compilazione
 - `piboh-script/disinstalla-dipendenze-windows.ps1` → script PowerShell di disinstallazione
 - `piboh-script/disinstalla-dipendenze-windows.bat` → launcher batch di disinstallazione
+- `piboh-script/apri-guide-windows.bat` → menu dedicato per aprire le guide in Notepad++
 - `piboh-portable/Notepad++Portable/` → copia portable di Notepad++ inclusa nel repository
 
 ---
