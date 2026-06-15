@@ -1,7 +1,7 @@
 @echo off
 setlocal EnableExtensions EnableDelayedExpansion
 chcp 65001 >nul 2>nul
-set "SCRIPT_VERSION=1.0.22"
+set "SCRIPT_VERSION=1.0.23.2"
 set "LOG_DIR=%~dp0piboh-script\log"
 if not exist "%LOG_DIR%" mkdir "%LOG_DIR%" >nul 2>nul
 set "LOG_FILE=%LOG_DIR%\menu.log"
@@ -100,6 +100,7 @@ if exist "%~dp0piboh-script\disinstalla-dipendenze-windows.bat" (
 goto menu
 
 :guides_menu
+call :flush_input
 cls
 echo ===============================================
 echo              Guide XTetris Windows
@@ -118,40 +119,38 @@ choice /c 12345678 /n /m "Seleziona una guida [1-8]: "
 set "GUIDE_CHOICE=%ERRORLEVEL%"
 >> "%LOG_FILE%" echo [%date% %time%] Scelta menu guide: %GUIDE_CHOICE%
 
-if "%GUIDE_CHOICE%"=="1" set "GUIDE_FILE=%~dp0README.md" & goto open_guide
-if "%GUIDE_CHOICE%"=="2" set "GUIDE_FILE=%~dp0guide\GUIDA-WINDOWS.md" & goto open_guide
-if "%GUIDE_CHOICE%"=="3" set "GUIDE_FILE=%~dp0guide\GUIDA-WINDOWS-RAPIDA.md" & goto open_guide
-if "%GUIDE_CHOICE%"=="4" set "GUIDE_FILE=%~dp0guide\GUIDA-MSYS2.md" & goto open_guide
-if "%GUIDE_CHOICE%"=="5" set "GUIDE_FILE=%~dp0guide\GUIDA-CLION-WINDOWS.md" & goto open_guide
-if "%GUIDE_CHOICE%"=="6" set "GUIDE_FILE=%~dp0guide\GUIDA-VSCODE-WINDOWS.md" & goto open_guide
-if "%GUIDE_CHOICE%"=="7" set "GUIDE_FILE=%~dp0guide\GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md" & goto open_guide
+if "%GUIDE_CHOICE%"=="1" call :open_guide "%~dp0README.md"
+if "%GUIDE_CHOICE%"=="2" call :open_guide "%~dp0guide\GUIDA-WINDOWS.md"
+if "%GUIDE_CHOICE%"=="3" call :open_guide "%~dp0guide\GUIDA-WINDOWS-RAPIDA.md"
+if "%GUIDE_CHOICE%"=="4" call :open_guide "%~dp0guide\GUIDA-MSYS2.md"
+if "%GUIDE_CHOICE%"=="5" call :open_guide "%~dp0guide\GUIDA-CLION-WINDOWS.md"
+if "%GUIDE_CHOICE%"=="6" call :open_guide "%~dp0guide\GUIDA-VSCODE-WINDOWS.md"
+if "%GUIDE_CHOICE%"=="7" call :open_guide "%~dp0guide\GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md"
 if "%GUIDE_CHOICE%"=="8" goto menu
 
-echo.
-echo Opzione non valida.
-pause
 goto guides_menu
 
 :open_guide
+set "GUIDE_FILE=%~1"
 call :find_notepadpp
 if not defined NPP_EXE (
   echo.
   echo ERRORE: Notepad++ non trovato.
   echo Installa prima i prerequisiti con piboh-script\installa-compila-windows.bat.
   pause
-  goto guides_menu
+  goto :eof
 )
 
 if not exist "%GUIDE_FILE%" (
   echo.
   echo ERRORE: guida non trovata: "%GUIDE_FILE%"
   pause
-  goto guides_menu
+  goto :eof
 )
 
 >> "%LOG_FILE%" echo [%date% %time%] Apertura guida: %GUIDE_FILE%
 start "Notepad++" "%NPP_EXE%" "%GUIDE_FILE%"
-goto guides_menu
+goto :eof
 
 :find_notepadpp
 set "NPP_EXE="
@@ -200,5 +199,5 @@ echo.
 echo Chiusura menu XTetris.
 exit /b 0
 
-REM Versione script: 1.0.22
+REM Versione script: 1.0.23.2
 REM File Generato con Arena AI (https://arena.ai/)

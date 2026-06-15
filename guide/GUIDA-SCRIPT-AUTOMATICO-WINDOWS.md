@@ -11,7 +11,7 @@ Questa guida spiega come usare lo script automatico incluso nel repository per:
 ## Versioni attuali degli script
 
 ```text
-Menu: 1.0.22
+Menu: 1.0.23.2
 Installatore: 1.0.9k
 Disinstallatore: 1.0.22
 ```
