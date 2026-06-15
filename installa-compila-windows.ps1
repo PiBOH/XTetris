@@ -44,7 +44,7 @@ function Refresh-CommonPaths {
 
 function Ensure-Winget {
     if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
-        throw "winget non è disponibile. Installa 'App Installer' dal Microsoft Store e rilancia lo script."
+        throw "winget non e disponibile. Installa 'App Installer' dal Microsoft Store e rilancia lo script."
     }
 }
 
@@ -55,7 +55,7 @@ function Test-WingetPackageInstalled([string]$Id) {
 
 function Ensure-WingetPackage([string]$Id, [string]$DisplayName) {
     if (Test-WingetPackageInstalled $Id) {
-        Write-Ok "$DisplayName è già installato"
+        Write-Ok "$DisplayName e gia installato"
         return
     }
 
@@ -130,7 +130,6 @@ function Invoke-MsysBash {
 
 function Resolve-RepoDir([string]$ProvidedDir) {
     $scriptDir = Split-Path -Parent $PSCommandPath
-    $repoCandidate = Split-Path -Parent $scriptDir
     $currentDir = (Get-Location).Path
 
     if (-not [string]::IsNullOrWhiteSpace($ProvidedDir)) {
@@ -143,10 +142,6 @@ function Resolve-RepoDir([string]$ProvidedDir) {
 
     if (Test-Path (Join-Path $scriptDir 'CMakeLists.txt')) {
         return [System.IO.Path]::GetFullPath($scriptDir)
-    }
-
-    if (Test-Path (Join-Path $repoCandidate 'CMakeLists.txt')) {
-        return [System.IO.Path]::GetFullPath($repoCandidate)
     }
 
     return [System.IO.Path]::GetFullPath((Join-Path $currentDir 'XTetris'))
@@ -180,14 +175,14 @@ if (-not (Test-Path $repoDirResolved)) {
 if (-not (Test-Path (Join-Path $repoDirResolved 'CMakeLists.txt'))) {
     $items = @(Get-ChildItem -Force -Path $repoDirResolved -ErrorAction SilentlyContinue)
     if ($items.Count -gt 0 -and -not (Test-Path (Join-Path $repoDirResolved '.git'))) {
-        throw "La cartella '$repoDirResolved' non sembra contenere XTetris ed è già popolata. Specifica -RepoDir con una cartella vuota o il repo corretto."
+        throw "La cartella '$repoDirResolved' non sembra contenere XTetris ed e gia popolata. Specifica -RepoDir con una cartella vuota o il repo corretto."
     }
 
     if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
         Refresh-CommonPaths
     }
     if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
-        throw "Git non è disponibile nel PATH anche dopo l'installazione."
+        throw "Git non e disponibile nel PATH anche dopo l'installazione."
     }
 
     if (-not (Test-Path (Join-Path $repoDirResolved '.git'))) {
@@ -200,7 +195,7 @@ if (-not (Test-Path (Join-Path $repoDirResolved 'CMakeLists.txt'))) {
     }
 }
 else {
-    Write-Ok 'Repository XTetris già presente'
+    Write-Ok 'Repository XTetris gia presente'
 }
 
 $msysRoot = Find-Msys2Root
