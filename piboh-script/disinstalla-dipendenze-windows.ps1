@@ -141,6 +141,15 @@ function Uninstall-TrackedPackage([string]$Id, [string]$DisplayName) {
     }
 
     if (-not [string]::IsNullOrWhiteSpace($location) -and (Test-Path $location)) {
+        if ($mode -eq 'temp') {
+            Write-Step "Rimuovo $DisplayName dalla cartella temporanea"
+            Remove-Item -Path $location -Recurse -Force -ErrorAction SilentlyContinue
+            Remove-InstalledByScriptPackage $Id
+            Remove-InstalledPackageMetadata $Id
+            Write-Ok "$DisplayName rimosso"
+            return
+        }
+
         $uninstallerCandidates = @(
             (Join-Path $location 'unins000.exe'),
             (Join-Path $location 'uninstall.exe'),
@@ -166,15 +175,6 @@ function Uninstall-TrackedPackage([string]$Id, [string]$DisplayName) {
                     return
                 }
             }
-        }
-
-        if ($mode -eq 'temp') {
-            Write-Step "Rimuovo $DisplayName dalla cartella temporanea"
-            Remove-Item -Path $location -Recurse -Force -ErrorAction SilentlyContinue
-            Remove-InstalledByScriptPackage $Id
-            Remove-InstalledPackageMetadata $Id
-            Write-Ok "$DisplayName rimosso"
-            return
         }
     }
 
@@ -237,6 +237,14 @@ function Ensure-Winget {
 
 function Get-PwshPath {
     Refresh-CommonPaths
+
+    $portableRoot = Join-Path (Split-Path -Parent $PSScriptRoot) 'piboh-portable'
+    $portablePreferred = Join-Path $portableRoot 'PowerShell-7\pwsh.exe'
+    if (Test-Path $portablePreferred) { return $portablePreferred }
+    if (Test-Path $portableRoot) {
+        $portablePwsh = Get-ChildItem -Path $portableRoot -Filter 'pwsh.exe' -Recurse -File -ErrorAction SilentlyContinue | Select-Object -First 1
+        if ($portablePwsh) { return $portablePwsh.FullName }
+    }
 
     $cmd = Get-Command pwsh -ErrorAction SilentlyContinue
     if ($cmd -and $cmd.Source) {
@@ -396,7 +404,6 @@ $repoDirResolved = Resolve-RepoDir $RepoDir
 Write-Step "Cartella di lavoro: $repoDirResolved"
 
 Uninstall-TrackedPackage 'Notepad++.Notepad++' 'Notepad++'
-Uninstall-TrackedPackage 'Git.Git' 'Git'
 Uninstall-TrackedPackage 'Kitware.CMake' 'CMake'
 Uninstall-TrackedPackage 'MSYS2.MSYS2' 'MSYS2'
 

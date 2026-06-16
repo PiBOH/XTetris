@@ -11,16 +11,16 @@ Questa guida spiega come usare lo script automatico incluso nel repository per:
 ## Versioni attuali degli script
 
 ```text
-Menu: 3.0.15
-Installatore: 3.0.15
-Disinstallatore: 3.0.15
-Guide launcher: 3.0.15
-Integrity check: 3.0.15
+Menu: 3.0.44
+Installatore: 3.0.44
+Disinstallatore: 3.0.44
+Guide launcher: 3.0.44
+Integrity check: 3.0.44
 ```
 
 ## File disponibili
 
-Nel repository trovi (versione corrente letta da `piboh-script/version.txt` = `3.0.15`):
+Nel repository trovi (versione corrente letta da `piboh-script/version.txt` = `3.0.44`):
 
 - `MENU-XTETRIS-WINDOWS.bat` → pre-menu principale Windows, con accesso a installazione, avvio, guide, changelog e controllo integrità
 - `piboh-script/installa-compila-windows.ps1` → script PowerShell principale consigliato
@@ -40,9 +40,9 @@ Nel repository trovi (versione corrente letta da `piboh-script/version.txt` = `3
 
 Lo script PowerShell di installazione prova a fare automaticamente queste operazioni:
 
-- permette di scegliere se installare le dipendenze in `piboh-temp/` oppure nel percorso predefinito;
+- installa tutte le dipendenze gestite automaticamente nella cartella `piboh-temp/` del progetto;
 - mantiene **PowerShell 7** sempre nel percorso predefinito;
-- tratta **Git** come componente opzionale;
+- non gestisce **Git** come dipendenza automatica;
 - rileva se è stato aperto con **Windows PowerShell classico**;
 - se serve, si rilancia automaticamente con **PowerShell 7**;
 - se **PowerShell 7** non è installato, prova a installarlo con `winget` in modalità silenziosa;
@@ -101,6 +101,8 @@ La priorità è:
 
 Quando apri una guida o il changelog, il launcher prova anche ad attivare automaticamente la preview del plugin **NppMarkdownPanel** (se presente nella copia portable).
 
+Se in `piboh-portable/PowerShell-7/` è presente una copia **portable** di PowerShell 7 (`pwsh.exe`), tutti gli script la usano con priorità assoluta; in sua assenza usano PowerShell 7 di sistema.
+
 ---
 
 ## Disinstallazione
@@ -111,7 +113,7 @@ Per rimuovere le dipendenze installate dagli script puoi usare:
 piboh-script/disinstalla-dipendenze-windows.bat
 ```
 
-Lo script di disinstallazione rimuove solo le dipendenze che **non erano già presenti nel sistema** e che sono state effettivamente installate dagli script automatici (ad esempio **PowerShell 7**, **Git**, **CMake** e **MSYS2**). Se una dipendenza era già installata prima dell'esecuzione del menu o dello script di installazione, non viene rimossa.
+Lo script di disinstallazione rimuove solo le dipendenze che **non erano già presenti nel sistema** e che sono state effettivamente installate dagli script automatici (ad esempio **PowerShell 7**, **CMake** e **MSYS2**). Se una dipendenza era già installata prima dell'esecuzione del menu o dello script di installazione, non viene rimossa.
 
 **Notepad++ Portable** non viene rimosso.
 
@@ -138,6 +140,8 @@ Il controllo verifica anche la presenza di:
 - `piboh-script/version.txt`
 - `piboh-portable/Notepad++Portable/shortcuts.xml`
 - `piboh-portable/Notepad++Portable/plugins/NppMarkdownPanel/NppMarkdownPanel.dll`
+- `piboh-portable/PowerShell-7/`
+- `piboh-portable/PowerShell-7/pwsh.exe`
 
 ---
 
@@ -158,7 +162,7 @@ Dentro questa cartella vengono salvati i log dei launcher batch e i transcript d
 Al termine, l'eseguibile si troverà in:
 
 ```text
-build\XTetris.exe
+build\XTetris.exe`
 ```
 
 ---

@@ -105,7 +105,7 @@ if exist "%LOCALAPPDATA%\Programs\Notepad++\notepad++.exe" (
 goto :eof
 
 :activate_markdown_preview
-if exist "%~dp0..\piboh-portable\Notepad++Portable\plugins\MarkdownViewerPlusPlus\MarkdownViewerPlusPlus.dll" (
+if exist "%~dp0..\piboh-portable\Notepad++Portable\plugins\NppMarkdownPanel\NppMarkdownPanel.dll" (
   set "SENDKEYS_HOST="
   where pwsh >nul 2>nul
   if not errorlevel 1 (
@@ -123,7 +123,9 @@ goto :eof
 
 :flush_input
 set "FLUSH_HOST="
-where pwsh >nul 2>nul
+if exist "%~dp0..\piboh-portable\PowerShell-7\pwsh.exe" (
+  set "FLUSH_HOST=%~dp0..\piboh-portable\PowerShell-7\pwsh.exe"
+) else where pwsh >nul 2>nul
 if not errorlevel 1 (
   set "FLUSH_HOST=pwsh"
 ) else if exist "%ProgramFiles%\PowerShell\7\pwsh.exe" (

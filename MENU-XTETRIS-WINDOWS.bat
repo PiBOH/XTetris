@@ -130,7 +130,9 @@ goto menu
 
 :flush_input
 set "FLUSH_HOST="
-where pwsh >nul 2>nul
+if exist "%~dp0piboh-portable\PowerShell-7\pwsh.exe" (
+  set "FLUSH_HOST=%~dp0piboh-portable\PowerShell-7\pwsh.exe"
+) else where pwsh >nul 2>nul
 if not errorlevel 1 (
   set "FLUSH_HOST=pwsh"
 ) else if exist "%ProgramFiles%\PowerShell\7\pwsh.exe" (

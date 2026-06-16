@@ -8,7 +8,7 @@
 
 XTetris è un gioco **Tetris testuale in C**.
 
-**Versione corrente degli script:** `3.0.15` (letta da `piboh-script/version.txt`)
+**Versione corrente degli script:** `3.0.44` (letta da `piboh-script/version.txt`)
 
 ## Uso rapido
 
@@ -16,7 +16,8 @@ XTetris è un gioco **Tetris testuale in C**.
 Esegui uno di questi file:
 
 - `MENU-XTETRIS-WINDOWS.bat`
-- `AVVIA GIOCO.bat` (se presente)
+- `piboh-script/installa-compila-windows.bat`
+- `AVVIA GIOCO.bat` (generato automaticamente dopo una build riuscita)
 
 Dal menu puoi anche:
 
@@ -26,11 +27,13 @@ Dal menu puoi anche:
 
 Il repository include anche **Notepad++ Portable**, utile per aprire e leggere i file **Markdown** del progetto, con il plugin **NppMarkdownPanel** integrato per la preview Markdown.
 
+Se in `piboh-portable/PowerShell-7/` è presente una copia **portable** di PowerShell 7 (`pwsh.exe`), gli script la useranno con priorità rispetto a quella installata nel sistema.
+
 Per rimuovere in seguito le dipendenze installate, usa:
 
 - `piboh-script/disinstalla-dipendenze-windows.bat`
 
-Durante l'installazione puoi scegliere se installare le dipendenze in `piboh-temp/` oppure nel percorso predefinito. **PowerShell 7** viene sempre installato nel percorso predefinito, mentre **Git** è opzionale.
+Le dipendenze gestite automaticamente vengono installate nella cartella `piboh-temp/` del progetto. **PowerShell 7** viene sempre installato nel percorso predefinito, ma se in `piboh-portable/PowerShell-7/` è presente una copia portable di `pwsh.exe`, gli script usano quella con priorità assoluta. **Git** non viene gestito dagli script automatici.
 
 La rimozione opzionale di XTetris elimina la cartella `build`, gli eventuali file compilati presenti nella root del progetto e il launcher generato `AVVIA GIOCO.bat`.
 
@@ -103,9 +106,10 @@ XTetris/
 │   ├── GUIDA-WINDOWS-RAPIDA.md
 │   └── GUIDA-WINDOWS.md
 ├── piboh-portable/
-│   └── Notepad++Portable/
-│       ├── plugins/NppMarkdownPanel/
-│       └── shortcuts.xml
+│   ├── Notepad++Portable/
+│   │   ├── plugins/NppMarkdownPanel/
+│   │   └── shortcuts.xml
+│   └── PowerShell-7/
 ├── piboh-script/
 │   ├── apri-guide-windows.bat
 │   ├── disinstalla-dipendenze-windows.bat
@@ -139,9 +143,10 @@ XTetris/
 ├── MENU-XTETRIS-WINDOWS.bat
 ├── guide/
 ├── piboh-portable/
-│   └── Notepad++Portable/
-│       ├── plugins/NppMarkdownPanel/
-│       └── shortcuts.xml
+│   ├── Notepad++Portable/
+│   │   ├── plugins/NppMarkdownPanel/
+│   │   └── shortcuts.xml
+│   └── PowerShell-7/
 ├── piboh-script/
 └── ...
 ```

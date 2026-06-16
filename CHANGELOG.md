@@ -1,5 +1,108 @@
 # CHANGELOG
 
+## 3.0.44
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.44`.
+- Riallineati definitivamente `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla versione centrale dopo il ripristino stabile di `piboh-temp/` e della funzione `Resolve-InstalledPackageLocation`.
+- Consolidata la documentazione finale del comportamento attuale dell'installer/disinstallatore.
+
+## 3.0.42
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.42`.
+- Corretto l'ultimo riferimento residuo a `3.0.39` dentro `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md`.
+- Riallineati di nuovo `README.md` e guida script alla versione centrale.
+
+## 3.0.41
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.41`.
+- Riallineati definitivamente `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla versione centrale dopo la correzione del riferimento rimasto a `3.0.39`.
+- Confermata la presenza della funzione `Resolve-InstalledPackageLocation` nello script di installazione.
+
+## 3.0.40
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.40`.
+- Ripristinata la funzione `Resolve-InstalledPackageLocation` nello script di installazione, correggendo l'errore che impediva di completare l'installazione dopo la reinstallazione di MSYS2/CMake.
+- Riallineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.
+
+## 3.0.39
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.39`.
+- Riallineati definitivamente `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla versione centrale dopo le ultime correzioni testuali.
+- Confermato il ripristino stabile di `piboh-temp/` come cartella per le dipendenze gestite automaticamente.
+
+## 3.0.38
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.38`.
+- Ripristinata e consolidata l'installazione delle dipendenze in `piboh-temp/`.
+- Confermata la correzione dell'installer per MSYS2/CMake con ricerca più robusta e controllo di usabilità meno fragile.
+- Riallineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.
+
+## 3.0.33
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.33`.
+- Confermata la correzione dell'installatore per MSYS2: se il pacchetto risulta installato ma non è utilizzabile nel percorso atteso, viene tentata una reinstallazione/repair con `--force`.
+- Riallineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.
+
+## 3.0.31
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.31`.
+- Corretto `Find-Msys2Root` nell'installatore: ora cerca MSYS2 sia in `piboh-dip/` sia in `piboh-dip/MSYS2/`, e usa anche i metadati salvati dall'installazione.
+- Riallineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.
+
+## 3.0.29
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.29`.
+- Riallineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla versione centrale effettiva letta dagli script.
+- Confermato l'uso prioritario di `piboh-portable/PowerShell-7/pwsh.exe` quando presente.
+
+## 3.0.28
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.28`.
+- Corretto definitivamente il blocco delle versioni nella guida script, riallineandolo alla versione centrale.
+- Riallineati di nuovo `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` dopo l'ultima correzione.
+
+## 3.0.27
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.27`.
+- Riallineati definitivamente `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla versione centrale dopo le ultime correzioni di documentazione.
+- Confermata la struttura `piboh-portable/PowerShell-7/` come percorso portable preferito per `pwsh.exe`.
+
+## 3.0.25
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.25`.
+- Ripulita la struttura mostrata nel `README.md` per `piboh-portable/`, separando correttamente `Notepad++Portable/` e `PowerShell-7/`.
+- Riallineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.
+
+## 3.0.24
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.24`.
+- Le dipendenze gestite automaticamente vengono ora installate sempre in `piboh-dip/`; i riferimenti a `piboh-temp/` sono stati rimossi.
+- Il controllo integrita distingue ora tra elementi critici (rosso), opzionali (giallo) ed elementi presenti (verde).
+- Il controllo integrita verifica anche la presenza della cartella `piboh-portable/PowerShell-7/` e di `pwsh.exe`.
+
+## 3.0.23
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.23`.
+- Gli script cercano ora prioritariamente `pwsh.exe` nel percorso `piboh-portable/PowerShell-7/` e, in fallback, nel resto di `piboh-portable/`.
+- Riallineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.
+
+## 3.0.22
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.22`.
+- Gli script cercano ora prioritariamente `pwsh.exe` dentro `piboh-portable/` e usano quella copia portable di PowerShell 7 se presente.
+- Riallineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.
+
+## 3.0.21
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.21`.
+- Corretto definitivamente il blocco delle versioni in `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` dopo il riallineamento centrale.
+- Riallineati ancora `README.md` e guida script alla nuova versione centrale.
+
+## 3.0.20
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.20`.
+- Riallineati di nuovo `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale dopo le ultime correzioni testuali.
+- Consolidato il sistema di versionamento centralizzato in `piboh-script/version.txt`.
+
+## 3.0.19
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.19`.
+- Completata la rimozione di **Git** dalla documentazione come dipendenza gestita dagli script automatici.
+- Riallineati di nuovo `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.
+
+## 3.0.18
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.18`.
+- Rimosso **Git** dalla gestione delle dipendenze automatiche degli script.
+- Se il repository non è presente localmente e Git non è disponibile, l'installatore chiede di clonare manualmente XTetris o installare Git per conto proprio.
+- Riallineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.
+
+## 3.0.16
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.16`.
+- Corretto il disinstallatore: se una dipendenza è stata installata in modalità `piboh-temp`, ora viene rimossa direttamente dalla cartella temporanea senza provare l'uninstaller del pacchetto.
+- Riallineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.
+
 ## 3.0.15
 - Aggiornato `piboh-script/version.txt` alla versione `3.0.15`.
 - Riallineati nuovamente `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.

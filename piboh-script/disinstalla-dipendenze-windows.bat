@@ -79,6 +79,14 @@ exit /b 0
 
 :find_pwsh
 set "PWSH="
+if exist "%~dp0..\piboh-portable\PowerShell-7\pwsh.exe" (
+ set "PWSH=%~dp0..\piboh-portable\PowerShell-7\pwsh.exe"
+ goto :eof
+)
+for /r "%~dp0..\piboh-portable" %%I in (pwsh.exe) do (
+ set "PWSH=%%I"
+ goto :eof
+)
 where pwsh >nul 2>nul
 if not errorlevel 1 (
  set "PWSH=pwsh"
