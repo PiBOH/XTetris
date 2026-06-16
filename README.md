@@ -16,8 +16,7 @@ XTetris è un gioco **Tetris testuale in C**.
 Esegui uno di questi file:
 
 - `MENU-XTETRIS-WINDOWS.bat`
-- `piboh-script/installa-compila-windows.bat`
-- `AVVIA GIOCO.bat` (generato automaticamente dopo una build riuscita)
+- `AVVIA GIOCO.bat` (se presente)
 
 Dal menu puoi anche:
 
