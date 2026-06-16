@@ -15,13 +15,21 @@ Esegui uno di questi file:
 
 - `MENU-XTETRIS-WINDOWS.bat`
 - `piboh-script/installa-compila-windows.bat`
-- `AVVIA-XTETRIS-WINDOWS.bat`
+- `AVVIA GIOCO.bat` (generato automaticamente dopo una build riuscita)
+
+Dal menu puoi anche:
+
+- aprire il **CHANGELOG**
+- controllare l'integrità dei file del repository
+- aprire le guide con **Notepad++ Portable**
 
 Il repository include anche **Notepad++ Portable**, utile per aprire e leggere i file **Markdown** del progetto.
 
 Per rimuovere in seguito le dipendenze installate, usa:
 
 - `piboh-script/disinstalla-dipendenze-windows.bat`
+
+Durante l'installazione puoi scegliere se installare le dipendenze in `piboh-temp/` oppure nel percorso predefinito. **PowerShell 7** viene sempre installato nel percorso predefinito, mentre **Git** è opzionale.
 
 La rimozione opzionale di XTetris elimina la cartella `build`, gli eventuali file compilati presenti nella root del progetto e il launcher generato `AVVIA GIOCO.bat`.
 
@@ -45,6 +53,7 @@ cmake --build .
 - [Guida MSYS2](guide/GUIDA-MSYS2.md)
 - [Guida CLion](guide/GUIDA-CLION-WINDOWS.md)
 - [Guida VS Code](guide/GUIDA-VSCODE-WINDOWS.md)
+- [Changelog](CHANGELOG.md)
 
 ## Web
 
@@ -91,15 +100,17 @@ XTetris/
 ├── piboh-portable/
 │   └── Notepad++Portable/
 ├── piboh-script/
+│   ├── apri-guide-windows.bat
 │   ├── disinstalla-dipendenze-windows.bat
 │   ├── disinstalla-dipendenze-windows.ps1
 │   ├── installa-compila-windows.bat
-│   └── installa-compila-windows.ps1
+│   ├── installa-compila-windows.ps1
+│   ├── log/
+│   └── verifica-integrita-windows.bat
 ├── .gitignore
-├── AVVIA-XTETRIS-WINDOWS.bat
+├── CHANGELOG.md
 ├── CMakeLists.txt
 ├── MENU-XTETRIS-WINDOWS.bat
-├── README.md
 └── main.c
 ```
 
@@ -116,7 +127,7 @@ XTetris/
 ├── menus.o
 ├── player.o
 ├── tetramino.o
-├── AVVIA-XTETRIS-WINDOWS.bat
+├── CHANGELOG.md
 ├── MENU-XTETRIS-WINDOWS.bat
 ├── guide/
 ├── piboh-portable/
