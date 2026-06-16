@@ -11,16 +11,16 @@ Questa guida spiega come usare lo script automatico incluso nel repository per:
 ## Versioni attuali degli script
 
 ```text
-Menu: 3.0.44
-Installatore: 3.0.44
-Disinstallatore: 3.0.44
-Guide launcher: 3.0.44
-Integrity check: 3.0.44
+Menu: 3.0.45
+Installatore: 3.0.45
+Disinstallatore: 3.0.45
+Guide launcher: 3.0.45
+Integrity check: 3.0.45
 ```
 
 ## File disponibili
 
-Nel repository trovi (versione corrente letta da `piboh-script/version.txt` = `3.0.44`):
+Nel repository trovi (versione corrente letta da `piboh-script/version.txt` = `3.0.45`):
 
 - `MENU-XTETRIS-WINDOWS.bat` → pre-menu principale Windows, con accesso a installazione, avvio, guide, changelog e controllo integrità
 - `piboh-script/installa-compila-windows.ps1` → script PowerShell principale consigliato

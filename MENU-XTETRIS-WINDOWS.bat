@@ -16,7 +16,7 @@ set "LOG_FILE=%LOG_DIR%\menu.log"
 call :flush_input
 cls
 echo ===============================================
-echo      XTetris Windows Pre-Menu %SCRIPT_VERSION%
+echo      Pre-XTetris Windows Menu %SCRIPT_VERSION%
 echo ===============================================
 echo.
 echo  1. Installa prerequisiti e compila XTetris

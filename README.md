@@ -8,7 +8,7 @@
 
 XTetris è un gioco **Tetris testuale in C**.
 
-**Versione corrente degli script:** `3.0.44` (letta da `piboh-script/version.txt`)
+**Versione corrente degli script:** `3.0.45` (letta da `piboh-script/version.txt`)
 
 ## Uso rapido
 

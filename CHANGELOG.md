@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## 3.0.45
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.45`.
+- Riallineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla versione centrale corrente.
+- Consolidato il versionamento dopo l'eccezione `3.0.44.1` e ripristinato l'incremento normale.
+
+## 3.0.44.1
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.44.1`.
+- Riallineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` a questa versione intermedia speciale.
+- Nessuna modifica funzionale aggiuntiva: aggiornamento eccezionale della versione su richiesta.
+
 ## 3.0.44
 - Aggiornato `piboh-script/version.txt` alla versione `3.0.44`.
 - Riallineati definitivamente `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla versione centrale dopo il ripristino stabile di `piboh-temp/` e della funzione `Resolve-InstalledPackageLocation`.
