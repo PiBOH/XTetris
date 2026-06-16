@@ -1,0 +1,49 @@
+**********************
+PowerShell transcript start
+Start time: 20260616145007
+Username: ASUSI7-K55VD\Utente
+RunAs User: ASUSI7-K55VD\Utente
+Configuration Name: 
+Machine: ASUSI7-K55VD (Microsoft Windows NT 10.0.26200.0)
+Host Application: C:\Program Files\PowerShell\7\pwsh.dll -NoProfile -ExecutionPolicy Bypass -File D:\8 - GitHub PiBOH\repository\CLONATI IN GITHUB DESKTOP\XTetris\piboh-script\disinstalla-dipendenze-windows.ps1
+Process ID: 8016
+PSVersion: 7.6.1
+PSEdition: Core
+GitCommitId: 7.6.1
+OS: Microsoft Windows 10.0.26200
+Platform: Win32NT
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1, 6.0, 7.0
+PSRemotingProtocolVersion: 2.4
+SerializationVersion: 1.1.0.1
+WSManStackVersion: 3.0
+**********************
+XTetris Windows Uninstaller 3.0.1
+[WARN] Non stai eseguendo lo script come amministratore. In molti casi va bene lo stesso, ma alcuni installer potrebbero chiedere conferma o fallire.
+
+==> Verifico winget
+[OK] winget disponibile
+
+==> Cartella di lavoro: D:\8 - GitHub PiBOH\repository\CLONATI IN GITHUB DESKTOP\XTetris
+[OK] Notepad++ non risulta installato dallo script
+[OK] Git non risulta installato dallo script
+
+==> Disinstallo CMake
+Found CMake [Kitware.CMake]
+Starting package uninstall...
+Successfully uninstalled
+[OK] CMake disinstallato
+
+==> Disinstallo MSYS2
+Found MSYS2 [MSYS2.MSYS2]
+Starting package uninstall...
+Successfully uninstalled
+[OK] MSYS2 disinstallato
+
+==> Preparo la pulizia finale dopo la chiusura di PowerShell 7
+[OK] Pulizia finale pianificata
+[OK] Disinstallazione completata
+Puoi chiudere questa finestra.
+**********************
+PowerShell transcript end
+End time: 20260616145247
+**********************

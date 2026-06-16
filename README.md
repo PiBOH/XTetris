@@ -8,6 +8,8 @@
 
 XTetris è un gioco **Tetris testuale in C**.
 
+**Versione corrente degli script:** `3.0.15` (letta da `piboh-script/version.txt`)
+
 ## Uso rapido
 
 ### Windows
@@ -23,7 +25,7 @@ Dal menu puoi anche:
 - controllare l'integrità dei file del repository
 - aprire le guide con **Notepad++ Portable**
 
-Il repository include anche **Notepad++ Portable**, utile per aprire e leggere i file **Markdown** del progetto.
+Il repository include anche **Notepad++ Portable**, utile per aprire e leggere i file **Markdown** del progetto, con il plugin **NppMarkdownPanel** integrato per la preview Markdown.
 
 Per rimuovere in seguito le dipendenze installate, usa:
 
@@ -36,6 +38,10 @@ La rimozione opzionale di XTetris elimina la cartella `build`, gli eventuali fil
 I log degli script vengono salvati in:
 
 - `piboh-script/log/`
+
+La versione corrente degli script è centralizzata in:
+
+- `piboh-script/version.txt`
 
 ### Build manuale
 ```bash
@@ -99,6 +105,8 @@ XTetris/
 │   └── GUIDA-WINDOWS.md
 ├── piboh-portable/
 │   └── Notepad++Portable/
+│       ├── plugins/NppMarkdownPanel/
+│       └── shortcuts.xml
 ├── piboh-script/
 │   ├── apri-guide-windows.bat
 │   ├── disinstalla-dipendenze-windows.bat
@@ -106,7 +114,8 @@ XTetris/
 │   ├── installa-compila-windows.bat
 │   ├── installa-compila-windows.ps1
 │   ├── log/
-│   └── verifica-integrita-windows.bat
+│   ├── verifica-integrita-windows.bat
+│   └── version.txt
 ├── .gitignore
 ├── CHANGELOG.md
 ├── CMakeLists.txt
@@ -132,6 +141,8 @@ XTetris/
 ├── guide/
 ├── piboh-portable/
 │   └── Notepad++Portable/
+│       ├── plugins/NppMarkdownPanel/
+│       └── shortcuts.xml
 ├── piboh-script/
 └── ...
 ```

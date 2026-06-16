@@ -1,5 +1,57 @@
 # CHANGELOG
 
+## 3.0.15
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.15`.
+- Riallineati nuovamente `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.
+- Consolidata la documentazione delle versioni dopo le ultime correzioni.
+
+## 3.0.14
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.14`.
+- Riallineati di nuovo `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.
+- Uniformate le versioni mostrate nella documentazione dopo le ultime correzioni.
+
+## 3.0.13
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.13`.
+- Il controllo integrità verifica ora anche `piboh-portable/Notepad++Portable/shortcuts.xml` e `piboh-portable/Notepad++Portable/plugins/NppMarkdownPanel/NppMarkdownPanel.dll`.
+- Riallineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.
+
+## 3.0.12
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.12`.
+- Rimossa la cartella del vecchio plugin `MarkdownViewerPlusPlus` dalla copia portable di Notepad++.
+- Lasciato `NppMarkdownPanel` come plugin Markdown di riferimento, con `shortcuts.xml` configurato per `Ctrl+Shift+M`.
+- Riallineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.
+
+## 3.0.11
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.11`.
+- Integrato `NppMarkdownPanel` nella copia portable di Notepad++ al posto del riferimento principale a MarkdownViewer++.
+- Aggiunto `shortcuts.xml` alla copia portable per associare `Ctrl+Shift+M` al comando di toggle del pannello Markdown.
+- Aggiornati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione e al nuovo plugin Markdown.
+
+## 3.0.10
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.10`.
+- Corretto il file `piboh-script/installa-compila-windows.ps1` rimuovendo testo residuo non valido in coda.
+- Riallineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.
+
+## 3.0.7
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.7`.
+- Riallineati di nuovo `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.
+- Uniformate le stringhe di versione mostrate nella documentazione.
+
+## 3.0.6
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.6`.
+- Allineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla nuova versione centrale.
+- Corretta la documentazione delle versioni mostrate nelle guide.
+
+## 3.0.5
+- Aggiornato `piboh-script/version.txt` alla versione `3.0.5`.
+- Il controllo integrità verifica ora anche la presenza di `piboh-script/version.txt`.
+- Aggiunta nel `README.md` una riga esplicita con la versione corrente degli script.
+
+## 3.0.4
+- Introdotto `piboh-script/version.txt` come fonte unica della versione degli script.
+- Tutti i batch e gli script PowerShell leggono ora la versione da un file centrale.
+- Aggiornati i riferimenti documentali per riflettere la versione unificata `3.0.4`.
+
 ## 3.0.3
 - Aggiornate tutte le versioni dei file script e dei riferimenti documentali alla versione `3.0.3`.
 - Installatore migliorato: scelta del percorso dipendenze, Git opzionale, uso di `--silent` e metadati delle installazioni.

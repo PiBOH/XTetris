@@ -11,36 +11,43 @@ Questa guida spiega come usare lo script automatico incluso nel repository per:
 ## Versioni attuali degli script
 
 ```text
-Menu: 1.0.23.2
-Installatore: 1.0.9k
-Disinstallatore: 1.0.22
+Menu: 3.0.15
+Installatore: 3.0.15
+Disinstallatore: 3.0.15
+Guide launcher: 3.0.15
+Integrity check: 3.0.15
 ```
 
 ## File disponibili
 
-Nel repository trovi:
+Nel repository trovi (versione corrente letta da `piboh-script/version.txt` = `3.0.15`):
 
-- `MENU-XTETRIS-WINDOWS.bat` → menu principale Windows, con fallback automatico se manca `AVVIA-XTETRIS-WINDOWS.bat`
-- `AVVIA-XTETRIS-WINDOWS.bat` → build automatica + avvio immediato del gioco
+- `MENU-XTETRIS-WINDOWS.bat` → pre-menu principale Windows, con accesso a installazione, avvio, guide, changelog e controllo integrità
 - `piboh-script/installa-compila-windows.ps1` → script PowerShell principale consigliato
 - `piboh-script/installa-compila-windows.bat` → launcher batch di installazione e compilazione
 - `piboh-script/disinstalla-dipendenze-windows.ps1` → script PowerShell di disinstallazione
 - `piboh-script/disinstalla-dipendenze-windows.bat` → launcher batch di disinstallazione
 - `piboh-script/apri-guide-windows.bat` → menu dedicato per aprire le guide in Notepad++
+- `piboh-script/verifica-integrita-windows.bat` → controllo integrità del repository
 - `piboh-portable/Notepad++Portable/` → copia portable di Notepad++ inclusa nel repository
+- `piboh-portable/Notepad++Portable/plugins/NppMarkdownPanel/` → plugin NppMarkdownPanel integrato per la preview Markdown
+- `CHANGELOG.md` → storico sintetico delle modifiche
+- `AVVIA GIOCO.bat` → launcher generato automaticamente dopo una build riuscita
 
 ---
 
-## Cosa fa lo script
+## Cosa fa l'installatore
 
-Lo script PowerShell prova a fare automaticamente queste operazioni:
+Lo script PowerShell di installazione prova a fare automaticamente queste operazioni:
 
+- permette di scegliere se installare le dipendenze in `piboh-temp/` oppure nel percorso predefinito;
+- mantiene **PowerShell 7** sempre nel percorso predefinito;
+- tratta **Git** come componente opzionale;
 - rileva se è stato aperto con **Windows PowerShell classico**;
 - se serve, si rilancia automaticamente con **PowerShell 7**;
-- se **PowerShell 7** non è installato, prova a installarlo con `winget`;
+- se **PowerShell 7** non è installato, prova a installarlo con `winget` in modalità silenziosa;
 - mostra comunque il messaggio iniziale che avvisa se non sei amministratore;
 - verifica che `winget` sia disponibile;
-- installa **Git** se manca;
 - installa **CMake** se manca;
 - usa **Notepad++ Portable** integrato nel repository per aprire i file Markdown;
 - installa **MSYS2** se manca;
@@ -68,40 +75,33 @@ powershell -ExecutionPolicy Bypass -File .\piboh-script\installa-compila-windows
 
 > Anche se parti da Windows PowerShell classico, lo script proverà a spostarsi automaticamente su **PowerShell 7**.
 
-### Metodo 2 - Avvio con doppio click
+### Metodo 2 - Da menu
 
-Puoi provare anche con:
+Usa:
 
 - `MENU-XTETRIS-WINDOWS.bat`
+
+Oppure direttamente:
+
 - `piboh-script/installa-compila-windows.bat`
 
-Oppure, se vuoi compilare e avviare subito il gioco:
-
-- `AVVIA-XTETRIS-WINDOWS.bat`
-
-Questi file richiamano automaticamente **PowerShell 7 (`pwsh`)**. Se `pwsh` non è installato, tentano prima di installarlo. Le opzioni di avvio del gioco dal menu vengono eseguite in una finestra separata e, alla chiusura del gioco, il controllo torna al menu principale. Inoltre il menu prova a pulire l'input residuo della console prima di tornare operativo.
-
 ---
 
-## Avvio automatico del gioco dopo la build
+## Visualizzazione guide e changelog
 
-Se vuoi compilare e poi avviare subito XTetris senza domanda finale:
+Dal menu principale puoi:
 
-```powershell
-powershell -ExecutionPolicy Bypass -File .\piboh-script\installa-compila-windows.ps1 -RunAfterBuild
-```
+- aprire una guida in Notepad++
+- aprire direttamente `CHANGELOG.md`
+
+La priorità è:
+
+1. **Notepad++ Portable** nel repository
+2. eventuale **Notepad++ di sistema** se disponibile
+
+Quando apri una guida o il changelog, il launcher prova anche ad attivare automaticamente la preview del plugin **NppMarkdownPanel** (se presente nella copia portable).
 
 ---
-
-## File generato automaticamente
-
-Se la compilazione va a buon fine, lo script crea questo file nella root del progetto:
-
-```text
-AVVIA GIOCO.bat
-```
-
-Questo launcher serve per avviare rapidamente il gioco compilato in seguito, senza rifare tutto il setup.
 
 ## Disinstallazione
 
@@ -111,7 +111,33 @@ Per rimuovere le dipendenze installate dagli script puoi usare:
 piboh-script/disinstalla-dipendenze-windows.bat
 ```
 
-Lo script di disinstallazione rimuove solo le dipendenze che **non erano già presenti nel sistema** e che sono state effettivamente installate dagli script automatici (ad esempio **PowerShell 7**, **Git**, **CMake** e **MSYS2**). Se una dipendenza era già installata prima dell'esecuzione del menu o dello script di installazione, non viene rimossa. **Notepad++ Portable** non viene rimosso. Per XTetris, la disinstallazione opzionale rimuove la cartella `build`, gli eventuali file compilati presenti nella root del progetto e il launcher generato `AVVIA GIOCO.bat`, ma **non** elimina l'intero repository.
+Lo script di disinstallazione rimuove solo le dipendenze che **non erano già presenti nel sistema** e che sono state effettivamente installate dagli script automatici (ad esempio **PowerShell 7**, **Git**, **CMake** e **MSYS2**). Se una dipendenza era già installata prima dell'esecuzione del menu o dello script di installazione, non viene rimossa.
+
+**Notepad++ Portable** non viene rimosso.
+
+Per XTetris, la disinstallazione opzionale rimuove:
+
+- la cartella `build`
+- gli eventuali file compilati presenti nella root del progetto
+- il launcher generato `AVVIA GIOCO.bat`
+
+ma **non** elimina l'intero repository.
+
+---
+
+## Controllo integrità
+
+Dal menu principale puoi eseguire un controllo dei file principali del repository tramite:
+
+```text
+piboh-script/verifica-integrita-windows.bat
+```
+
+Il controllo verifica anche la presenza di:
+
+- `piboh-script/version.txt`
+- `piboh-portable/Notepad++Portable/shortcuts.xml`
+- `piboh-portable/Notepad++Portable/plugins/NppMarkdownPanel/NppMarkdownPanel.dll`
 
 ---
 
@@ -137,28 +163,6 @@ build\XTetris.exe
 
 ---
 
-## Limiti dello script
-
-Lo script automatizza molto, ma ci sono alcune dipendenze di sistema che devono già funzionare correttamente:
-
-### 1. `winget` deve esistere
-
-Se `winget` non è installato, lo script non può installare automaticamente PowerShell 7 / Git / CMake / MSYS2.
-
-In quel caso installa:
-
-- **App Installer** dal Microsoft Store
-
-### 2. Potrebbero comparire prompt di conferma
-
-Anche senza auto-elevazione ad amministratore, alcuni installer possono chiedere conferme, a seconda della configurazione del PC.
-
-### 3. La prima installazione può richiedere tempo
-
-MSYS2 e i pacchetti di build non sono piccoli: la prima esecuzione può durare diversi minuti.
-
----
-
 ## Se qualcosa va storto
 
 ### Errore su `winget`
@@ -169,69 +173,11 @@ Installa o aggiorna App Installer.
 
 Rilancia lo script. Se necessario installa manualmente **PowerShell 7** e poi riprova.
 
-### Errore su Git/CMake/MSYS2
-
-Rilancia lo script da una nuova finestra PowerShell.
-
 ### Errore durante la build
 
 Controlla che il repository sia completo e che `CMakeLists.txt` sia presente nella root.
 
 ---
-
-## Uso consigliato
-
-Per la maggior parte degli utenti Windows, il flusso più semplice è:
-
-1. scaricare o clonare il repository;
-2. aprire la cartella del progetto;
-3. fare doppio click su:
-
-```text
-MENU-XTETRIS-WINDOWS.bat
-```
-
-oppure, se vuoi andare direttamente all'installazione:
-
-```text
-installa-compila-windows.bat
-```
-
-oppure, se vuoi compilare e lanciare subito il gioco:
-
-```text
-AVVIA-XTETRIS-WINDOWS.bat
-```
-
-4. in alternativa, dopo una build riuscita, usare:
-
-```text
-AVVIA GIOCO.bat
-```
-
----
-
-## In sintesi
-
-Se vuoi evitare setup manuale, il file principale da usare è:
-
-```text
-installa-compila-windows.ps1
-```
-
-Se vuoi il launcher più comodo da doppio click:
-
-```text
-installa-compila-windows.bat
-```
-
-Se vuoi compilare e avviare subito:
-
-```text
-AVVIA-XTETRIS-WINDOWS.bat
-```
-
-È il modo più vicino possibile a un install/build automatico per usare XTetris originale su Windows.
 
 ## Guide collegate
 

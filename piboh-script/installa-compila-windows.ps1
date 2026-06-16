@@ -6,12 +6,17 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$ScriptVersion = '1.0.9k-STABLE'
+$script:VersionFile = Join-Path $PSScriptRoot 'version.txt'
+$ScriptVersion = if (Test-Path $script:VersionFile) { (Get-Content -Path $script:VersionFile -ErrorAction SilentlyContinue | Select-Object -First 1).Trim() } else { '0.0.0-UNKNOWN' }
 $script:SelfPath = $MyInvocation.MyCommand.Path
 $script:LogDir = Join-Path $PSScriptRoot 'log'
 $script:StateFile = Join-Path $script:LogDir 'installed-packages.txt'
+$script:StateMetaFile = Join-Path $script:LogDir 'installed-packages.csv'
 $script:TranscriptStarted = $false
 $script:LogFile = $null
+$script:InstallMode = 'default'
+$script:TempInstallRoot = $null
+$script:GitRequested = $false
 
 function Ensure-LogInfrastructure {
     if (-not (Test-Path $script:LogDir)) {
@@ -20,6 +25,10 @@ function Ensure-LogInfrastructure {
 
     if (-not (Test-Path $script:StateFile)) {
         New-Item -ItemType File -Path $script:StateFile -Force | Out-Null
+    }
+
+    if (-not (Test-Path $script:StateMetaFile)) {
+        New-Item -ItemType File -Path $script:StateMetaFile -Force | Out-Null
     }
 }
 
@@ -38,11 +47,7 @@ function Initialize-Log {
 
 function Finalize-Log {
     if ($script:TranscriptStarted) {
-        try {
-            Stop-Transcript | Out-Null
-        }
-        catch {
-        }
+        try { Stop-Transcript | Out-Null } catch {}
         $script:TranscriptStarted = $false
     }
 }
@@ -53,7 +58,6 @@ function Add-InstalledByScriptPackage([string]$Id) {
     if (Test-Path $script:StateFile) {
         $entries = @(Get-Content -Path $script:StateFile -ErrorAction SilentlyContinue)
     }
-
     if ($entries -notcontains $Id) {
         Add-Content -Path $script:StateFile -Value $Id
     }
@@ -61,40 +65,79 @@ function Add-InstalledByScriptPackage([string]$Id) {
 
 function Remove-InstalledByScriptPackage([string]$Id) {
     Ensure-LogInfrastructure
-    if (-not (Test-Path $script:StateFile)) {
-        return
-    }
-
+    if (-not (Test-Path $script:StateFile)) { return }
     $entries = @(Get-Content -Path $script:StateFile -ErrorAction SilentlyContinue | Where-Object { $_ -and $_ -ne $Id })
     Set-Content -Path $script:StateFile -Value $entries
 }
 
 function Test-InstalledByScriptPackage([string]$Id) {
     Ensure-LogInfrastructure
-    if (-not (Test-Path $script:StateFile)) {
-        return $false
-    }
-
+    if (-not (Test-Path $script:StateFile)) { return $false }
     $entries = @(Get-Content -Path $script:StateFile -ErrorAction SilentlyContinue)
     return ($entries -contains $Id)
 }
 
-function Write-Step($Message) {
-    Write-Host "`n==> $Message" -ForegroundColor Cyan
+function Save-InstalledPackageMetadata([string]$Id, [string]$Mode, [string]$Location) {
+    Ensure-LogInfrastructure
+    $entries = @()
+    if (Test-Path $script:StateMetaFile) {
+        $entries = @(Get-Content -Path $script:StateMetaFile -ErrorAction SilentlyContinue | Where-Object { $_ -and -not $_.StartsWith($Id + '|') })
+    }
+    $line = ('{0}|{1}|{2}' -f $Id, $Mode, $Location)
+    $entries += $line
+    Set-Content -Path $script:StateMetaFile -Value $entries
 }
 
-function Write-Ok($Message) {
-    Write-Host "[OK] $Message" -ForegroundColor Green
+function Get-InstalledPackageMetadata([string]$Id) {
+    Ensure-LogInfrastructure
+    if (-not (Test-Path $script:StateMetaFile)) { return $null }
+    $line = Get-Content -Path $script:StateMetaFile -ErrorAction SilentlyContinue | Where-Object { $_ -and $_.StartsWith($Id + '|') } | Select-Object -First 1
+    if (-not $line) { return $null }
+    $parts = $line -split '\|', 3
+    [pscustomobject]@{ Id = $parts[0]; Mode = $parts[1]; Location = $parts[2] }
 }
 
-function Write-WarnMsg($Message) {
-    Write-Host "[WARN] $Message" -ForegroundColor Yellow
+function Resolve-InstalledPackageLocation([string]$Id, [string]$RequestedInstallLocation, [string]$ProjectRoot) {
+    if (-not [string]::IsNullOrWhiteSpace($RequestedInstallLocation) -and (Test-Path $RequestedInstallLocation)) {
+        return $RequestedInstallLocation
+    }
+
+    switch ($Id) {
+        'Microsoft.PowerShell' {
+            $pwsh = Get-PwshPath
+            if ($pwsh) { return (Split-Path -Parent (Split-Path -Parent $pwsh)) }
+        }
+        'Git.Git' {
+            $candidates = @(
+                (Join-Path $ProjectRoot 'piboh-temp\Git'),
+                "$env:ProgramFiles\Git",
+                "$env:LOCALAPPDATA\Programs\Git"
+            )
+            foreach ($candidate in $candidates) { if (Test-Path $candidate) { return $candidate } }
+        }
+        'Kitware.CMake' {
+            $candidates = @(
+                (Join-Path $ProjectRoot 'piboh-temp\CMake'),
+                "$env:ProgramFiles\CMake",
+                "$env:LOCALAPPDATA\Programs\CMake"
+            )
+            foreach ($candidate in $candidates) { if (Test-Path $candidate) { return $candidate } }
+        }
+        'MSYS2.MSYS2' {
+            try { return (Find-Msys2Root) } catch { }
+        }
+    }
+
+    return ''
 }
+
+function Write-Step($Message) { Write-Host "`n==> $Message" -ForegroundColor Cyan }
+function Write-Ok($Message) { Write-Host "[OK] $Message" -ForegroundColor Green }
+function Write-WarnMsg($Message) { Write-Host "[WARN] $Message" -ForegroundColor Yellow }
 
 function Add-PathIfExists([string]$PathToAdd) {
     if ([string]::IsNullOrWhiteSpace($PathToAdd)) { return }
     if (-not (Test-Path $PathToAdd)) { return }
-
     $current = ($env:PATH -split ';') | Where-Object { $_ -ne '' }
     if ($current -notcontains $PathToAdd) {
         $env:PATH = "$PathToAdd;$env:PATH"
@@ -117,6 +160,16 @@ function Refresh-CommonPaths {
     Add-PathIfExists "$env:ProgramFiles\MSYS2\usr\bin"
 }
 
+function Add-ProjectLocalPaths([string]$ProjectRoot) {
+    if ([string]::IsNullOrWhiteSpace($ProjectRoot)) { return }
+    $tempRoot = Join-Path $ProjectRoot 'piboh-temp'
+    Add-PathIfExists (Join-Path $tempRoot 'Git\cmd')
+    Add-PathIfExists (Join-Path $tempRoot 'Git\bin')
+    Add-PathIfExists (Join-Path $tempRoot 'CMake\bin')
+    Add-PathIfExists (Join-Path $tempRoot 'MSYS2\ucrt64\bin')
+    Add-PathIfExists (Join-Path $tempRoot 'MSYS2\usr\bin')
+}
+
 function Ensure-Winget {
     if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
         throw "winget non e disponibile. Installa 'App Installer' dal Microsoft Store e rilancia lo script."
@@ -125,73 +178,41 @@ function Ensure-Winget {
 
 function Get-PwshPath {
     Refresh-CommonPaths
-
     $cmd = Get-Command pwsh -ErrorAction SilentlyContinue
-    if ($cmd -and $cmd.Source) {
-        return $cmd.Source
-    }
-
+    if ($cmd -and $cmd.Source) { return $cmd.Source }
     $candidates = @(
         "$env:ProgramFiles\PowerShell\7\pwsh.exe",
         "$env:ProgramFiles\PowerShell\7-preview\pwsh.exe",
         "$env:LOCALAPPDATA\Microsoft\WindowsApps\pwsh.exe"
     )
-
     foreach ($candidate in $candidates) {
-        if (Test-Path $candidate) {
-            return $candidate
-        }
+        if (Test-Path $candidate) { return $candidate }
     }
-
     return $null
 }
 
-function Test-IsPowerShell7 {
-    return ($PSVersionTable.PSEdition -eq 'Core' -and $PSVersionTable.PSVersion.Major -ge 7)
-}
+function Test-IsPowerShell7 { return ($PSVersionTable.PSEdition -eq 'Core' -and $PSVersionTable.PSVersion.Major -ge 7) }
 
 function New-ScriptArgumentList {
-    $arguments = @(
-        '-NoProfile',
-        '-ExecutionPolicy', 'Bypass',
-        '-File', $script:SelfPath,
-        '-RepoUrl', $RepoUrl
-    )
-
-    if (-not [string]::IsNullOrWhiteSpace($RepoDir)) {
-        $arguments += @('-RepoDir', $RepoDir)
-    }
-
-    if ($RunAfterBuild) {
-        $arguments += '-RunAfterBuild'
-    }
-
+    $arguments = @('-NoProfile','-ExecutionPolicy','Bypass','-File',$script:SelfPath,'-RepoUrl',$RepoUrl)
+    if (-not [string]::IsNullOrWhiteSpace($RepoDir)) { $arguments += @('-RepoDir', $RepoDir) }
+    if ($RunAfterBuild) { $arguments += '-RunAfterBuild' }
     return $arguments
 }
 
 function Ensure-PowerShell7Host {
-    if (Test-IsPowerShell7) {
-        return
-    }
-
+    if (Test-IsPowerShell7) { return }
     Write-Step 'Rilevato Windows PowerShell classico: rilancio con PowerShell 7'
-
     $pwsh = Get-PwshPath
     if (-not $pwsh) {
         Ensure-Winget
         Write-Step 'PowerShell 7 non trovato: installo Microsoft.PowerShell con winget'
-        winget install --id Microsoft.PowerShell --exact --accept-package-agreements --accept-source-agreements --disable-interactivity
-        if ($LASTEXITCODE -ne 0) {
-            throw 'Installazione di PowerShell 7 fallita.'
-        }
+        winget install --id Microsoft.PowerShell --exact --accept-package-agreements --accept-source-agreements --disable-interactivity --silent
+        if ($LASTEXITCODE -ne 0) { throw 'Installazione di PowerShell 7 fallita.' }
         Add-InstalledByScriptPackage 'Microsoft.PowerShell'
         $pwsh = Get-PwshPath
     }
-
-    if (-not $pwsh) {
-        throw 'PowerShell 7 risulta installato ma pwsh.exe non e stato trovato.'
-    }
-
+    if (-not $pwsh) { throw 'PowerShell 7 risulta installato ma pwsh.exe non e stato trovato.' }
     $arguments = New-ScriptArgumentList
     & $pwsh @arguments
     exit $LASTEXITCODE
@@ -202,49 +223,69 @@ function Test-WingetPackageInstalled([string]$Id) {
     return ($output -match [regex]::Escape($Id))
 }
 
-function Ensure-WingetPackage([string]$Id, [string]$DisplayName) {
+function Ask-InstallMode {
+    Write-Host ''
+    Write-Host 'Dove vuoi installare le dipendenze?' -ForegroundColor Cyan
+    Write-Host '  1. Percorso di installazione predefinito'
+    Write-Host '  2. Cartella piboh-temp del progetto'
+    $choice = Read-Host 'Scelta [1-2]'
+    if ($choice -eq '2') { return 'temp' }
+    return 'default'
+}
+
+function Get-PackageInstallLocation([string]$Id, [string]$ProjectRoot) {
+    if ($script:InstallMode -ne 'temp') { return $null }
+    $tempRoot = Join-Path $ProjectRoot 'piboh-temp'
+    switch ($Id) {
+        'Git.Git' { return (Join-Path $tempRoot 'Git') }
+        'Kitware.CMake' { return (Join-Path $tempRoot 'CMake') }
+        'MSYS2.MSYS2' { return (Join-Path $tempRoot 'MSYS2') }
+        default { return $null }
+    }
+}
+
+function Ensure-WingetPackage([string]$Id, [string]$DisplayName, [string]$InstallLocation = $null) {
     if (Test-WingetPackageInstalled $Id) {
         Write-Ok "$DisplayName e gia installato"
         return
     }
 
     Write-Step "Installo $DisplayName con winget"
-    winget install --id $Id --exact --accept-package-agreements --accept-source-agreements --disable-interactivity
+    $arguments = @('install','--id',$Id,'--exact','--accept-package-agreements','--accept-source-agreements','--disable-interactivity','--silent')
+    if (-not [string]::IsNullOrWhiteSpace($InstallLocation)) {
+        New-Item -ItemType Directory -Path $InstallLocation -Force | Out-Null
+        $arguments += @('--location', $InstallLocation)
+    }
 
+    & winget @arguments
     if (-not (Test-WingetPackageInstalled $Id)) {
         throw "Installazione di $DisplayName non riuscita o non rilevata correttamente."
     }
-
     Add-InstalledByScriptPackage $Id
+    $mode = if ([string]::IsNullOrWhiteSpace($InstallLocation)) { 'default' } else { 'temp' }
+    $resolvedLocation = Resolve-InstalledPackageLocation $Id $InstallLocation $repoDirResolved
+    Save-InstalledPackageMetadata $Id $mode $resolvedLocation
     Write-Ok "$DisplayName installato"
 }
 
 function Find-Msys2Root {
-    $candidates = @(
-        'C:\msys64',
-        "$env:LOCALAPPDATA\Programs\MSYS2",
-        "$env:ProgramFiles\MSYS2"
-    )
-
+    $candidates = @()
+    if ($script:TempInstallRoot) { $candidates += (Join-Path $script:TempInstallRoot 'MSYS2') }
+    $candidates += @('C:\msys64', "$env:LOCALAPPDATA\Programs\MSYS2", "$env:ProgramFiles\MSYS2")
     foreach ($candidate in $candidates) {
-        if (Test-Path (Join-Path $candidate 'usr\bin\bash.exe')) {
-            return $candidate
-        }
+        if (Test-Path (Join-Path $candidate 'usr\bin\bash.exe')) { return $candidate }
     }
-
     throw "MSYS2 non trovato. Verifica che l'installazione sia andata a buon fine."
 }
 
 function Convert-ToMsysPath([string]$WindowsPath) {
     $full = [System.IO.Path]::GetFullPath($WindowsPath)
     $normalized = $full.Replace('\', '/')
-
     if ($normalized -match '^([A-Za-z]):/(.*)$') {
         $drive = $matches[1].ToLower()
         $rest = $matches[2]
         return "/$drive/$rest"
     }
-
     throw "Impossibile convertire il path per MSYS2: $WindowsPath"
 }
 
@@ -254,51 +295,27 @@ function Invoke-MsysBash {
         [Parameter(Mandatory = $true)] [string]$Command,
         [string]$WorkingDirectory = ''
     )
-
     $bash = Join-Path $MsysRoot 'usr\bin\bash.exe'
-    if (-not (Test-Path $bash)) {
-        throw "bash.exe non trovato in MSYS2"
-    }
-
+    if (-not (Test-Path $bash)) { throw "bash.exe non trovato in MSYS2" }
     $env:CHERE_INVOKING = '1'
     $env:MSYSTEM = 'UCRT64'
     $env:MSYS2_PATH_TYPE = 'inherit'
-
     if ($WorkingDirectory) {
         $msysPath = Convert-ToMsysPath $WorkingDirectory
         $wrapped = "cd '$msysPath' && $Command"
-    }
-    else {
-        $wrapped = $Command
-    }
-
+    } else { $wrapped = $Command }
     & $bash -lc $wrapped
-    if ($LASTEXITCODE -ne 0) {
-        throw "Comando MSYS2 fallito con exit code $LASTEXITCODE"
-    }
+    if ($LASTEXITCODE -ne 0) { throw "Comando MSYS2 fallito con exit code $LASTEXITCODE" }
 }
 
 function Resolve-RepoDir([string]$ProvidedDir) {
     $scriptDir = Split-Path -Parent $PSCommandPath
     $repoCandidate = Split-Path -Parent $scriptDir
     $currentDir = (Get-Location).Path
-
-    if (-not [string]::IsNullOrWhiteSpace($ProvidedDir)) {
-        return [System.IO.Path]::GetFullPath($ProvidedDir)
-    }
-
-    if (Test-Path (Join-Path $currentDir 'CMakeLists.txt')) {
-        return [System.IO.Path]::GetFullPath($currentDir)
-    }
-
-    if (Test-Path (Join-Path $scriptDir 'CMakeLists.txt')) {
-        return [System.IO.Path]::GetFullPath($scriptDir)
-    }
-
-    if (Test-Path (Join-Path $repoCandidate 'CMakeLists.txt')) {
-        return [System.IO.Path]::GetFullPath($repoCandidate)
-    }
-
+    if (-not [string]::IsNullOrWhiteSpace($ProvidedDir)) { return [System.IO.Path]::GetFullPath($ProvidedDir) }
+    if (Test-Path (Join-Path $currentDir 'CMakeLists.txt')) { return [System.IO.Path]::GetFullPath($currentDir) }
+    if (Test-Path (Join-Path $scriptDir 'CMakeLists.txt')) { return [System.IO.Path]::GetFullPath($scriptDir) }
+    if (Test-Path (Join-Path $repoCandidate 'CMakeLists.txt')) { return [System.IO.Path]::GetFullPath($repoCandidate) }
     return [System.IO.Path]::GetFullPath((Join-Path $currentDir 'XTetris'))
 }
 
@@ -308,7 +325,6 @@ function Ensure-PortableNotepad([string]$ProjectRoot) {
         Write-Ok "Notepad++ Portable disponibile: $portableExe"
         return
     }
-
     Write-WarnMsg 'Notepad++ Portable non trovato nel repository.'
 }
 
@@ -329,13 +345,10 @@ if not exist "build\XTetris.exe" (
   pause
   exit /b 1
 )
-
-echo Avvio XTetris...
+cls
 "build\XTetris.exe"
 set "EXITCODE=%ERRORLEVEL%"
 >> "%LOG_DIR%\avvia-gioco.log" echo [%date% %time%] Fine launcher generato con exit code %EXITCODE%
-echo.
-pause
 exit /b %EXITCODE%
 REM Versione launcher generato: $ScriptVersion
 REM File Generato con Arena AI (https://arena.ai/)
@@ -347,11 +360,7 @@ REM File Generato con Arena AI (https://arena.ai/)
 function Ask-YesNo([string]$Prompt, [bool]$DefaultYes = $true) {
     $suffix = if ($DefaultYes) { '[S/n]' } else { '[s/N]' }
     $answer = Read-Host "$Prompt $suffix"
-
-    if ([string]::IsNullOrWhiteSpace($answer)) {
-        return $DefaultYes
-    }
-
+    if ([string]::IsNullOrWhiteSpace($answer)) { return $DefaultYes }
     switch -Regex ($answer.Trim()) {
         '^(s|si|sì|y|yes)$' { return $true }
         '^(n|no)$' { return $false }
@@ -376,19 +385,42 @@ Write-Step 'Verifico winget'
 Ensure-Winget
 Write-Ok 'winget disponibile'
 
-Ensure-WingetPackage 'Microsoft.PowerShell' 'PowerShell 7'
-Ensure-WingetPackage 'Git.Git' 'Git'
-Ensure-WingetPackage 'Kitware.CMake' 'CMake'
-Ensure-WingetPackage 'MSYS2.MSYS2' 'MSYS2'
-
-Refresh-CommonPaths
-
 $repoDirResolved = Resolve-RepoDir $RepoDir
 Write-Step "Cartella di lavoro: $repoDirResolved"
+if (-not (Test-Path $repoDirResolved)) { New-Item -ItemType Directory -Path $repoDirResolved | Out-Null }
 
-if (-not (Test-Path $repoDirResolved)) {
-    New-Item -ItemType Directory -Path $repoDirResolved | Out-Null
+$script:InstallMode = Ask-InstallMode
+if ($script:InstallMode -eq 'temp') {
+    $script:TempInstallRoot = Join-Path $repoDirResolved 'piboh-temp'
+    New-Item -ItemType Directory -Path $script:TempInstallRoot -Force | Out-Null
+    Write-Ok "Modalita installazione dipendenze: piboh-temp ($script:TempInstallRoot)"
 }
+else {
+    Write-Ok 'Modalita installazione dipendenze: percorso predefinito'
+}
+
+Ensure-WingetPackage 'Microsoft.PowerShell' 'PowerShell 7'
+
+$repoPresent = Test-Path (Join-Path $repoDirResolved 'CMakeLists.txt')
+if ($repoPresent) {
+    $script:GitRequested = Ask-YesNo 'Vuoi installare anche Git? (opzionale)' $false
+}
+else {
+    $script:GitRequested = Ask-YesNo 'Repository non presente localmente. Vuoi installare Git per poter clonare XTetris?' $false
+}
+
+if ($script:GitRequested) {
+    Ensure-WingetPackage 'Git.Git' 'Git' (Get-PackageInstallLocation 'Git.Git' $repoDirResolved)
+}
+else {
+    Write-WarnMsg 'Git non verra installato.'
+}
+
+Ensure-WingetPackage 'Kitware.CMake' 'CMake' (Get-PackageInstallLocation 'Kitware.CMake' $repoDirResolved)
+Ensure-WingetPackage 'MSYS2.MSYS2' 'MSYS2' (Get-PackageInstallLocation 'MSYS2.MSYS2' $repoDirResolved)
+
+Refresh-CommonPaths
+Add-ProjectLocalPaths $repoDirResolved
 
 if (-not (Test-Path (Join-Path $repoDirResolved 'CMakeLists.txt'))) {
     $items = @(Get-ChildItem -Force -Path $repoDirResolved -ErrorAction SilentlyContinue)
@@ -396,9 +428,7 @@ if (-not (Test-Path (Join-Path $repoDirResolved 'CMakeLists.txt'))) {
         throw "La cartella '$repoDirResolved' non sembra contenere XTetris ed e gia popolata. Specifica -RepoDir con una cartella vuota o il repo corretto."
     }
 
-    if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
-        Refresh-CommonPaths
-    }
+    if (-not (Get-Command git -ErrorAction SilentlyContinue)) { Refresh-CommonPaths; Add-ProjectLocalPaths $repoDirResolved }
     if (-not (Get-Command git -ErrorAction SilentlyContinue)) {
         throw "Git non e disponibile nel PATH anche dopo l'installazione."
     }
@@ -406,9 +436,7 @@ if (-not (Test-Path (Join-Path $repoDirResolved 'CMakeLists.txt'))) {
     if (-not (Test-Path (Join-Path $repoDirResolved '.git'))) {
         Write-Step 'Clono il repository XTetris'
         git clone $RepoUrl $repoDirResolved
-        if ($LASTEXITCODE -ne 0) {
-            throw 'git clone fallito'
-        }
+        if ($LASTEXITCODE -ne 0) { throw 'git clone fallito' }
         Write-Ok 'Repository clonato'
     }
 }
@@ -454,10 +482,11 @@ Write-GameLauncher -ProjectRoot $repoDirResolved
 $shouldRun = $RunAfterBuild -or (Ask-YesNo 'Vuoi avviare il gioco?')
 if ($shouldRun) {
     Write-Step 'Avvio XTetris'
+    Clear-Host
     & $exePath
 }
 
 Finalize-Log
 
-# Versione script: 1.0.9k-STABLE
+# Versione script: caricata da version.txt
 # File Generato con Arena AI (https://arena.ai/)

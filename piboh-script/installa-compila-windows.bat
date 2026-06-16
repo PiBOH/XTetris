@@ -1,7 +1,12 @@
 @echo off
 setlocal EnableExtensions
 chcp 65001 >nul 2>nul
-set "SCRIPT_VERSION=1.0.9k-STABLE"
+set "VERSION_FILE=%~dp0version.txt"
+if exist "%VERSION_FILE%" (
+  set /p SCRIPT_VERSION=<"%VERSION_FILE%"
+) else (
+  set "SCRIPT_VERSION=0.0.0-UNKNOWN"
+)
 set "LOG_DIR=%~dp0log"
 if not exist "%LOG_DIR%" mkdir "%LOG_DIR%" >nul 2>nul
 set "STATE_FILE=%LOG_DIR%\installed-packages.txt"
@@ -37,7 +42,7 @@ pause
  exit /b 1
 )
 
-winget install --id Microsoft.PowerShell --exact --accept-package-agreements --accept-source-agreements --disable-interactivity
+winget install --id Microsoft.PowerShell --exact --accept-package-agreements --accept-source-agreements --disable-interactivity --silent
 if errorlevel 1 (
  echo ERRORE: installazione automatica di PowerShell 7 fallita.
  >> "%LOG_FILE%" echo [%date% %time%] Errore durante esecuzione
@@ -93,5 +98,5 @@ if exist "%LOCALAPPDATA%\Microsoft\WindowsApps\pwsh.exe" (
 )
 goto :eof
 
-REM Versione script: 1.0.9k-STABLE
+REM Versione script: caricata da version.txt
 REM File Generato con Arena AI (https://arena.ai/)

@@ -4,10 +4,12 @@ param(
 )
 
 $ErrorActionPreference = 'Stop'
-$ScriptVersion = '1.0.21-STABLE'
+$script:VersionFile = Join-Path $PSScriptRoot 'version.txt'
+$ScriptVersion = if (Test-Path $script:VersionFile) { (Get-Content -Path $script:VersionFile -ErrorAction SilentlyContinue | Select-Object -First 1).Trim() } else { '0.0.0-UNKNOWN' }
 $script:SelfPath = $MyInvocation.MyCommand.Path
 $script:LogDir = Join-Path $PSScriptRoot 'log'
 $script:StateFile = Join-Path $script:LogDir 'installed-packages.txt'
+$script:StateMetaFile = Join-Path $script:LogDir 'installed-packages.csv'
 $script:TranscriptStarted = $false
 $script:LogFile = $null
 
@@ -18,6 +20,10 @@ function Ensure-LogInfrastructure {
 
     if (-not (Test-Path $script:StateFile)) {
         New-Item -ItemType File -Path $script:StateFile -Force | Out-Null
+    }
+
+    if (-not (Test-Path $script:StateMetaFile)) {
+        New-Item -ItemType File -Path $script:StateMetaFile -Force | Out-Null
     }
 }
 
@@ -75,6 +81,120 @@ function Test-InstalledByScriptPackage([string]$Id) {
 
     $entries = @(Get-Content -Path $script:StateFile -ErrorAction SilentlyContinue)
     return ($entries -contains $Id)
+}
+
+function Save-InstalledPackageMetadata([string]$Id, [string]$Mode, [string]$Location) {
+    Ensure-LogInfrastructure
+    $entries = @()
+    if (Test-Path $script:StateMetaFile) {
+        $entries = @(Get-Content -Path $script:StateMetaFile -ErrorAction SilentlyContinue | Where-Object { $_ -and -not $_.StartsWith($Id + '|') })
+    }
+    $line = ('{0}|{1}|{2}' -f $Id, $Mode, $Location)
+    $entries += $line
+    Set-Content -Path $script:StateMetaFile -Value $entries
+}
+
+function Remove-InstalledPackageMetadata([string]$Id) {
+    Ensure-LogInfrastructure
+    if (-not (Test-Path $script:StateMetaFile)) { return }
+    $entries = @(Get-Content -Path $script:StateMetaFile -ErrorAction SilentlyContinue | Where-Object { $_ -and -not $_.StartsWith($Id + '|') })
+    Set-Content -Path $script:StateMetaFile -Value $entries
+}
+
+function Get-InstalledPackageMetadata([string]$Id) {
+    Ensure-LogInfrastructure
+    if (-not (Test-Path $script:StateMetaFile)) { return $null }
+    $line = Get-Content -Path $script:StateMetaFile -ErrorAction SilentlyContinue | Where-Object { $_ -and $_.StartsWith($Id + '|') } | Select-Object -First 1
+    if (-not $line) { return $null }
+    $parts = $line -split '\|', 3
+    [pscustomobject]@{ Id = $parts[0]; Mode = $parts[1]; Location = $parts[2] }
+}
+
+function Invoke-HiddenProcess([string]$FilePath, [string[]]$Arguments) {
+    $process = Start-Process -FilePath $FilePath -ArgumentList $Arguments -WindowStyle Hidden -Wait -PassThru
+    return $process.ExitCode
+}
+
+function Uninstall-TrackedPackage([string]$Id, [string]$DisplayName) {
+    if (-not (Test-InstalledByScriptPackage $Id)) {
+        Write-Ok "$DisplayName non risulta installato dallo script"
+        return
+    }
+
+    $metadata = Get-InstalledPackageMetadata $Id
+    $location = if ($metadata) { $metadata.Location } else { '' }
+    $mode = if ($metadata) { $metadata.Mode } else { 'default' }
+
+    if ($Id -eq 'Microsoft.PowerShell') {
+        if (Test-WingetPackageInstalled $Id) {
+            Write-Step "Disinstallo $DisplayName"
+            winget uninstall --id $Id --exact --accept-source-agreements --disable-interactivity --silent
+            if (-not (Test-WingetPackageInstalled $Id)) {
+                Remove-InstalledByScriptPackage $Id
+                Remove-InstalledPackageMetadata $Id
+                Write-Ok "$DisplayName disinstallato"
+            } else {
+                Write-WarnMsg "$DisplayName potrebbe richiedere una rimozione manuale o un riavvio"
+            }
+        }
+        return
+    }
+
+    if (-not [string]::IsNullOrWhiteSpace($location) -and (Test-Path $location)) {
+        $uninstallerCandidates = @(
+            (Join-Path $location 'unins000.exe'),
+            (Join-Path $location 'uninstall.exe'),
+            (Join-Path $location 'Uninstall.exe')
+        )
+
+        foreach ($candidate in $uninstallerCandidates) {
+            if (Test-Path $candidate) {
+                Write-Step "Disinstallo $DisplayName"
+                $args = @()
+                switch ($Id) {
+                    'Git.Git' { $args = @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/SP-') }
+                    'Kitware.CMake' { $args = @('/S') }
+                    'MSYS2.MSYS2' { $args = @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART', '/SP-') }
+                    default { $args = @('/S') }
+                }
+                Invoke-HiddenProcess $candidate $args | Out-Null
+                Start-Sleep -Seconds 2
+                if (-not (Test-Path $location)) {
+                    Remove-InstalledByScriptPackage $Id
+                    Remove-InstalledPackageMetadata $Id
+                    Write-Ok "$DisplayName disinstallato"
+                    return
+                }
+            }
+        }
+
+        if ($mode -eq 'temp') {
+            Write-Step "Rimuovo $DisplayName dalla cartella temporanea"
+            Remove-Item -Path $location -Recurse -Force -ErrorAction SilentlyContinue
+            Remove-InstalledByScriptPackage $Id
+            Remove-InstalledPackageMetadata $Id
+            Write-Ok "$DisplayName rimosso"
+            return
+        }
+    }
+
+    if (-not (Test-WingetPackageInstalled $Id)) {
+        Remove-InstalledByScriptPackage $Id
+        Remove-InstalledPackageMetadata $Id
+        Write-WarnMsg "$DisplayName era segnato come installato dallo script, ma non risulta presente nel sistema"
+        return
+    }
+
+    Write-Step "Disinstallo $DisplayName"
+    winget uninstall --id $Id --exact --accept-source-agreements --disable-interactivity --silent
+    if (Test-WingetPackageInstalled $Id) {
+        Write-WarnMsg "$DisplayName potrebbe richiedere una rimozione manuale o un riavvio"
+    }
+    else {
+        Remove-InstalledByScriptPackage $Id
+        Remove-InstalledPackageMetadata $Id
+        Write-Ok "$DisplayName disinstallato"
+    }
 }
 
 function Write-Step($Message) {
@@ -167,7 +287,7 @@ function Ensure-PowerShell7Host {
     if (-not $pwsh) {
         Ensure-Winget
         Write-Step 'PowerShell 7 non trovato: installo Microsoft.PowerShell con winget'
-        winget install --id Microsoft.PowerShell --exact --accept-package-agreements --accept-source-agreements --disable-interactivity
+        winget install --id Microsoft.PowerShell --exact --accept-package-agreements --accept-source-agreements --disable-interactivity --silent
         if ($LASTEXITCODE -ne 0) {
             throw 'Installazione di PowerShell 7 fallita.'
         }
@@ -187,30 +307,6 @@ function Ensure-PowerShell7Host {
 function Test-WingetPackageInstalled([string]$Id) {
     $output = winget list --id $Id --exact --accept-source-agreements 2>$null | Out-String
     return ($output -match [regex]::Escape($Id))
-}
-
-function Uninstall-TrackedWingetPackage([string]$Id, [string]$DisplayName) {
-    if (-not (Test-InstalledByScriptPackage $Id)) {
-        Write-Ok "$DisplayName non risulta installato dallo script"
-        return
-    }
-
-    if (-not (Test-WingetPackageInstalled $Id)) {
-        Remove-InstalledByScriptPackage $Id
-        Write-WarnMsg "$DisplayName era segnato come installato dallo script, ma non risulta presente nel sistema"
-        return
-    }
-
-    Write-Step "Disinstallo $DisplayName"
-    winget uninstall --id $Id --exact --accept-source-agreements --disable-interactivity
-
-    if (Test-WingetPackageInstalled $Id) {
-        Write-WarnMsg "$DisplayName potrebbe richiedere una rimozione manuale o un riavvio"
-    }
-    else {
-        Remove-InstalledByScriptPackage $Id
-        Write-Ok "$DisplayName disinstallato"
-    }
 }
 
 function Resolve-RepoDir([string]$ProvidedDir) {
@@ -299,10 +395,10 @@ Write-Ok 'winget disponibile'
 $repoDirResolved = Resolve-RepoDir $RepoDir
 Write-Step "Cartella di lavoro: $repoDirResolved"
 
-Uninstall-TrackedWingetPackage 'Notepad++.Notepad++' 'Notepad++'
-Uninstall-TrackedWingetPackage 'Git.Git' 'Git'
-Uninstall-TrackedWingetPackage 'Kitware.CMake' 'CMake'
-Uninstall-TrackedWingetPackage 'MSYS2.MSYS2' 'MSYS2'
+Uninstall-TrackedPackage 'Notepad++.Notepad++' 'Notepad++'
+Uninstall-TrackedPackage 'Git.Git' 'Git'
+Uninstall-TrackedPackage 'Kitware.CMake' 'CMake'
+Uninstall-TrackedPackage 'MSYS2.MSYS2' 'MSYS2'
 
 $removeBuild = $false
 $buildPath = Join-Path $repoDirResolved 'build'
@@ -319,6 +415,7 @@ else {
 $removePwsh = (Test-InstalledByScriptPackage 'Microsoft.PowerShell') -and (Test-WingetPackageInstalled 'Microsoft.PowerShell')
 if ($removePwsh) {
     Remove-InstalledByScriptPackage 'Microsoft.PowerShell'
+    Remove-InstalledPackageMetadata 'Microsoft.PowerShell'
 }
 if ($removePwsh -or $removeBuild) {
     Write-Step 'Preparo la pulizia finale dopo la chiusura di PowerShell 7'
@@ -332,5 +429,5 @@ Write-Ok 'Disinstallazione completata'
 Write-Host 'Puoi chiudere questa finestra.' -ForegroundColor Cyan
 Finalize-Log
 
-# Versione script: 1.0.21-STABLE
+# Versione script: caricata da version.txt
 # File Generato con Arena AI (https://arena.ai/)
