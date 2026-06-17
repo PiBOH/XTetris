@@ -367,8 +367,6 @@ code {
 .readme ul, .readme ol { padding-left: 24px; }
 .readme li { margin-bottom: 4px; }
 .readme a { color: var(--link); }
-.readme img.shieldsio,
-.readme img[src*="shields.io"] { display: inline-block; margin: 2px 4px 2px 0; }
 
 .readme pre,
 .changelog pre,
@@ -409,24 +407,50 @@ code {
 }
 .readme th { background: var(--bg-panel); }
 
-/* ---------- README badges ---------- */
-.readme p:first-of-type {
+/* ---------- README images: logo + badges ---------- */
+
+/* Logo XTetris (la prima immagine del README) */
+.readme img[src*="xtetrisimage"] {
+  display: block;
+  width: clamp(140px, 40%, 260px);
+  max-width: 100%;
+  height: auto;
+  margin: 8px auto 18px;
+  filter: drop-shadow(0 0 18px rgba(88, 166, 255, 0.25));
+}
+
+/* Tutte le altre immagini: vincola la larghezza */
+.readme img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Badge shields.io: altezza fissa e allineamento verticale */
+.readme img[src*="shields.io"] {
+  height: 20px;
+  vertical-align: middle;
+  border-radius: 3px;
+  margin: 2px 2px;
+}
+
+/* Wrapper dei badge (link <a>) */
+.readme a img[src*="shields.io"] {
+  display: inline-block;
+}
+
+/* Allinea verticalmente le righe di badge */
+.readme p:has(img[src*="shields.io"]) {
   display: flex;
   flex-wrap: wrap;
-  gap: 4px 6px;
+  gap: 4px 4px;
   align-items: center;
-  margin-top: 0;
-}
-.readme p:first-of-type a,
-.readme p:first-of-type img {
-  display: inline-block;
-  margin: 0;
+  margin: 8px 0 14px;
   line-height: 1;
 }
-.readme p:first-of-type img {
-  height: 20px;
-  border-radius: 3px;
-  vertical-align: middle;
+.readme p:has(img[src*="shields.io"]) a {
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
 }
 
 /* ---------- Version banner ---------- */

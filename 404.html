@@ -4,22 +4,235 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>404 · XTetris</title>
+  <link rel="icon" type="image/png" href="piboh-images/xtetrisimage_nobg.png" />
   <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Stili locali solo per la 404 */
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background:
+        radial-gradient(ellipse at center, rgba(160, 0, 240, 0.18), transparent 60%),
+        linear-gradient(180deg, #0d1117 0%, #11151c 100%);
+      padding: 32px 20px;
+    }
+    .notfound {
+      max-width: 720px;
+      width: 100%;
+      text-align: center;
+    }
+    .notfound-logo {
+      width: clamp(140px, 30vw, 200px);
+      height: auto;
+      margin: 0 auto 16px;
+      filter:
+        drop-shadow(0 0 24px rgba(88, 166, 255, 0.35))
+        drop-shadow(0 4px 18px rgba(0, 0, 0, 0.5));
+      animation: nf-float 4s ease-in-out infinite;
+    }
+    @keyframes nf-float {
+      0%,100% { transform: translateY(0) rotate(-2deg); }
+      50%     { transform: translateY(-8px) rotate(2deg); }
+    }
+    .notfound-code {
+      font-size: clamp(5rem, 14vw, 9rem);
+      font-weight: 900;
+      margin: 0;
+      letter-spacing: -0.04em;
+      background: linear-gradient(90deg,
+        var(--piece-i), var(--piece-j), var(--piece-t),
+        var(--piece-l), var(--piece-z));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
+    }
+    .notfound-title {
+      font-size: 1.4rem;
+      margin: 8px 0 4px;
+      color: var(--text);
+    }
+    .notfound-sub {
+      color: var(--text-mute);
+      margin: 0 0 24px;
+    }
+    .notfound-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+    .notfound-piece {
+      font-size: 2.4rem;
+      margin: 0 4px;
+      display: inline-block;
+      animation: nf-piece-fall 3s linear infinite;
+      opacity: 0.6;
+    }
+    .notfound-piece:nth-child(2) { animation-delay: 0.4s; color: var(--piece-j); }
+    .notfound-piece:nth-child(3) { animation-delay: 0.8s; color: var(--piece-l); }
+    .notfound-piece:nth-child(4) { animation-delay: 1.2s; color: var(--piece-t); }
+    .notfound-piece:nth-child(5) { animation-delay: 1.6s; color: var(--piece-s); }
+    .notfound-piece:nth-child(6) { animation-delay: 2.0s; color: var(--piece-z); }
+    .notfound-piece:nth-child(1) { color: var(--piece-i); }
+    @keyframes nf-piece-fall {
+      0%   { transform: translateY(-10px); opacity: 0; }
+      20%  { opacity: 0.8; }
+      100% { transform: translateY(60px); opacity: 0; }
+    }
+
+    /* ===== Easter egg: Konami code → 2048 ===== */
+    .egg-hint {
+      margin-top: 28px;
+      padding: 10px 16px;
+      background: rgba(0, 240, 240, 0.06);
+      border: 1px dashed rgba(0, 240, 240, 0.35);
+      border-radius: 8px;
+      color: var(--text-mute);
+      font-size: 0.88rem;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    .egg-hint.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .egg-hint kbd {
+      display: inline-block;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-bottom-width: 2px;
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-family: ui-monospace, SFMono-Regular, monospace;
+      font-size: 0.78rem;
+      color: var(--text);
+      margin: 0 1px;
+    }
+    .egg-hint a {
+      color: var(--piece-i);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .egg-hint a:hover { text-decoration: underline; }
+    .egg-progress {
+      display: inline-block;
+      color: var(--piece-s);
+      font-weight: 700;
+      letter-spacing: 0.15em;
+    }
+  </style>
 </head>
 <body>
-  <header class="hero" style="min-height: 360px; padding: 80px 24px;">
-    <div class="hero-inner">
-      <h1 class="hero-title" style="font-size: clamp(3rem, 8vw, 6rem);">404</h1>
-      <p class="hero-tagline">
-        La pagina che stai cercando non esiste. Forse è caduta come un tetramino senza supporto.
-      </p>
-      <div class="hero-actions">
-        <a class="btn btn-primary" href="./">⬅ Torna alla home</a>
-        <a class="btn btn-secondary" href="https://github.com/PiBOH/XTetris" target="_blank" rel="noopener">
-          Vedi il repository
-        </a>
-      </div>
+  <main class="notfound">
+    <img class="notfound-logo"
+         src="piboh-images/xtetrisimage_nobg.png"
+         alt="XTetris"
+         width="180" height="180"
+         decoding="async" />
+
+    <h1 class="notfound-code">404</h1>
+
+    <p>
+      <span class="notfound-piece">▣</span>
+      <span class="notfound-piece">▣</span>
+      <span class="notfound-piece">▣</span>
+      <span class="notfound-piece">▣</span>
+      <span class="notfound-piece">▣</span>
+      <span class="notfound-piece">▣</span>
+    </p>
+
+    <p class="notfound-title">Pagina persa nel vuoto.</p>
+    <p class="notfound-sub">
+      Il blocco che cercavi non c'è — è caduto prima di atterrare.
+    </p>
+
+    <div class="notfound-actions">
+      <a class="btn btn-primary" href="./">⬅ Torna alla home</a>
+      <a class="btn btn-secondary" href="https://github.com/PiBOH/XTetris" target="_blank" rel="noopener">
+        Vedi il repository
+      </a>
     </div>
-  </header>
+
+    <div id="egg-hint" class="egg-hint" role="status" aria-live="polite">
+      💡 <strong>Easter egg:</strong>
+      premi la sequenza
+      <kbd>↑</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd><kbd>←</kbd><kbd>→</kbd><kbd>B</kbd><kbd>A</kbd>
+      <span class="egg-progress" id="egg-progress" aria-hidden="true"></span>
+      <br>
+      oppure vai direttamente a <a href="https://piboh.github.io/2048-game/" target="_blank" rel="noopener">🎮 2048</a>.
+    </div>
+  </main>
+
+  <script>
+  (function () {
+    'use strict';
+
+    var EGG_URL = 'https://piboh.github.io/2048-game/';
+
+    // Sequenza Konami classica: ↑ ↑ ↓ ↓ ← → ← → B A
+    var KONAMI = [
+      'ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown',
+      'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight',
+      'b', 'a'
+    ];
+    var idx = 0;
+
+    // Mostra l'hint dopo 3.5 secondi
+    var hintEl = document.getElementById('egg-hint');
+    var progressEl = document.getElementById('egg-progress');
+    setTimeout(function () {
+      if (hintEl) hintEl.classList.add('visible');
+    }, 3500);
+
+    function flashProgress(stage) {
+      if (!progressEl) return;
+      progressEl.textContent = '[' + stage + '/' + KONAMI.length + ']';
+      setTimeout(function () { progressEl.textContent = ''; }, 900);
+    }
+
+    document.addEventListener('keydown', function (e) {
+      var key = (e.key || '').toLowerCase();
+      var expected = KONAMI[idx].toLowerCase();
+      if (key === expected) {
+        idx++;
+        flashProgress(idx);
+        if (idx >= KONAMI.length) {
+          // Easter egg attivato!
+          if (hintEl) {
+            hintEl.style.background = 'rgba(0, 240, 0, 0.15)';
+            hintEl.style.borderColor = 'var(--piece-s)';
+            hintEl.innerHTML = '🎉 <strong>Easter egg sbloccato!</strong> Carico 2048…';
+          }
+          setTimeout(function () { window.location.href = EGG_URL; }, 600);
+        }
+      } else {
+        // Reset (ma se il primo tasto è giusto riparti da 1, non da 0)
+        idx = (key === KONAMI[0].toLowerCase()) ? 1 : 0;
+      }
+    });
+
+    // Easter egg anche cliccando sull'hint stesso
+    if (hintEl) {
+      hintEl.addEventListener('click', function (e) {
+        // Se il click è sul link diretto a 2048, non fare nulla (il link naviga)
+        if (e.target.tagName === 'A' && e.target.href) return;
+        window.location.href = EGG_URL;
+      });
+      hintEl.style.cursor = 'pointer';
+    }
+
+    // Console hint per i developer curiosi
+    try {
+      console.log('%c🎮 Easter egg?', 'color:#00f0f0;font-size:18px;font-weight:bold');
+      console.log('%cSequenza Konami: ↑ ↑ ↓ ↓ ← → ← → B A', 'color:#a000f0;font-size:13px');
+      console.log('%cOppure: ' + EGG_URL, 'color:#f0a000');
+    } catch (_) { /* no-op */ }
+  })();
+  </script>
 </body>
 </html>

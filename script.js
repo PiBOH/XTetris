@@ -67,6 +67,19 @@
   }
 
   function renderMarkdown(md) {
+    // Pre-process: rimuovi la "[" spuria che appare a inizio riga prima di
+    // un'immagine standalone (es. `[![logo](url)` senza chiusura `](href)`).
+    // Usiamo un negative lookahead `(?!]\()` per non toccare le righe che
+    // sono invece dei badge markdown validi `[![alt](src)](href)`.
+    md = md.replace(/^\[(!\[[^\]]*\]\([^)\s]+(?:\s+"[^"]*")?\))(?!]\()/gm, '$1');
+
+    // Pre-process: converti i blob URL di GitHub in URL raw per le immagini,
+    // perché i blob URL restituiscono HTML (viewer), non l'immagine binaria.
+    md = md.replace(
+      /https:\/\/github\.com\/([^/]+)\/([^/]+)\/blob\/([^)\s"']+)/g,
+      'https://raw.githubusercontent.com/$1/$2/$3'
+    );
+
     const lines = md.replace(/\r\n?/g, '\n').split('\n');
     const out = [];
     let i = 0;
