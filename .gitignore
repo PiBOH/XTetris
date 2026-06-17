@@ -56,3 +56,4 @@ piboh-script/log/*
 piboh-temp/
 piboh-dip/
 .releases/
+/piboh-script/log
