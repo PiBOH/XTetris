@@ -20,6 +20,19 @@
   const RELEASE_API    = `https://api.github.com/repos/${REPO}/releases/latest`;
   const RELEASE_DL_TPL = `https://github.com/${REPO}/releases/latest/download/XTetris.zip`;
 
+  // Mappa guida -> percorso nel repository
+  // La guida "predefinita" (caricata all'apertura della pagina) è quella
+  // dello script automatico, come richiesto.
+  const GUIDE_PATHS = {
+    'GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md': 'guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md',
+    'GUIDA-WINDOWS.md':                  'guide/GUIDA-WINDOWS.md',
+    'GUIDA-WINDOWS-RAPIDA.md':           'guide/GUIDA-WINDOWS-RAPIDA.md',
+    'GUIDA-MSYS2.md':                    'guide/GUIDA-MSYS2.md',
+    'GUIDA-CLION-WINDOWS.md':            'guide/GUIDA-CLION-WINDOWS.md',
+    'GUIDA-VSCODE-WINDOWS.md':           'guide/GUIDA-VSCODE-WINDOWS.md',
+  };
+  const DEFAULT_GUIDE = 'GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md';
+
   // -------- tiny markdown renderer (intentionally minimal) -----
   function escapeHtml(s) {
     return s
@@ -286,6 +299,61 @@
     }
   }
 
+  // ---------- guide reader ----------
+  function guideRawUrl(filename) {
+    const path = GUIDE_PATHS[filename];
+    return `https://github.com/${REPO}/blob/${BRANCH}/${path}`;
+  }
+
+  function guideRawMdUrl(filename) {
+    const path = GUIDE_PATHS[filename];
+    return `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${path}`;
+  }
+
+  async function loadGuide(filename) {
+    const target = document.getElementById('guide-content');
+    const link   = document.getElementById('guide-raw-link');
+    if (!target) return;
+
+    if (!GUIDE_PATHS[filename]) {
+      target.innerHTML =
+        `<p style="color:#f0a000">⚠ Guida non riconosciuta: <code>${escapeHtml(filename)}</code></p>`;
+      return;
+    }
+
+    // Aggiorna subito il link "Apri su GitHub ↗"
+    if (link) link.setAttribute('href', guideRawUrl(filename));
+
+    // Mostra stato di caricamento
+    target.innerHTML =
+      `<p class="loading">Caricamento di <code>${escapeHtml(filename)}</code>…</p>`;
+
+    try {
+      const url  = guideRawMdUrl(filename);
+      const md   = await loadText(url);
+      const html = renderMarkdown(md);
+      target.innerHTML = html;
+      // Scroll morbido verso il contenuto caricato
+      target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    } catch (err) {
+      target.innerHTML =
+        `<p style="color:#f0a000">⚠ Impossibile caricare la guida.</p>
+         <p>Apri direttamente il sorgente su GitHub:
+         <a href="${escapeHtml(guideRawUrl(filename))}" target="_blank" rel="noopener">
+           ${escapeHtml(filename)}
+         </a></p>
+         <p style="color:#9da7b3;font-size:.85em">Dettagli: ${escapeHtml(err.message)}</p>`;
+    }
+  }
+
+  function bindGuideSelector() {
+    const sel = document.getElementById('guide-select');
+    if (!sel) return;
+    sel.addEventListener('change', () => loadGuide(sel.value));
+    // Carica la guida predefinita al boot
+    loadGuide(DEFAULT_GUIDE);
+  }
+
   // ---------- copy buttons ----------
   function bindCopyButtons() {
     document.querySelectorAll('.copy-btn').forEach(btn => {
@@ -315,8 +383,9 @@
     // Version + download URLs come from the GitHub API
     fetchLatestRelease().then(applyVersionToPage);
 
-    // README + changelog come from raw.githubusercontent.com
+    // README + changelog + guida selezionata dal dropdown
     fillReadme();
     fillChangelog();
+    bindGuideSelector();
   });
 })();

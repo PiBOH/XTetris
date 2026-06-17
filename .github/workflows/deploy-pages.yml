@@ -27,6 +27,7 @@ on:
       - 'script.js'
       - '404.html'
       - 'README.md'
+      - 'piboh-images/**'
       - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
 

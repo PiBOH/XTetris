@@ -3,10 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title data-title-version>XTetris</title>
+    <title>XTetris</title>
     <meta name="description" content="XTetris è un gioco Tetris testuale scritto in C. Scopri come scaricarlo, compilarlo e giocarlo." />
   <link rel="stylesheet" href="style.css" />
-  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='28' height='28' x='2' y='2' fill='%2300f0f0'/%3E%3Crect width='28' height='28' x='32' y='2' fill='%23a000f0'/%3E%3Crect width='28' height='28' x='2' y='32' fill='%23f0a000'/%3E%3Crect width='28' height='28' x='32' y='32' fill='%2300f000'/%3E%3C/svg%3E" />
+  <link rel="icon" type="image/png" href="piboh-images/xtetrisimage_nobg.png" />
 </head>
 <body>
 
@@ -23,17 +23,14 @@
     </div>
 
     <div class="hero-inner">
-      <div class="hero-logo" aria-hidden="true">
-        <div class="block block-i"></div>
-        <div class="block block-j"></div>
-        <div class="block block-l"></div>
-        <div class="block block-o"></div>
-        <div class="block block-s"></div>
-        <div class="block block-t"></div>
-        <div class="block block-z"></div>
-      </div>
+      <img class="hero-logo"
+           src="piboh-images/xtetrisimage_nobg.png"
+           alt="XTetris logo"
+           width="220"
+           height="220"
+           decoding="async" />
 
-      <h1 class="hero-title">XT<span class="title-x">e</span>tris</h1>
+      <h1 class="hero-title">XTetris</h1>
       <p class="hero-tagline">Un Tetris testuale scritto in C, con script automatici per Windows.</p>
 
       <div class="badges">
@@ -69,7 +66,7 @@
         <li><a href="#about">Info</a></li>
         <li><a href="#readme">README</a></li>
         <li><a href="#download">Download</a></li>
-        <li><a href="#build">Build</a></li>
+        <li><a href="#guide">Guide</a></li>
         <li><a href="#structure">Struttura</a></li>
       </ul>
     </div>
@@ -85,31 +82,34 @@
         e attivamente sviluppato da <a href="https://github.com/PiBOH" target="_blank" rel="noopener">PiBOH</a>.
       </p>
       <p class="lead">
-        Il progetto include <strong>script automatici per Windows</strong> che installano le dipendenze (MSYS2, CMake, MinGW),
-        compilano il gioco e lanciano l'eseguibile con un solo click. È anche disponibile una copia
-        <strong>portable di Notepad++</strong> con il plugin <em>NppMarkdownPanel</em> integrato, perfetto per leggere la documentazione.
+        Il progetto include un <strong>menu automatico per Windows</strong>
+        (<code>MENU-XTETRIS-WINDOWS.bat</code>) che permette di installare i prerequisiti,
+        compilare e avviare il gioco con un click, oltre a opzioni di disinstallazione,
+        verifica dell'integrità del repository e apertura delle guide.
+        È anche disponibile una copia <strong>portable di Notepad++</strong> con il plugin
+        <em>NppMarkdownPanel</em> integrato, perfetto per leggere la documentazione.
       </p>
 
       <div class="features-grid">
         <div class="feature">
           <div class="feature-icon">🕹️</div>
           <h3>100% C puro</h3>
-          <p>Sorgente compatto, organizzato in moduli (tetramino, player, piano di gioco, menu).</p>
+          <p>Sorgente organizzato in moduli (tetramino, player, piano di gioco, menu).</p>
         </div>
         <div class="feature">
           <div class="feature-icon">🪟</div>
-          <h3>One-click su Windows</h3>
-          <p>Script <code>.bat</code> e <code>.ps1</code> pronti: installa dipendenze, compila e avvia tutto da un unico file.</p>
+          <h3>Menu automatico Windows</h3>
+          <p>8 opzioni da <code>MENU-XTETRIS-WINDOWS.bat</code>: installa, compila, avvia, disinstalla, guide, changelog, verifica integrità.</p>
         </div>
         <div class="feature">
           <div class="feature-icon">🛠️</div>
-          <h3>Build portabile</h3>
-          <p>Compilabile manualmente con <code>cmake</code> su qualsiasi piattaforma con un compilatore C.</p>
+          <h3>Build manuale</h3>
+          <p>Compilabile con <code>cmake</code> da riga di comando su qualsiasi piattaforma con un compilatore C.</p>
         </div>
         <div class="feature">
           <div class="feature-icon">📚</div>
           <h3>Guide complete</h3>
-          <p>Guide dedicate per Windows, MSYS2, CLion e VS Code incluse nel repository.</p>
+          <p>Sei guide dedicate nel repo: Windows, MSYS2, script automatico, CLion, VS Code e versione rapida.</p>
         </div>
       </div>
     </div>
@@ -202,38 +202,37 @@
     </div>
   </section>
 
-  <!-- ========== BUILD ========== -->
-  <section id="build" class="section section-alt">
+  <!-- ========== GUIDE ========== -->
+  <section id="guide" class="section section-alt">
     <div class="container">
-      <h2 class="section-title"><span class="accent-j">▶</span> Come compilarlo</h2>
+      <h2 class="section-title"><span class="accent-j">▶</span> Guide del progetto</h2>
+      <p class="section-sub">
+        Per impostazione predefinita viene mostrata la <strong>guida dello script automatico</strong>.
+        Dal menù a tendina puoi scegliere una qualsiasi delle altre guide incluse nel repository.
+      </p>
 
-      <div class="tabs">
-        <h3>🪟 Su Windows (automatico)</h3>
-        <p>Esegui uno di questi file dalla cartella del progetto:</p>
-        <ul class="bullet-list">
-          <li><code>MENU-XTETRIS-WINDOWS.bat</code> — menu interattivo</li>
-          <li><code>piboh-script/installa-compila-windows.bat</code> — installa dipendenze e compila</li>
-          <li><code>AVVIA GIOCO.bat</code> — generato automaticamente dopo una build riuscita</li>
-        </ul>
-        <p>
-          Dal menu puoi anche aprire il <strong>CHANGELOG</strong>, controllare l'integrità dei file
-          e aprire le guide con <strong>Notepad++ Portable</strong>.
-        </p>
-
-        <h3>🐧 Build manuale (cross-platform)</h3>
-        <div class="code-block">
-          <pre><code>mkdir build
-cd build
-cmake ..
-cmake --build .</code></pre>
-          <button class="copy-btn" data-copy="mkdir build
-cd build
-cmake ..
-cmake --build ." type="button" aria-label="Copia comando">
-            Copia
-          </button>
-        </div>
+      <div class="guide-controls">
+        <label for="guide-select"><strong>📖 Guida:</strong></label>
+        <select id="guide-select" aria-label="Seleziona una guida">
+          <option value="GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md">
+            Guida script automatico (Windows) — predefinita
+          </option>
+          <option value="GUIDA-WINDOWS.md">Guida Windows</option>
+          <option value="GUIDA-WINDOWS-RAPIDA.md">Guida rapida (Windows)</option>
+          <option value="GUIDA-MSYS2.md">Guida MSYS2</option>
+          <option value="GUIDA-CLION-WINDOWS.md">Guida CLion (Windows)</option>
+          <option value="GUIDA-VSCODE-WINDOWS.md">Guida VS Code (Windows)</option>
+        </select>
+        <a id="guide-raw-link" class="guide-raw-link"
+           href="https://github.com/PiBOH/XTetris/blob/main/guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md"
+           target="_blank" rel="noopener" aria-label="Apri la guida su GitHub">
+          Apri su GitHub ↗
+        </a>
       </div>
+
+      <article id="guide-content" class="readme">
+        <p class="loading">Caricamento della guida in corso…</p>
+      </article>
     </div>
   </section>
 
@@ -241,12 +240,16 @@ cmake --build ." type="button" aria-label="Copia comando">
   <section id="structure" class="section">
     <div class="container">
       <h2 class="section-title"><span class="accent-o">▶</span> Struttura del repository</h2>
+      <p class="section-sub">
+        Ricavata direttamente dal README del progetto · si aggiorna automaticamente con il repo.
+      </p>
 
       <div class="structure-grid">
         <div>
-          <h3>Base</h3>
+          <h3>Base (senza build)</h3>
           <pre class="tree"><code>XTetris/
-├── .github/workflows/
+├── .github/
+│   └── workflows/
 ├── .idea/
 ├── Elements/
 │   ├── boolType.h
@@ -268,10 +271,31 @@ cmake --build ." type="button" aria-label="Copia comando">
 │   ├── tetramino.c
 │   └── tetramino.h
 ├── guide/
+│   ├── GUIDA-CLION-WINDOWS.md
+│   ├── GUIDA-MSYS2.md
+│   ├── GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md
+│   ├── GUIDA-VSCODE-WINDOWS.md
+│   ├── GUIDA-WINDOWS-RAPIDA.md
+│   └── GUIDA-WINDOWS.md
+├── piboh-images/
+│   ├── .gitkeep
+│   ├── xtetrisimage.jpeg
+│   └── xtetrisimage_nobg.png
 ├── piboh-portable/
 │   ├── Notepad++Portable/
+│   │   ├── plugins/NppMarkdownPanel/
+│   │   └── shortcuts.xml
 │   └── PowerShell-7/
 ├── piboh-script/
+│   ├── apri-guide-windows.bat
+│   ├── disinstalla-dipendenze-windows.bat
+│   ├── disinstalla-dipendenze-windows.ps1
+│   ├── installa-compila-windows.bat
+│   ├── installa-compila-windows.ps1
+│   ├── log/
+│   ├── verifica-integrita-windows.bat
+│   └── version.txt
+├── .gitignore
 ├── CHANGELOG.md
 ├── CMakeLists.txt
 ├── MENU-XTETRIS-WINDOWS.bat
@@ -324,7 +348,7 @@ cmake --build ." type="button" aria-label="Copia comando">
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <strong>XTetris</strong>
+        <strong>XTetris</strong> · Tetris testuale in C
       </div>
       <div class="footer-links">
         <a href="https://github.com/PiBOH/XTetris" target="_blank" rel="noopener">Repository</a>
@@ -334,7 +358,7 @@ cmake --build ." type="button" aria-label="Copia comando">
       </div>
       <div class="footer-meta">
         Fork di <a href="https://github.com/AlexGiulioBerton/XTetris" target="_blank" rel="noopener">AlexGiulioBerton/XTetris</a>
-        · Pagina GitHub Pages generata automaticamente dal workflow deploy-pages.yml
+        · Pagina GitHub Pages generata staticamente
       </div>
     </div>
   </footer>
