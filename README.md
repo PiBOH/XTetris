@@ -1,41 +1,45 @@
 # XTetris
 
-[![Deploy GitHub Pages](https://github.com/PiBOH/XTetris/actions/workflows/deploy.yml/badge.svg)](https://github.com/PiBOH/XTetris/actions/workflows/deploy.yml)
+<!-- [![Deploy GitHub Pages](https://github.com/PiBOH/XTetris/actions/workflows/deploy.yml/badge.svg)](https://github.com/PiBOH/XTetris/actions/workflows/deploy.yml) -->
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-online-blue)](https://piboh.github.io/XTetris/)
-![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/PiBOH/XTetris/total?logo=GitHub&cacheSeconds=60)
-![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/PiBOH/XTetris/latest/total)
+[![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/PiBOH/XTetris/total?logo=GitHub&cacheSeconds=60)](https://github.com/PiBOH/XTetris/releases/)
+[![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/PiBOH/XTetris/latest/total)](https://github.com/PiBOH/XTetris/releases/latest)
 [![License](https://img.shields.io/github/license/PiBOH/XTetris)](LICENSE)
 [![Last Commit](https://img.shields.io/github/last-commit/PiBOH/XTetris)](https://github.com/PiBOH/XTetris/commits/main)
 [![Top Language](https://img.shields.io/github/languages/top/PiBOH/XTetris)](https://github.com/PiBOH/XTetris)
 
-XTetris è un gioco **Tetris testuale in C**.
+[![GitHub Release](https://img.shields.io/github/v/release/PiBOH/XTetris?display_name=tag&style=flat-square&logo=google%20gemini&logoColor=e5e6e8&label=Stable%20Release%20Version&labelColor=121212&cacheSeconds=60)](https://github.com/PiBOH/XTetris/blob/main/piboh-script/version.txt)
 
-**Versione corrente degli script:** `3.0.45` (letta da `piboh-script/version.txt`)
 
 ## Uso rapido
 
 ### Windows
-Esegui uno di questi file:
+Esegui uno il file:
 
 - `MENU-XTETRIS-WINDOWS.bat`
-- `piboh-script/installa-compila-windows.bat`
-- `AVVIA GIOCO.bat` (generato automaticamente dopo una build riuscita)
+e scegli tra le opzioni disponibiliinserendo il loro numero di elenco:
 
-Dal menu puoi anche:
+1. Installa prerequisiti e compila XTetris
 
-- aprire il **CHANGELOG**
-- controllare l'integrità dei file del repository
-- aprire le guide con **Notepad++ Portable**
+2. Compila e avvia subito XTetris
 
-Il repository include anche **Notepad++ Portable**, utile per aprire e leggere i file **Markdown** del progetto, con il plugin **NppMarkdownPanel** integrato per la preview Markdown.
+3. Avvia il gioco gia compilato
 
-Se in `piboh-portable/PowerShell-7/` è presente una copia **portable** di PowerShell 7 (`pwsh.exe`), gli script la useranno con priorità rispetto a quella installata nel sistema.
+4. Disinstalla dipendenze / rimuovi build e file compilati di XTetris
 
-Per rimuovere in seguito le dipendenze installate, usa:
+5. Apri una guida in Notepad++
 
-- `piboh-script/disinstalla-dipendenze-windows.bat`
+6. Visualizza CHANGELOG.md
 
-Le dipendenze gestite automaticamente vengono installate nella cartella `piboh-temp/` del progetto. **PowerShell 7** viene sempre installato nel percorso predefinito, ma se in `piboh-portable/PowerShell-7/` è presente una copia portable di `pwsh.exe`, gli script usano quella con priorità assoluta. **Git** non viene gestito dagli script automatici.
+7. Controlla integrita del repository
+
+8. Esci
+
+
+> [!NOTE]
+> Il repository include anche **Notepad++ Portable**, utile per aprire e leggere i file **Markdown** del progetto, con il plugin **NppMarkdownPanel** integrato per la preview Markdown.
+
+Le dipendenze gestite automaticamente vengono installate nella cartella `piboh-temp/` del progetto. **PowerShell 7** viene sempre installato nel percorso predefinito, ma se in `piboh-portable/PowerShell-7/` è presente una copia portable di `pwsh.exe`, gli script usano quella con priorità assoluta. **Git** non viene gestito dagli script automatici. Per rimuovere le dipendenze non più necessarie si basta selezionare l'apposita opzione dal menu.
 
 La rimozione opzionale di XTetris elimina la cartella `build`, gli eventuali file compilati presenti nella root del progetto e il launcher generato `AVVIA GIOCO.bat`.
 
@@ -43,7 +47,7 @@ I log degli script vengono salvati in:
 
 - `piboh-script/log/`
 
-La versione corrente degli script è centralizzata in:
+La versione corrente degli script è salvata in:
 
 - `piboh-script/version.txt`
 
@@ -67,7 +71,7 @@ cmake --build .
 
 ## Web
 
-Il repository pubblica anche una versione browser tramite **GitHub Pages**.
+Il repository pubblica anche una versione browser tramite **[GitHub Pages](https://piboh.github.io/XTetris/)**.
 
 ## Struttura del repository
 
@@ -159,4 +163,4 @@ XTetris/
 
 - [AlexGiulioBerton](https://github.com/AlexGiulioBerton)
 
-<!-- File Generato con Arena AI (https://arena.ai/) -->
+<!-- File Generato con Arena AI (https://arena.ai/) e riadattato da [PiBOH](https://piboh.github.io) per renderlo più "umano" e comprensibile dalle persone. -->
