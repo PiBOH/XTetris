@@ -2,6 +2,7 @@
 
 [![Deploy GitHub Pages](https://github.com/PiBOH/XTetris/actions/workflows/deploy.yml/badge.svg)](https://github.com/PiBOH/XTetris/actions/workflows/deploy.yml)
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-online-blue)](https://piboh.github.io/XTetris/)
+![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/PiBOH/XTetris/latest/total)
 [![License](https://img.shields.io/github/license/PiBOH/XTetris)](LICENSE)
 [![Last Commit](https://img.shields.io/github/last-commit/PiBOH/XTetris)](https://github.com/PiBOH/XTetris/commits/main)
 [![Top Language](https://img.shields.io/github/languages/top/PiBOH/XTetris)](https://github.com/PiBOH/XTetris)
