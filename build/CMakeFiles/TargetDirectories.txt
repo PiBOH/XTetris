@@ -1,3 +1,0 @@
-D:/8 - GitHub PiBOH/repository/CLONATI IN GITHUB DESKTOP/XTetris/build/CMakeFiles/XTetris.dir
-D:/8 - GitHub PiBOH/repository/CLONATI IN GITHUB DESKTOP/XTetris/build/CMakeFiles/edit_cache.dir
-D:/8 - GitHub PiBOH/repository/CLONATI IN GITHUB DESKTOP/XTetris/build/CMakeFiles/rebuild_cache.dir
