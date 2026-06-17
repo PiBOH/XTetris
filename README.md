@@ -1,4 +1,9 @@
-# XTetris
+<!-- immagine logo generata con gemini (google) -->
+<div align="center">
+  <a href="https://piboh.github.io/XTetris/">
+     <img width="300" height="300" alt="xtetrisimage_nobg" src="https://github.com/PiBOH/XTetris/blob/main/piboh-images/xtetrisimage_nobg.png" />
+
+
 [<img src="https://img.shields.io/github/v/release/PiBOH/XTetris?style=for-the-badge&logo=abdownloadmanager&label=Download%20the%20latest%20Version&labelColor=121222&cacheSeconds=60&link=https%3A%2F%2Fgithub.com%2FPiBOH%2FXTetris%2Freleases%2Flatest%2Fdownload%2FXTetris.zip" height="99">](https://github.com/PiBOH/XTetris/releases/latest/download/XTetris.zip)
 
 <!-- [![Deploy GitHub Pages](https://github.com/PiBOH/XTetris/actions/workflows/deploy.yml/badge.svg)](https://github.com/PiBOH/XTetris/actions/workflows/deploy.yml) -->
@@ -11,6 +16,7 @@
 
 <!-- [![GitHub Release](https://img.shields.io/github/v/release/PiBOH/XTetris?display_name=tag&style=flat-square&logo=google%20gemini&logoColor=e5e6e8&label=Stable%20Release%20Version&labelColor=121212&cacheSeconds=60)](https://github.com/PiBOH/XTetris/blob/main/piboh-script/version.txt) -->
 
+</div>
 
 ## Uso rapido
 
@@ -112,6 +118,9 @@ XTetris/
 │   ├── GUIDA-VSCODE-WINDOWS.md
 │   ├── GUIDA-WINDOWS-RAPIDA.md
 │   └── GUIDA-WINDOWS.md
+├── piboh-images/
+|   ├── xterisimage.jpeg
+|   └── xterisimage_nobg.png
 ├── piboh-portable/
 │   ├── Notepad++Portable/
 │   │   ├── plugins/NppMarkdownPanel/
@@ -149,6 +158,9 @@ XTetris/
 ├── CHANGELOG.md
 ├── MENU-XTETRIS-WINDOWS.bat
 ├── guide/
+├── piboh-images/
+|   ├── xterisimage.jpeg
+|   └── xterisimage_nobg.png
 ├── piboh-portable/
 │   ├── Notepad++Portable/
 │   │   ├── plugins/NppMarkdownPanel/
