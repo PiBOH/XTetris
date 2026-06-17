@@ -1,5 +1,5 @@
 # XTetris
-<img src="https://img.shields.io/github/v/release/PiBOH/XTetris?style=for-the-badge&logo=abdownloadmanager&label=Download%20the%20latest%20Version&labelColor=121222&cacheSeconds=60&link=https%3A%2F%2Fgithub.com%2FPiBOH%2FXTetris%2Freleases%2Flatest%2Fdownload%2FXTetris.zip" height="50000">
+<img src="https://img.shields.io/github/v/release/PiBOH/XTetris?style=for-the-badge&logo=abdownloadmanager&label=Download%20the%20latest%20Version&labelColor=121222&cacheSeconds=60&link=https%3A%2F%2Fgithub.com%2FPiBOH%2FXTetris%2Freleases%2Flatest%2Fdownload%2FXTetris.zip" height="99">
 
 <!-- [![Deploy GitHub Pages](https://github.com/PiBOH/XTetris/actions/workflows/deploy.yml/badge.svg)](https://github.com/PiBOH/XTetris/actions/workflows/deploy.yml) -->
 [![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-online-blue)](https://piboh.github.io/XTetris/)
@@ -9,7 +9,7 @@
 [![Last Commit](https://img.shields.io/github/last-commit/PiBOH/XTetris)](https://github.com/PiBOH/XTetris/commits/main)
 
 
-[![GitHub Release](https://img.shields.io/github/v/release/PiBOH/XTetris?display_name=tag&style=flat-square&logo=google%20gemini&logoColor=e5e6e8&label=Stable%20Release%20Version&labelColor=121212&cacheSeconds=60)](https://github.com/PiBOH/XTetris/blob/main/piboh-script/version.txt)
+<!-- [![GitHub Release](https://img.shields.io/github/v/release/PiBOH/XTetris?display_name=tag&style=flat-square&logo=google%20gemini&logoColor=e5e6e8&label=Stable%20Release%20Version&labelColor=121212&cacheSeconds=60)](https://github.com/PiBOH/XTetris/blob/main/piboh-script/version.txt) -->
 
 
 ## Uso rapido
