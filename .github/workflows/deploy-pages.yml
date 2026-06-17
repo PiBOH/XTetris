@@ -1,10 +1,23 @@
-# Deploy the static GitHub Pages site for PiBOH/XTetris.
+# Deploy della GitHub Pages statica di PiBOH/XTetris.
 #
-# Questo workflow pubblica la pagina statica del sito
-# (index.html, style.css, script.js, 404.html, README.md)
-# direttamente dalla root del branch main verso GitHub Pages.
+# Questo workflow pubblica i file statici della cartella `piboh-gpages/`
+# (index.html, 404.html, script.js, style.css) direttamente verso GitHub Pages.
 #
-#   - deploy-pages.yml  -> sito statico con README live + download
+# Le immagini in `piboh-images/` e il README.md restano nella root del repo:
+#   - piboh-images/  → copiate dentro piboh-gpages/ durante il deploy,
+#                      referenziate dai file HTML con "piboh-images/..."
+#   - README.md      → resta visibile su github.com/PiBOH/XTetris
+#
+# NOTA: GitHub Pages può ricevere deploy da una sola sorgente
+# "GitHub Actions" alla volta. Se anche .github/workflows/deploy.yml
+# è attivo e pubblica la build WebAssembly, i due workflow
+# si sovrascriveranno a vicenda. Decidi quale tenere attivo:
+#
+#   - deploy-pages.yml  -> sito statico dalla cartella piboh-gpages/
+#   - deploy.yml        -> build WebAssembly di XTetris (versione "playable")
+#
+# Se vuoi entrambi, sposta la build WASM in un sub-path (es. /play/)
+# modificando l'output di deploy.yml in site/play/index.html.
 
 name: Deploy GitHub Pages
 
@@ -13,11 +26,7 @@ on:
     branches:
       - main
     paths:
-      - 'piboh-gpages/index.html'
-      - 'piboh-gpages/style.css'
-      - 'piboh-gpages/script.js'
-      - 'piboh-gpages/404.html'
-      - 'README.md'
+      - 'piboh-gpages/**'
       - 'piboh-images/**'
       - '.github/workflows/deploy-pages.yml'
   workflow_dispatch:
@@ -49,9 +58,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          for f in index.html style.css script.js 404.html; do
-            if [ ! -f "$f" ]; then
-              echo "::error::File statico mancante: $f"
+          for f in piboh-gpages/index.html \
+                   piboh-gpages/style.css \
+                   piboh-gpages/script.js \
+                   piboh-gpages/404.html \
+                   piboh-images; do
+            if [ ! -e "$f" ]; then
+              echo "::error::File/cartella statico mancante: $f"
               exit 1
             fi
           done
@@ -62,12 +75,22 @@ jobs:
         run: |
           # .nojekyll disabilita Jekyll su GitHub Pages
           # così i file che iniziano con _ o . non vengono ignorati
-          touch .nojekyll
+          touch piboh-gpages/.nojekyll
+
+      - name: Copy assets into piboh-gpages
+        shell: bash
+        run: |
+          # Le immagini in piboh-images/ restano fuori da piboh-gpages/
+          # nel repo. Vengono copiate dentro piboh-gpages/ al momento del
+          # deploy così l'upload dell'artifact le include.
+          cp -r piboh-images piboh-gpages/
+          echo "Contenuto di piboh-gpages/ dopo il copy:"
+          ls -la piboh-gpages/
 
       - name: Upload GitHub Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.'
+          path: './piboh-gpages'
 
       - name: Deploy to GitHub Pages
         id: deployment
