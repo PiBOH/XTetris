@@ -4,6 +4,7 @@
 - Aggiornato `piboh-script/version.txt` alla versione `3.0.45`.
 - Riallineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla versione centrale corrente.
 - Consolidato il versionamento dopo l'eccezione `3.0.44.1` e ripristinato l'incremento normale.
+- Aggiunto logo del gioco in `piboh-images/xterisimage_nobg.png`
 
 ## 3.0.44.1
 - Aggiornato `piboh-script/version.txt` alla versione `3.0.44.1`.
