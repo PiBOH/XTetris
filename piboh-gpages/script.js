@@ -323,10 +323,15 @@
     return `https://raw.githubusercontent.com/${REPO}/${BRANCH}/${path}`;
   }
 
-  async function loadGuide(filename) {
+  async function loadGuide(filename, opts) {
     const target = document.getElementById('guide-content');
     const link   = document.getElementById('guide-raw-link');
     if (!target) return;
+
+    // `opts.scroll = true` solo quando l'utente ha cambiato attivamente
+    // il dropdown. All'apertura della pagina NON scrolliamo per non
+    // "rubare" la posizione naturale del browser.
+    const shouldScroll = !!(opts && opts.scroll);
 
     if (!GUIDE_PATHS[filename]) {
       target.innerHTML =
@@ -346,8 +351,10 @@
       const md   = await loadText(url);
       const html = renderMarkdown(md);
       target.innerHTML = html;
-      // Scroll morbido verso il contenuto caricato
-      target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      // Scroll morbido SOLO se l'utente ha cambiato guida.
+      if (shouldScroll) {
+        target.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
     } catch (err) {
       target.innerHTML =
         `<p style="color:#f0a000">⚠ Impossibile caricare la guida.</p>
@@ -362,9 +369,9 @@
   function bindGuideSelector() {
     const sel = document.getElementById('guide-select');
     if (!sel) return;
-    sel.addEventListener('change', () => loadGuide(sel.value));
-    // Carica la guida predefinita al boot
-    loadGuide(DEFAULT_GUIDE);
+    sel.addEventListener('change', () => loadGuide(sel.value, { scroll: true }));
+    // Carica la guida predefinita al boot SENZA scrollare.
+    loadGuide(DEFAULT_GUIDE, { scroll: false });
   }
 
   // ---------- copy buttons ----------
