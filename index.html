@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>XTetris · Tetris testuale in C</title>
+  <meta name="description" content="XTetris è un gioco Tetris testuale scritto in C. Scopri come scaricarlo, compilarlo e giocarlo." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='28' height='28' x='2' y='2' fill='%2300f0f0'/%3E%3Crect width='28' height='28' x='32' y='2' fill='%23a000f0'/%3E%3Crect width='28' height='28' x='2' y='32' fill='%23f0a000'/%3E%3Crect width='28' height='28' x='32' y='32' fill='%2300f000'/%3E%3C/svg%3E" />
+</head>
+<body>
+
+  <!-- ========== HERO ========== -->
+  <header class="hero" id="top">
+    <div class="tetris-bg" aria-hidden="true">
+      <div class="piece piece-i"></div>
+      <div class="piece piece-o"></div>
+      <div class="piece piece-t"></div>
+      <div class="piece piece-s"></div>
+      <div class="piece piece-z"></div>
+      <div class="piece piece-l"></div>
+      <div class="piece piece-j"></div>
+    </div>
+
+    <div class="hero-inner">
+      <div class="hero-logo" aria-hidden="true">
+        <div class="block block-i"></div>
+        <div class="block block-j"></div>
+        <div class="block block-l"></div>
+        <div class="block block-o"></div>
+        <div class="block block-s"></div>
+        <div class="block block-t"></div>
+        <div class="block block-z"></div>
+      </div>
+
+      <h1 class="hero-title">XT<span class="title-x">X</span>tris</h1>
+      <p class="hero-tagline">Un Tetris testuale scritto in C, con script automatici per Windows.</p>
+
+      <div class="badges">
+        <img alt="GitHub stars" src="https://img.shields.io/github/stars/PiBOH/XTetris?style=flat&logo=github" />
+        <img alt="GitHub forks" src="https://img.shields.io/github/forks/PiBOH/XTetris?style=flat&logo=github" />
+        <img alt="Last commit" src="https://img.shields.io/github/last-commit/PiBOH/XTetris?style=flat" />
+        <img alt="License" src="https://img.shields.io/github/license/PiBOH/XTetris?style=flat" />
+        <img alt="Top language" src="https://img.shields.io/github/languages/top/PiBOH/XTetris?style=flat&logo=c" />
+        <img alt="Downloads (latest release)" src="https://img.shields.io/github/downloads/PiBOH/XTetris/latest/total?style=flat&logo=github" />
+      </div>
+
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#download">
+          <span aria-hidden="true">⬇</span> Scarica XTetris
+        </a>
+        <a class="btn btn-secondary" href="https://github.com/PiBOH/XTetris" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+            <path fill="currentColor" d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56v-2c-3.2.7-3.87-1.36-3.87-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.76 2.7 1.25 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.7 0-1.26.45-2.29 1.18-3.1-.12-.29-.51-1.46.11-3.04 0 0 .97-.31 3.18 1.18a11.06 11.06 0 0 1 5.79 0c2.21-1.49 3.18-1.18 3.18-1.18.62 1.58.23 2.75.11 3.04.73.81 1.18 1.84 1.18 3.1 0 4.43-2.7 5.41-5.27 5.69.41.36.78 1.05.78 2.12v3.14c0 .31.21.68.8.56C20.21 21.39 23.5 17.08 23.5 12 23.5 5.65 18.35.5 12 .5z"/>
+          </svg>
+          Vedi su GitHub
+        </a>
+        <a class="btn btn-ghost" href="#readme">Leggi il README</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ========== NAV ========== -->
+  <nav class="topnav">
+    <div class="topnav-inner">
+      <a href="#top" class="topnav-brand">XT<span>X</span>tris</a>
+      <ul>
+        <li><a href="#about">Info</a></li>
+        <li><a href="#readme">README</a></li>
+        <li><a href="#download">Download</a></li>
+        <li><a href="#build">Build</a></li>
+        <li><a href="#structure">Struttura</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- ========== ABOUT ========== -->
+  <section id="about" class="section">
+    <div class="container">
+      <h2 class="section-title"><span class="accent-i">▶</span> Cos'è XTetris?</h2>
+      <p class="lead">
+        <strong>XTetris</strong> è un gioco <strong>Tetris testuale in C</strong>, nato come fork del progetto di
+        <a href="https://github.com/AlexGiulioBerton/XTetris" target="_blank" rel="noopener">AlexGiulioBerton</a>
+        e attivamente sviluppato da <a href="https://github.com/PiBOH" target="_blank" rel="noopener">PiBOH</a>.
+      </p>
+      <p class="lead">
+        Il progetto include <strong>script automatici per Windows</strong> che installano le dipendenze (MSYS2, CMake, MinGW),
+        compilano il gioco e lanciano l'eseguibile con un solo click. È anche disponibile una copia
+        <strong>portable di Notepad++</strong> con il plugin <em>NppMarkdownPanel</em> integrato, perfetto per leggere la documentazione.
+      </p>
+
+      <div class="features-grid">
+        <div class="feature">
+          <div class="feature-icon">🕹️</div>
+          <h3>100% C puro</h3>
+          <p>Sorgente compatto, organizzato in moduli (tetramino, player, piano di gioco, menu).</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🪟</div>
+          <h3>One-click su Windows</h3>
+          <p>Script <code>.bat</code> e <code>.ps1</code> pronti: installa dipendenze, compila e avvia.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">🛠️</div>
+          <h3>Build portabile</h3>
+          <p>Compilabile manualmente con <code>cmake</code> su qualsiasi piattaforma con un compilatore C.</p>
+        </div>
+        <div class="feature">
+          <div class="feature-icon">📚</div>
+          <h3>Guide complete</h3>
+          <p>Guide dedicate per Windows, MSYS2, CLion e VS Code incluse nel repository.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== README ========== -->
+  <section id="readme" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title"><span class="accent-t">▶</span> README del progetto</h2>
+      <p class="section-sub">Contenuto del file <code>README.md</code> del repository, renderizzato qui sotto.</p>
+
+      <article id="readme-content" class="readme">
+        <p class="loading">Caricamento del README in corso…</p>
+      </article>
+
+      <p class="readme-source">
+        📄 Sorgente originale:
+        <a href="https://github.com/PiBOH/XTetris/blob/main/README.md" target="_blank" rel="noopener">
+          github.com/PiBOH/XTetris/blob/main/README.md
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== DOWNLOAD ========== -->
+  <section id="download" class="section">
+    <div class="container">
+      <h2 class="section-title"><span class="accent-l">▶</span> Scarica XTetris</h2>
+      <p class="section-sub">Versione corrente: <strong>3.0.45</strong> · Aggiornata il 16 giugno 2026.</p>
+
+      <div class="download-grid">
+        <div class="download-card download-card-primary">
+          <div class="download-icon">⬇</div>
+          <h3>Download diretto</h3>
+          <p>Archivio <code>.zip</code> pronto all'uso, contiene sorgenti, script e guida.</p>
+          <a class="btn btn-primary btn-block"
+             href="https://github.com/PiBOH/XTetris/raw/main/.releases/XTetris_3.0.0.zip"
+             download="XTetris_3.0.45.zip">
+            ⬇ Scarica XTetris 3.0.45 (.zip)
+          </a>
+          <p class="download-note">Mirror diretto da <code>.releases/</code> nel repository.</p>
+        </div>
+
+        <div class="download-card">
+          <div class="download-icon">📦</div>
+          <h3>Repository completo</h3>
+          <p>Clona l'intero repository, ideale per sviluppatori.</p>
+          <div class="code-block">
+            <code>git clone https://github.com/PiBOH/XTetris.git</code>
+            <button class="copy-btn" data-copy="git clone https://github.com/PiBOH/XTetris.git" type="button" aria-label="Copia comando">
+              Copia
+            </button>
+          </div>
+          <a class="btn btn-secondary btn-block"
+             href="https://github.com/PiBOH/XTetris/archive/refs/heads/main.zip">
+            ⬇ Scarica sorgenti (.zip)
+          </a>
+        </div>
+
+        <div class="download-card">
+          <div class="download-icon">🏷️</div>
+          <h3>Tutte le release</h3>
+          <p>Cronologia completa di tag e versioni pubblicate.</p>
+          <a class="btn btn-ghost btn-block" href="https://github.com/PiBOH/XTetris/releases" target="_blank" rel="noopener">
+            Vedi tutte le release →
+          </a>
+        </div>
+
+        <div class="download-card">
+          <div class="download-icon">🔁</div>
+          <h3>Fork originale</h3>
+          <p>Progetto da cui XTetris è forkato.</p>
+          <a class="btn btn-ghost btn-block" href="https://github.com/AlexGiulioBerton/XTetris" target="_blank" rel="noopener">
+            AlexGiulioBerton/XTetris →
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== BUILD ========== -->
+  <section id="build" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title"><span class="accent-j">▶</span> Come compilarlo</h2>
+
+      <div class="tabs">
+        <h3>🪟 Su Windows (automatico)</h3>
+        <p>Esegui uno di questi file dalla cartella del progetto:</p>
+        <ul class="bullet-list">
+          <li><code>MENU-XTETRIS-WINDOWS.bat</code> — menu interattivo</li>
+          <li><code>piboh-script/installa-compila-windows.bat</code> — installa dipendenze e compila</li>
+          <li><code>AVVIA GIOCO.bat</code> — generato automaticamente dopo una build riuscita</li>
+        </ul>
+        <p>
+          Dal menu puoi anche aprire il <strong>CHANGELOG</strong>, controllare l'integrità dei file
+          e aprire le guide con <strong>Notepad++ Portable</strong>.
+        </p>
+
+        <h3>🐧 Build manuale (cross-platform)</h3>
+        <div class="code-block">
+          <pre><code>mkdir build
+cd build
+cmake ..
+cmake --build .</code></pre>
+          <button class="copy-btn" data-copy="mkdir build
+cd build
+cmake ..
+cmake --build ." type="button" aria-label="Copia comando">
+            Copia
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== STRUCTURE ========== -->
+  <section id="structure" class="section">
+    <div class="container">
+      <h2 class="section-title"><span class="accent-o">▶</span> Struttura del repository</h2>
+
+      <div class="structure-grid">
+        <div>
+          <h3>Base</h3>
+          <pre class="tree"><code>XTetris/
+├── .github/workflows/
+├── .idea/
+├── Elements/
+│   ├── boolType.h
+│   ├── color_codes.h
+│   ├── colori.h
+│   ├── exit_modes.h
+│   ├── rotazioni.h
+│   └── string.h
+├── GameSetting/
+│   ├── Player/
+│   │   ├── player.c
+│   │   └── player.h
+│   ├── menus.c
+│   └── menus.h
+├── PianoDiGioco/
+│   ├── pianodigioco.c
+│   └── pianodigioco.h
+├── Tetramino/
+│   ├── tetramino.c
+│   └── tetramino.h
+├── guide/
+├── piboh-portable/
+│   ├── Notepad++Portable/
+│   └── PowerShell-7/
+├── piboh-script/
+├── CHANGELOG.md
+├── CMakeLists.txt
+├── MENU-XTETRIS-WINDOWS.bat
+└── main.c</code></pre>
+        </div>
+        <div>
+          <h3>Dopo la build</h3>
+          <pre class="tree"><code>XTetris/
+├── build/
+│   ├── XTetris.exe
+│   └── ...
+├── cmake-build-debug/
+├── AVVIA GIOCO.bat
+├── main.o
+├── menus.o
+├── player.o
+├── tetramino.o
+├── CHANGELOG.md
+├── MENU-XTETRIS-WINDOWS.bat
+├── guide/
+├── piboh-portable/
+│   ├── Notepad++Portable/
+│   │   ├── plugins/NppMarkdownPanel/
+│   │   └── shortcuts.xml
+│   └── PowerShell-7/
+├── piboh-script/
+└── ...</code></pre>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CHANGELOG ========== -->
+  <section id="changelog" class="section section-alt">
+    <div class="container">
+      <h2 class="section-title"><span class="accent-s">▶</span> Changelog recente</h2>
+      <div class="changelog" id="changelog-content">
+        <p class="loading">Caricamento del changelog…</p>
+      </div>
+      <p class="readme-source">
+        📄 Storico completo:
+        <a href="https://github.com/PiBOH/XTetris/blob/main/CHANGELOG.md" target="_blank" rel="noopener">
+          github.com/PiBOH/XTetris/blob/main/CHANGELOG.md
+        </a>
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <strong>XT<span>X</span>tris</strong> · Tetris testuale in C
+      </div>
+      <div class="footer-links">
+        <a href="https://github.com/PiBOH/XTetris" target="_blank" rel="noopener">Repository</a>
+        <a href="https://github.com/PiBOH/XTetris/issues" target="_blank" rel="noopener">Issues</a>
+        <a href="https://github.com/PiBOH/XTetris/releases" target="_blank" rel="noopener">Releases</a>
+        <a href="LICENSE" target="_blank" rel="noopener">Licenza</a>
+      </div>
+      <div class="footer-meta">
+        Fork di <a href="https://github.com/AlexGiulioBerton/XTetris" target="_blank" rel="noopener">AlexGiulioBerton/XTetris</a>
+        · Pagina GitHub Pages generata staticamente
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
