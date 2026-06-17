@@ -422,6 +422,38 @@ code {
 }
 .readme th { background: var(--bg-panel); }
 
+/* ---------- README badges ---------- */
+.readme p:first-of-type {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 6px;
+  align-items: center;
+  margin-top: 0;
+}
+.readme p:first-of-type a,
+.readme p:first-of-type img {
+  display: inline-block;
+  margin: 0;
+  line-height: 1;
+}
+.readme p:first-of-type img {
+  height: 20px;
+  border-radius: 3px;
+  vertical-align: middle;
+}
+
+/* ---------- Version banner ---------- */
+.version-banner {
+  background: rgba(240, 160, 0, 0.12);
+  border: 1px solid rgba(240, 160, 0, 0.45);
+  color: #f0a000;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  margin: 0 0 22px;
+}
+.version-banner a { color: #f0c060; }
+
 .readme-source {
   margin-top: 18px;
   font-size: 0.9rem;

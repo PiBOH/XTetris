@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>XTetris · Tetris testuale in C</title>
-  <meta name="description" content="XTetris è un gioco Tetris testuale scritto in C. Scopri come scaricarlo, compilarlo e giocarlo." />
+    <title data-title-version>XTetris [VERSION] · Tetris testuale in C</title>
+    <meta name="description" content="XTetris è un gioco Tetris testuale scritto in C. Scopri come scaricarlo, compilarlo e giocarlo." />
   <link rel="stylesheet" href="style.css" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='28' height='28' x='2' y='2' fill='%2300f0f0'/%3E%3Crect width='28' height='28' x='32' y='2' fill='%23a000f0'/%3E%3Crect width='28' height='28' x='2' y='32' fill='%23f0a000'/%3E%3Crect width='28' height='28' x='32' y='32' fill='%2300f000'/%3E%3C/svg%3E" />
 </head>
@@ -41,13 +41,14 @@
         <img alt="GitHub forks" src="https://img.shields.io/github/forks/PiBOH/XTetris?style=flat&logo=github" />
         <img alt="Last commit" src="https://img.shields.io/github/last-commit/PiBOH/XTetris?style=flat" />
         <img alt="License" src="https://img.shields.io/github/license/PiBOH/XTetris?style=flat" />
-        <img alt="Top language" src="https://img.shields.io/github/languages/top/PiBOH/XTetris?style=flat&logo=c" />
-        <img alt="Downloads (latest release)" src="https://img.shields.io/github/downloads/PiBOH/XTetris/latest/total?style=flat&logo=github" />
+        <img alt="GitHub Downloads (all assets, all releases)" src="https://img.shields.io/github/downloads/PiBOH/XTetris/total?logo=github" />
+        <img alt="GitHub Downloads (latest release)" src="https://img.shields.io/github/downloads/PiBOH/XTetris/latest/total?style=flat&logo=github" />
       </div>
 
       <div class="hero-actions">
-        <a class="btn btn-primary" href="#download">
-          <span aria-hidden="true">⬇</span> Scarica XTetris
+        <a class="btn btn-primary" data-download-url
+           download="XTetris_latest.zip">
+          <span aria-hidden="true">⬇</span> Scarica XTetris <span data-version>latest</span>
         </a>
         <a class="btn btn-secondary" href="https://github.com/PiBOH/XTetris" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
@@ -137,19 +138,29 @@
   <section id="download" class="section">
     <div class="container">
       <h2 class="section-title"><span class="accent-l">▶</span> Scarica XTetris</h2>
-      <p class="section-sub">Versione corrente: <strong>3.0.45</strong> · Aggiornata il 16 giugno 2026.</p>
+      <p class="section-sub">
+        Versione corrente: <strong><span data-version>latest</span></strong>
+        · Tutti i pulsanti qui sotto puntano sempre all'ultima release pubblicata.
+      </p>
+
+      <p id="version-banner" class="version-banner" hidden>
+        ⚠ Impossibile recuperare la versione corrente da GitHub. I link puntano comunque
+        all'ultima release disponibile su
+        <a href="https://github.com/PiBOH/XTetris/releases/latest" target="_blank" rel="noopener">releases/latest</a>.
+      </p>
 
       <div class="download-grid">
         <div class="download-card download-card-primary">
           <div class="download-icon">⬇</div>
           <h3>Download diretto</h3>
-          <p>Archivio <code>.zip</code> pronto all'uso, contiene sorgenti, script e guida.</p>
-          <a class="btn btn-primary btn-block"
-             href="https://github.com/PiBOH/XTetris/raw/main/.releases/XTetris_3.0.0.zip"
-             download="XTetris_3.0.45.zip">
-            ⬇ Scarica XTetris 3.0.45 (.zip)
+          <p>Archivio <code><span data-download-filename>XTetris_latest.zip</span></code> pronto all'uso.</p>
+          <a class="btn btn-primary btn-block" data-download-url
+             download="XTetris_latest.zip">
+            ⬇ Scarica XTetris <span data-version>latest</span> (.zip)
           </a>
-          <p class="download-note">Mirror diretto da <code>.releases/</code> nel repository.</p>
+          <p class="download-note">
+            URL canonico: <code data-download-url>https://github.com/PiBOH/XTetris/releases/latest/download/XTetris.zip</code>
+          </p>
         </div>
 
         <div class="download-card">
@@ -162,9 +173,8 @@
               Copia
             </button>
           </div>
-          <a class="btn btn-secondary btn-block"
-             href="https://github.com/PiBOH/XTetris/archive/refs/heads/main.zip">
-            ⬇ Scarica sorgenti (.zip)
+          <a class="btn btn-secondary btn-block" data-download-url>
+            ⬇ Scarica XTetris <span data-version>latest</span> (.zip)
           </a>
         </div>
 
@@ -174,6 +184,9 @@
           <p>Cronologia completa di tag e versioni pubblicate.</p>
           <a class="btn btn-ghost btn-block" href="https://github.com/PiBOH/XTetris/releases" target="_blank" rel="noopener">
             Vedi tutte le release →
+          </a>
+          <a class="btn btn-ghost btn-block" data-download-url>
+            ⬇ Scarica ultima release (.zip)
           </a>
         </div>
 

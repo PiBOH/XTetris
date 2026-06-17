@@ -1,0 +1,82 @@
+# Deploy the static GitHub Pages site for PiBOH/XTetris.
+#
+# Questo workflow pubblica la pagina statica del sito
+# (index.html, style.css, script.js, 404.html, README.md)
+# direttamente dalla root del branch main verso GitHub Pages.
+#
+# NOTA: GitHub Pages può ricevere deploy da una sola sorgente
+# "GitHub Actions" alla volta. Se anche .github/workflows/deploy.yml
+# è attivo e pubblica la build WebAssembly, i due workflow
+# si sovrascriveranno a vicenda. Decidi quale tenere attivo:
+#
+#   - deploy-pages.yml  -> sito statico con README live + download
+#   - deploy.yml        -> build WebAssembly di XTetris (versione "playable")
+#
+# Se vuoi entrambi, sposta la build WASM in un sub-path (es. /play/)
+# modificando l'output di deploy.yml in site/play/index.html.
+
+name: Deploy GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'index.html'
+      - 'style.css'
+      - 'script.js'
+      - '404.html'
+      - 'README.md'
+      - '.github/workflows/deploy-pages.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v4
+
+      - name: Verify required static files exist
+        shell: bash
+        run: |
+          set -euo pipefail
+          for f in index.html style.css script.js 404.html; do
+            if [ ! -f "$f" ]; then
+              echo "::error::File statico mancante: $f"
+              exit 1
+            fi
+          done
+          echo "Tutti i file statici richiesti sono presenti."
+
+      - name: Create .nojekyll marker
+        shell: bash
+        run: |
+          # .nojekyll disabilita Jekyll su GitHub Pages
+          # così i file che iniziano con _ o . non vengono ignorati
+          touch .nojekyll
+
+      - name: Upload GitHub Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -3,6 +3,9 @@
    ===========================================================
    - Fetches the raw README.md from the repo and renders it as
      sanitized HTML, preserving badges, code blocks and headings.
+   - Fetches the latest release tag from the GitHub API and
+     updates every [data-version] / [data-download-filename] /
+     [data-download-url] placeholder on the page.
    - Fetches the CHANGELOG.md for the changelog section.
    - Handles the "copy" buttons on code snippets.
    =========================================================== */
@@ -10,10 +13,12 @@
 (function () {
   'use strict';
 
-  const REPO   = 'PiBOH/XTetris';
-  const BRANCH = 'main';
-  const README_URL    = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/README.md`;
-  const CHANGELOG_URL = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/CHANGELOG.md`;
+  const REPO           = 'PiBOH/XTetris';
+  const BRANCH         = 'main';
+  const README_URL     = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/README.md`;
+  const CHANGELOG_URL  = `https://raw.githubusercontent.com/${REPO}/${BRANCH}/CHANGELOG.md`;
+  const RELEASE_API    = `https://api.github.com/repos/${REPO}/releases/latest`;
+  const RELEASE_DL_TPL = `https://github.com/${REPO}/releases/latest/download/XTetris.zip`;
 
   // -------- tiny markdown renderer (intentionally minimal) -----
   function escapeHtml(s) {
@@ -30,14 +35,14 @@
     text = text.replace(/!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g,
       (_, alt, src, title) => {
         const t = title ? ` title="${escapeHtml(title)}"` : '';
-        return `<img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}" loading="lazy"${t}>`;
+        return `<img src="${escapeHtml(src)}" alt="${escapeHtml(alt)}" loading="lazy" decoding="async"${t}>`;
       });
     // links
     text = text.replace(/\[([^\]]+)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g,
       (_, label, href, title) => {
         const t = title ? ` title="${escapeHtml(title)}"` : '';
         const ext = /^https?:\/\//i.test(href) ? ' target="_blank" rel="noopener"' : '';
-        return `<a href="${escapeHtml(href)}"${t}${ext}>${escapeHtml(label)}</a>`;
+        return `<a href="${escapeHtml(href)}"${t}${ext}>${inlineFormat(label)}</a>`;
       });
     // bold
     text = text.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
@@ -174,17 +179,87 @@
   }
 
   // ---------- fetch & render helpers ----------
-  async function loadMarkdown(url) {
-    const res = await fetch(url, { cache: 'no-store' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+  async function loadText(url, accept) {
+    const opts = accept ? { headers: { 'Accept': accept } } : {};
+    const res = await fetch(url, { cache: 'no-store', ...opts });
+    if (!res.ok) throw new Error(`HTTP ${res.status} su ${url}`);
     return await res.text();
+  }
+
+  async function loadJson(url) {
+    const res = await fetch(url, {
+      cache: 'no-store',
+      headers: { 'Accept': 'application/vnd.github+json' }
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status} su ${url}`);
+    return await res.json();
+  }
+
+  // ---------- latest release / version ----------
+  async function fetchLatestRelease() {
+    try {
+      const data = await loadJson(RELEASE_API);
+      let tag = (data.tag_name || '').toString();
+      // Strip a leading "v" / "V" so "v3.0.45" -> "3.0.45"
+      tag = tag.replace(/^v/i, '');
+      return {
+        tag: tag,
+        name: data.name || tag,
+        url: data.html_url,
+        assets: (data.assets || []).map(a => ({
+          name: a.name,
+          url: a.browser_download_url
+        }))
+      };
+    } catch (err) {
+      console.warn('[XTetris] impossibile recuperare la versione:', err.message);
+      return null;
+    }
+  }
+
+  function applyVersionToPage(info) {
+    const tag = info ? info.tag : 'latest';
+
+    // 1) Replace every [data-version] with the tag
+    document.querySelectorAll('[data-version]').forEach(el => {
+      el.textContent = tag;
+      el.removeAttribute('data-version'); // avoid double-update
+    });
+
+    // 2) Replace every [data-download-url] with the canonical
+    //    "always-latest" download URL on GitHub Releases
+    document.querySelectorAll('[data-download-url]').forEach(el => {
+      const href = RELEASE_DL_TPL;
+      if (el.tagName === 'A') el.setAttribute('href', href);
+      else el.textContent = href;
+      el.removeAttribute('data-download-url');
+    });
+
+    // 3) Replace every [data-download-filename] with the suggested filename
+    document.querySelectorAll('[data-download-filename]').forEach(el => {
+      el.textContent = `XTetris_${tag}.zip`;
+      el.removeAttribute('data-download-filename');
+    });
+
+    // 4) Update the page <title> with the tag, if a [data-title-version] marker exists
+    const titleSlot = document.querySelector('[data-title-version]');
+    if (titleSlot) {
+      document.title = document.title.replace(/\[VERSION\]|\{VERSION\}/, tag);
+      titleSlot.removeAttribute('data-title-version');
+    }
+
+    // 5) Show a hidden status banner only when we couldn't fetch
+    const banner = document.getElementById('version-banner');
+    if (banner) {
+      banner.hidden = !!info;
+    }
   }
 
   async function fillReadme() {
     const target = document.getElementById('readme-content');
     if (!target) return;
     try {
-      const md  = await loadMarkdown(README_URL);
+      const md  = await loadText(README_URL);
       const html = renderMarkdown(md);
       target.innerHTML = html;
     } catch (err) {
@@ -200,8 +275,8 @@
     const target = document.getElementById('changelog-content');
     if (!target) return;
     try {
-      const md  = await loadMarkdown(CHANGELOG_URL);
-      // Show only first ~30 entries (roughly) to keep page light
+      const md  = await loadText(CHANGELOG_URL);
+      // Show only first ~400 lines to keep the page light
       const trimmed = md.split('\n').slice(0, 400).join('\n');
       target.innerHTML = renderMarkdown(trimmed);
     } catch (err) {
@@ -236,6 +311,11 @@
   // ---------- boot ----------
   document.addEventListener('DOMContentLoaded', () => {
     bindCopyButtons();
+
+    // Version + download URLs come from the GitHub API
+    fetchLatestRelease().then(applyVersionToPage);
+
+    // README + changelog come from raw.githubusercontent.com
     fillReadme();
     fillChangelog();
   });
