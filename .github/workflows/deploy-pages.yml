@@ -4,16 +4,7 @@
 # (index.html, style.css, script.js, 404.html, README.md)
 # direttamente dalla root del branch main verso GitHub Pages.
 #
-# NOTA: GitHub Pages può ricevere deploy da una sola sorgente
-# "GitHub Actions" alla volta. Se anche .github/workflows/deploy.yml
-# è attivo e pubblica la build WebAssembly, i due workflow
-# si sovrascriveranno a vicenda. Decidi quale tenere attivo:
-#
 #   - deploy-pages.yml  -> sito statico con README live + download
-#   - deploy.yml        -> build WebAssembly di XTetris (versione "playable")
-#
-# Se vuoi entrambi, sposta la build WASM in un sub-path (es. /play/)
-# modificando l'output di deploy.yml in site/play/index.html.
 
 name: Deploy GitHub Pages
 
@@ -22,10 +13,10 @@ on:
     branches:
       - main
     paths:
-      - 'index.html'
-      - 'style.css'
-      - 'script.js'
-      - '404.html'
+      - 'piboh-gpages/index.html'
+      - 'piboh-gpages/style.css'
+      - 'piboh-gpages/script.js'
+      - 'piboh-gpages/404.html'
       - 'README.md'
       - 'piboh-images/**'
       - '.github/workflows/deploy-pages.yml'
