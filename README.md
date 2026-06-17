@@ -21,26 +21,23 @@
 ## Uso rapido
 
 ### Windows
-Esegui uno il file:
+Esegui il file `MENU-XTETRIS-WINDOWS.bat` e scegli tra le opzioni disponibili inserendo il loro numero di elenco:
 
-- `MENU-XTETRIS-WINDOWS.bat`
-e scegli tra le opzioni disponibiliinserendo il loro numero di elenco:
+1 - Installa prerequisiti e compila XTetris
 
-1. Installa prerequisiti e compila XTetris
+2 - Compila e avvia subito XTetris
 
-2. Compila e avvia subito XTetris
+3 - Avvia il gioco gia compilato
 
-3. Avvia il gioco gia compilato
+4 - Disinstalla dipendenze / rimuovi build e file compilati di XTetris
 
-4. Disinstalla dipendenze / rimuovi build e file compilati di XTetris
+5 - Apri una guida in Notepad++
 
-5. Apri una guida in Notepad++
+6 - Visualizza CHANGELOG.md
 
-6. Visualizza CHANGELOG.md
+7 - Controlla integrita del repository
 
-7. Controlla integrita del repository
-
-8. Esci
+8 - Esci
 
 
 > [!NOTE]
