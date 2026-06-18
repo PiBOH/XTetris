@@ -7,7 +7,8 @@
 [<img src="https://img.shields.io/github/v/release/PiBOH/XTetris?style=for-the-badge&logo=abdownloadmanager&label=Download%20the%20latest%20Version&labelColor=121222&cacheSeconds=60&link=https%3A%2F%2Fgithub.com%2FPiBOH%2FXTetris%2Freleases%2Flatest%2Fdownload%2FXTetris.zip" height="99">](https://github.com/PiBOH/XTetris/releases/latest/download/XTetris.zip)
 
 <!-- [![Deploy GitHub Pages](https://github.com/PiBOH/XTetris/actions/workflows/deploy.yml/badge.svg)](https://github.com/PiBOH/XTetris/actions/workflows/deploy.yml) -->
-[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-online-blue)](https://piboh.github.io/XTetris/)
+[![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/PiBOH/XTetris/deploy-pages.yml?style=flat&logo=githubactions&logoColor=1A93EC&label=Github%20Pages%20Build&labelColor=121211&color=1A93EC&cacheSeconds=300)
+](https://piboh.github.io/XTetris/) <!-- github pages -->
 [![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/PiBOH/XTetris/total?logo=GitHub&cacheSeconds=60)](https://github.com/PiBOH/XTetris/releases/)
 [![GitHub Downloads (all assets, latest release)](https://img.shields.io/github/downloads/PiBOH/XTetris/latest/total)](https://github.com/PiBOH/XTetris/releases/latest)
 [![License](https://img.shields.io/github/license/PiBOH/XTetris)](LICENSE)
