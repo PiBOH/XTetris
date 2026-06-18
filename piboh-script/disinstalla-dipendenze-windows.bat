@@ -83,6 +83,10 @@ if exist "%~dp0..\piboh-portable\PowerShell-7\pwsh.exe" (
  set "PWSH=%~dp0..\piboh-portable\PowerShell-7\pwsh.exe"
  goto :eof
 )
+if exist "%~dp0..\piboh-portable\PowerShell-7.7.0-preview.2-win-x64\pwsh.exe" (
+ set "PWSH=%~dp0..\piboh-portable\PowerShell-7.7.0-preview.2-win-x64\pwsh.exe"
+ goto :eof
+)
 for /r "%~dp0..\piboh-portable" %%I in (pwsh.exe) do (
  set "PWSH=%%I"
  goto :eof

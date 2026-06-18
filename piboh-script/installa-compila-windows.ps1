@@ -156,7 +156,9 @@ function Get-PwshPath {
 
     $portableRoot = Join-Path (Split-Path -Parent $PSScriptRoot) 'piboh-portable'
     $portablePreferred = Join-Path $portableRoot 'PowerShell-7\pwsh.exe'
+    $portablePreferredAlt = Join-Path $portableRoot 'PowerShell-7.7.0-preview.2-win-x64\pwsh.exe'
     if (Test-Path $portablePreferred) { return $portablePreferred }
+    if (Test-Path $portablePreferredAlt) { return $portablePreferredAlt }
     if (Test-Path $portableRoot) {
         $portablePwsh = Get-ChildItem -Path $portableRoot -Filter 'pwsh.exe' -Recurse -File -ErrorAction SilentlyContinue | Select-Object -First 1
         if ($portablePwsh) { return $portablePwsh.FullName }

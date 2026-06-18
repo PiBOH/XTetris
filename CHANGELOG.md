@@ -1,10 +1,40 @@
 # CHANGELOG
 
+## 3.1.11
+- Aggiornato `piboh-script/version.txt` alla versione `3.1.11`.
+- Riallineati definitivamente `README.md`, `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` e `CHANGELOG.md` alla stessa versione centrale.
+- Confermato lo stato attuale del supporto a `piboh-temp/`, `PowerShell-7` portable e `NppMarkdownPanel`.
+
+## 3.1.9
+- Aggiornato `piboh-script/version.txt` alla versione `3.1.9`.
+- Riallineati definitivamente `README.md`, `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` e `CHANGELOG.md` alla stessa versione centrale.
+- Confermato lo stato attuale del supporto a `piboh-temp/`, `PowerShell-7` portable e `NppMarkdownPanel`.
+
+## 3.1.7
+- Aggiornato `piboh-script/version.txt` alla versione `3.1.7`.
+- Riallineati definitivamente `README.md`, `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` e `CHANGELOG.md` alla stessa versione centrale.
+- Confermato lo stato attuale del supporto a `piboh-temp/`, `PowerShell-7` portable e `NppMarkdownPanel`.
+
+## 3.1.3
+- Aggiornato `piboh-script/version.txt` alla versione `3.1.3`.
+- Notepad++ Portable usa ora `plugins/Config/NppMarkdownPanel.ini` per aprire automaticamente il pannello di preview Markdown sui file supportati.
+- Rimosso il tentativo di attivazione via `SendKeys` dal launcher delle guide.
+- La disinstallazione pulisce ora anche `piboh-temp/`, `installed-packages.txt` e `installed-packages.csv`.
+
+## 3.1.2
+- Aggiornato `piboh-script/version.txt` alla versione `3.1.2`.
+- Gli script cercano ora `pwsh.exe` sia in `piboh-portable/PowerShell-7/` sia in `piboh-portable/PowerShell-7.7.0-preview.2-win-x64/` prima di usare il fallback.
+- Aggiornata la documentazione per riflettere la struttura reale trovata sul repository GitHub.
+
+## 3.1.1
+- Allineata la numerazione degli script alla nuova serie `3.1.x` richiesta.
+- Confermato il ripristino del flusso stabile con `piboh-temp/`.
+- Confermata la presenza della funzione `Resolve-InstalledPackageLocation` nello script di installazione e il relativo fix per l'errore che bloccava il processo.
+
 ## 3.0.45
 - Aggiornato `piboh-script/version.txt` alla versione `3.0.45`.
 - Riallineati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` alla versione centrale corrente.
 - Consolidato il versionamento dopo l'eccezione `3.0.44.1` e ripristinato l'incremento normale.
-- Aggiunto logo del gioco in `piboh-images/xterisimage_nobg.png`
 
 ## 3.0.44.1
 - Aggiornato `piboh-script/version.txt` alla versione `3.0.44.1`.
