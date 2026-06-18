@@ -26,10 +26,11 @@ echo  4. Disinstalla dipendenze / rimuovi build e file compilati di XTetris
 echo  5. Apri una guida in Notepad++
 echo  6. Visualizza CHANGELOG.md
 echo  7. Controlla integrita del repository
-echo  8. Esci
+echo  8. Pulisci log e cache
+echo  9. Esci
 echo.
 set "CHOICE="
-set /p CHOICE=Seleziona un'opzione [1-8]: 
+set /p CHOICE=Seleziona un'opzione [1-9]: 
 >> "%LOG_FILE%" echo [%date% %time%] Scelta menu principale: %CHOICE%
 
 if "%CHOICE%"=="1" goto install_build
@@ -39,10 +40,11 @@ if "%CHOICE%"=="4" goto uninstall_all
 if "%CHOICE%"=="5" goto guides_launcher
 if "%CHOICE%"=="6" goto changelog_launcher
 if "%CHOICE%"=="7" goto integrity_check
-if "%CHOICE%"=="8" goto end
+if "%CHOICE%"=="8" goto cleanup_logs_cache
+if "%CHOICE%"=="9" goto end
 
 echo.
-echo Opzione non valida. Inserisci un numero da 1 a 8.
+echo Opzione non valida. Inserisci un numero da 1 a 9.
 pause
 goto menu
 
@@ -124,6 +126,17 @@ if exist "%~dp0piboh-script\verifica-integrita-windows.bat" (
 ) else (
   echo.
   echo ERRORE: file non trovato: piboh-script\verifica-integrita-windows.bat
+  pause
+)
+goto menu
+
+:cleanup_logs_cache
+if exist "%~dp0piboh-script\pulisci-log-cache-windows.bat" (
+  call "%~dp0piboh-script\pulisci-log-cache-windows.bat"
+  call :flush_input
+) else (
+  echo.
+  echo ERRORE: file non trovato: piboh-script\pulisci-log-cache-windows.bat
   pause
 )
 goto menu

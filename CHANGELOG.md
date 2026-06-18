@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## 3.1.13
+- Rimosso il messaggio duplicato sul rilevamento di PowerShell 7 Portable dal launcher batch: il rilevamento viene mostrato una sola volta dallo script PowerShell principale.
+- Aggiunta l'opzione menu `Pulisci log e cache` con il nuovo file `piboh-script/pulisci-log-cache-windows.bat`, che pulisce i file `.log` e la cartella `piboh-temp/`.
+- Reso silenzioso il controllo preliminare di MSYS2 nello script di installazione, evitando il messaggio di errore transitorio quando MSYS2 non è ancora disponibile nel percorso atteso.
+- Aggiornato `piboh-script/version.txt` alla versione `3.1.13`.
+
 ## 3.1.12
 - Corretto `piboh-script/installa-compila-windows.ps1`: se `piboh-portable/PowerShell-7/pwsh.exe` è presente, l'opzione 1 usa quella copia e non installa `Microsoft.PowerShell` con `winget`.
 - Aggiornati `README.md` e `guide/GUIDA-SCRIPT-AUTOMATICO-WINDOWS.md` per chiarire che l'installazione automatica di PowerShell 7 avviene solo in assenza sia della copia portable sia di una copia di sistema utilizzabile.

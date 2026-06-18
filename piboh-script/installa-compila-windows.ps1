@@ -103,7 +103,8 @@ function Resolve-InstalledPackageLocation([string]$Id, [string]$RequestedInstall
             }
         }
         'MSYS2.MSYS2' {
-            try { return (Find-Msys2Root) } catch { }
+            $root = Find-Msys2Root -Quiet
+            if ($root) { return $root }
         }
     }
 
@@ -248,6 +249,10 @@ function Get-PackageInstallLocation([string]$Id, [string]$ProjectRoot) {
 }
 
 function Find-Msys2Root {
+    param(
+        [switch]$Quiet
+    )
+
     $candidates = @()
     if ($script:TempInstallRoot) {
         $candidates += $script:TempInstallRoot
@@ -264,6 +269,7 @@ function Find-Msys2Root {
     foreach ($candidate in $candidates | Where-Object { $_ } | Select-Object -Unique) {
         if (Test-Path (Join-Path $candidate 'usr\bin\bash.exe')) { return $candidate }
     }
+    if ($Quiet) { return $null }
     throw "MSYS2 non trovato. Verifica che l'installazione sia andata a buon fine."
 }
 
@@ -294,10 +300,8 @@ function Test-PackageUsable([string]$Id, [string]$InstallLocation) {
                     (Join-Path $InstallLocation 'msys64\usr\bin\bash.exe')
                 )
             }
-            try {
-                $rootFound = Find-Msys2Root
-                if ($rootFound) { $candidates += (Join-Path $rootFound 'usr\bin\bash.exe') }
-            } catch {}
+            $rootFound = Find-Msys2Root -Quiet
+            if ($rootFound) { $candidates += (Join-Path $rootFound 'usr\bin\bash.exe') }
             return [bool]($candidates | Where-Object { $_ -and (Test-Path $_) } | Select-Object -First 1)
         }
         default {
