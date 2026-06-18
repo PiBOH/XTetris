@@ -4,5 +4,5 @@ questo file contiene una lista delle cosa fatte e da fare
 - [x] Tutto **testato**, **funzionante** e **open source!** (ovviamente il tipo di licenza spetta a @AlexGiulioBerton sceglierla, al momento io ho messo la licenza [MIT](https://opensource.org/license/mit).
 - [x] unificato il punto in cui il programma pesca la [versione degli script](https://github.com/PiBOH/XTetris/blob/main/piboh-script/version.txt)
 - [x] creare logo del gioco da visualizzare ner README.
+- [x] Implementare un issue template personalizzato. -> Provalo [QUI](https://github.com/PiBOH/XTetris/issues/new/choose).
 - [ ] Implementare il refresh del teminale ad ogni azione del gioco. _(probabilmente nella release 4.x.x)_
-- [ ] Implementare un issue template personalizzato.
