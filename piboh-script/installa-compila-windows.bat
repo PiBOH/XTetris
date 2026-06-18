@@ -31,7 +31,15 @@ pause
 )
 
 call :find_pwsh
-if defined PWSH goto run_pwsh
+if defined PWSH (
+  echo(!PWSH!| findstr /i /c:"piboh-portable" >nul
+  if not errorlevel 1 (
+    echo [OK] PowerShell 7 Portable rilevato: !PWSH!
+  ) else (
+    echo [OK] PowerShell 7 gia disponibile: !PWSH!
+  )
+  goto run_pwsh
+)
 
 echo ==> PowerShell 7 non trovato. Provo a installarlo con winget...
 where winget >nul 2>nul

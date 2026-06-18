@@ -151,9 +151,7 @@ function Ensure-Winget {
     }
 }
 
-function Get-PwshPath {
-    Refresh-CommonPaths
-
+function Get-PortablePwshPath {
     $portableRoot = Join-Path (Split-Path -Parent $PSScriptRoot) 'piboh-portable'
     $portablePreferred = Join-Path $portableRoot 'PowerShell-7\pwsh.exe'
     $portablePreferredAlt = Join-Path $portableRoot 'PowerShell-7.7.0-preview.2-win-x64\pwsh.exe'
@@ -163,6 +161,14 @@ function Get-PwshPath {
         $portablePwsh = Get-ChildItem -Path $portableRoot -Filter 'pwsh.exe' -Recurse -File -ErrorAction SilentlyContinue | Select-Object -First 1
         if ($portablePwsh) { return $portablePwsh.FullName }
     }
+    return $null
+}
+
+function Get-PwshPath {
+    Refresh-CommonPaths
+
+    $portablePwsh = Get-PortablePwshPath
+    if ($portablePwsh) { return $portablePwsh }
 
     $cmd = Get-Command pwsh -ErrorAction SilentlyContinue
     if ($cmd -and $cmd.Source) { return $cmd.Source }
@@ -204,6 +210,22 @@ function Ensure-PowerShell7Host {
     $arguments = New-ScriptArgumentList
     & $pwsh @arguments
     exit $LASTEXITCODE
+}
+
+function Ensure-PreferredPowerShell7 {
+    $portablePwsh = Get-PortablePwshPath
+    if ($portablePwsh) {
+        Write-Ok "PowerShell 7 Portable rilevato: $portablePwsh"
+        return
+    }
+
+    $pwsh = Get-PwshPath
+    if ($pwsh) {
+        Write-Ok "PowerShell 7 gia disponibile: $pwsh"
+        return
+    }
+
+    Ensure-WingetPackage 'Microsoft.PowerShell' 'PowerShell 7'
 }
 
 function Test-WingetPackageInstalled([string]$Id) {
@@ -443,7 +465,7 @@ $script:TempInstallRoot = Join-Path $repoDirResolved 'piboh-temp'
 New-Item -ItemType Directory -Path $script:TempInstallRoot -Force | Out-Null
 Write-Ok "Modalita installazione dipendenze: piboh-temp ($script:TempInstallRoot)"
 
-Ensure-WingetPackage 'Microsoft.PowerShell' 'PowerShell 7'
+Ensure-PreferredPowerShell7
 Write-WarnMsg 'Git non viene gestito dagli script automatici.'
 
 Ensure-WingetPackage 'Kitware.CMake' 'CMake' (Get-PackageInstallLocation 'Kitware.CMake' $repoDirResolved)
