@@ -16,7 +16,7 @@ set "LOG_FILE=%LOG_DIR%\menu.log"
 call :flush_input
 cls
 echo ===============================================
-echo      XTetris Windows Pre-Menu %SCRIPT_VERSION%
+echo      Pre-XTetris Windows Menu %SCRIPT_VERSION%
 echo ===============================================
 echo.
 echo  1. Installa prerequisiti e compila XTetris
@@ -167,7 +167,7 @@ if exist "%ProgramFiles%\PowerShell\7-preview\pwsh.exe" (
 set "FLUSH_HOST=powershell"
 
 :flush_run
-"%FLUSH_HOST%" -NoProfile -Command "try { $Host.UI.RawUI.FlushInputBuffer() } catch { }" >nul 2>nul
+"%FLUSH_HOST%" -NoProfile -Command "try { $Host.UI.RawUI.FlushInputBuffer() } catch { }" < nul >nul 2>nul
 goto :eof
 
 :end
