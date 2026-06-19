@@ -145,29 +145,19 @@ goto menu
 set "FLUSH_HOST="
 if exist "%~dp0piboh-portable\PowerShell-7\pwsh.exe" (
   set "FLUSH_HOST=%~dp0piboh-portable\PowerShell-7\pwsh.exe"
-  goto :flush_run
-)
-if exist "%~dp0piboh-portable\PowerShell-7.7.0-preview.2-win-x64\pwsh.exe" (
+) else if exist "%~dp0piboh-portable\PowerShell-7.7.0-preview.2-win-x64\pwsh.exe" (
   set "FLUSH_HOST=%~dp0piboh-portable\PowerShell-7.7.0-preview.2-win-x64\pwsh.exe"
-  goto :flush_run
-)
-where pwsh >nul 2>nul
+) else where pwsh >nul 2>nul
 if not errorlevel 1 (
   set "FLUSH_HOST=pwsh"
-  goto :flush_run
-)
-if exist "%ProgramFiles%\PowerShell\7\pwsh.exe" (
+) else if exist "%ProgramFiles%\PowerShell\7\pwsh.exe" (
   set "FLUSH_HOST=%ProgramFiles%\PowerShell\7\pwsh.exe"
-  goto :flush_run
-)
-if exist "%ProgramFiles%\PowerShell\7-preview\pwsh.exe" (
+) else if exist "%ProgramFiles%\PowerShell\7-preview\pwsh.exe" (
   set "FLUSH_HOST=%ProgramFiles%\PowerShell\7-preview\pwsh.exe"
-  goto :flush_run
+) else (
+  set "FLUSH_HOST=powershell"
 )
-set "FLUSH_HOST=powershell"
-
-:flush_run
-"%FLUSH_HOST%" -NoProfile -Command "try { $Host.UI.RawUI.FlushInputBuffer() } catch { }" < nul >nul 2>nul
+"%FLUSH_HOST%" -NoProfile -Command "try { $Host.UI.RawUI.FlushInputBuffer() } catch { }" >nul 2>nul
 goto :eof
 
 :end
