@@ -4,7 +4,7 @@
 - Corretto `piboh-script/verifica-integrita-windows.bat`: il riepilogo finale usa ora una struttura batch compatibile e l'opzione 7 non dovrebbe mandare più in crash il menu.
 - Aggiornato `piboh-script/pulisci-log-cache-windows.bat`: ora svuota tutti i file dentro `piboh-script/log/`, rimuove `piboh-temp/` ed elimina nel repository gli altri file che contengono `cache` nel nome, escludendo lo script stesso.
 - Ripulito `README.md` rimuovendo sezioni ridondanti e lasciando una struttura più compatta e coerente con l'uso reale del repository.
-- Aggiornato `piboh-script/version.txt` alla versione `3.1.14`.
+- Aggiornato `piboh-script/version.txt` alla versione `3.1.19`.
 
 ## 3.1.13
 - Rimosso il messaggio duplicato sul rilevamento di PowerShell 7 Portable dal launcher batch: il rilevamento viene mostrato una sola volta dallo script PowerShell principale.
