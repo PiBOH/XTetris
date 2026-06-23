@@ -142,22 +142,9 @@ if exist "%~dp0piboh-script\pulisci-log-cache-windows.bat" (
 goto menu
 
 :flush_input
-set "FLUSH_HOST="
-if exist "%~dp0piboh-portable\PowerShell-7\pwsh.exe" (
-  set "FLUSH_HOST=%~dp0piboh-portable\PowerShell-7\pwsh.exe"
-) else if exist "%~dp0piboh-portable\PowerShell-7.7.0-preview.2-win-x64\pwsh.exe" (
-  set "FLUSH_HOST=%~dp0piboh-portable\PowerShell-7.7.0-preview.2-win-x64\pwsh.exe"
-) else where pwsh >nul 2>nul
-if not errorlevel 1 (
-  set "FLUSH_HOST=pwsh"
-) else if exist "%ProgramFiles%\PowerShell\7\pwsh.exe" (
-  set "FLUSH_HOST=%ProgramFiles%\PowerShell\7\pwsh.exe"
-) else if exist "%ProgramFiles%\PowerShell\7-preview\pwsh.exe" (
-  set "FLUSH_HOST=%ProgramFiles%\PowerShell\7-preview\pwsh.exe"
-) else (
-  set "FLUSH_HOST=powershell"
-)
-"%FLUSH_HOST%" -NoProfile -Command "try { $Host.UI.RawUI.FlushInputBuffer() } catch { }" >nul 2>nul
+REM Flush input buffer senza chiamare PowerShell (che causa crash cmd.exe su alcune configurazioni).
+REM Strategia: pause < nul legge EOF da nul immediatamente e "consuma" eventuali key residue.
+pause < nul >nul 2>nul
 goto :eof
 
 :end

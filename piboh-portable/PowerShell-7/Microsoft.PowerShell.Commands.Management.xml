@@ -587,44 +587,6 @@
             by prefacing then with an additional backslash
             </returns>
         </member>
-        <member name="M:Microsoft.PowerShell.Commands.CIMExtensions.QueryInstances(Microsoft.Management.Infrastructure.CimSession,System.String,System.String)">
-            <summary>
-            An "overload" of the
-            <see cref="T:Microsoft.Management.Infrastructure.CimSession"/>.QueryInstances
-            method that takes only the namespace and query string as a parameters.
-            </summary>
-            <param name="session">The CimSession to be queried.</param>
-            <param name="nameSpace">A string containing the namespace to run the query against.</param>
-            <param name="query">A string containing the query to be run.</param>
-            <returns>
-            An IEnumerable interface that can be used to enumerate the instances
-            </returns>
-        </member>
-        <member name="M:Microsoft.PowerShell.Commands.CIMExtensions.QueryFirstInstance(Microsoft.Management.Infrastructure.CimSession,System.String,System.String)">
-            <summary>
-            Execute a CIM query and return only the first instance in the result.
-            </summary>
-            <param name="session">The CimSession to be queried.</param>
-            <param name="nameSpace">A string containing the namespace to run the query against.</param>
-            <param name="query">A string containing the query to be run.</param>
-            <returns>
-            A <see cref="T:Microsoft.Management.Infrastructure.CimInstance"/> object
-            representing the first instance in a query result if successful, null
-            otherwise.
-            </returns>
-        </member>
-        <member name="M:Microsoft.PowerShell.Commands.CIMExtensions.QueryFirstInstance(Microsoft.Management.Infrastructure.CimSession,System.String)">
-            <summary>
-            Execute a CIM query and return only the first instance in the result.
-            </summary>
-            <param name="session">The CimSession to be queried.</param>
-            <param name="query">A string containing the query to be run.</param>
-            <returns>
-            A <see cref="T:Microsoft.Management.Infrastructure.CimInstance"/> object
-            representing the first instance in a query result if successful, null
-            otherwise.
-            </returns>
-        </member>
         <member name="T:Microsoft.PowerShell.Commands.ClearContentCommand">
             <summary>
             A command that appends the specified content to the item at the specified path.
@@ -781,19 +743,6 @@
             Determines if the path should be resolved after being joined.
             </summary>
             <value></value>
-        </member>
-        <member name="P:Microsoft.PowerShell.Commands.JoinPathCommand.Extension">
-            <summary>
-            Gets or sets the extension to use for the resulting path.
-            If not specified, the original extension (if any) is preserved.
-            <para>
-            Behavior:
-            - If the path has an existing extension, it will be replaced with the specified extension.
-            - If the path does not have an extension, the specified extension will be added.
-            - If an empty string is provided, any existing extension will be removed.
-            - A leading dot in the extension is optional; if omitted, one will be added automatically.
-            </para>
-            </summary>
         </member>
         <member name="M:Microsoft.PowerShell.Commands.JoinPathCommand.ProcessRecord">
             <summary>
@@ -5325,8 +5274,14 @@
         </member>
         <member name="M:Microsoft.PowerShell.Commands.GetHotFixCommand.Dispose">
             <summary>
-            Release all resources.
+            Dispose Method.
             </summary>
+        </member>
+        <member name="M:Microsoft.PowerShell.Commands.GetHotFixCommand.Dispose(System.Boolean)">
+            <summary>
+            Dispose Method.
+            </summary>
+            <param name="disposing"></param>
         </member>
         <member name="T:Microsoft.PowerShell.Commands.JobProcessCollection">
             <summary>
@@ -7495,11 +7450,8 @@
         </member>
         <member name="M:Microsoft.PowerShell.Commands.StartProcessCommand.Dispose">
             <summary>
-            Release all resources.
-            </summary>
-            <remarks>
             Dispose WaitHandle used to honor -Wait parameter.
-            </remarks>
+            </summary>
         </member>
         <member name="M:Microsoft.PowerShell.Commands.StartProcessCommand.StartWithCreateProcess(System.Diagnostics.ProcessStartInfo)">
             <summary>
@@ -7979,13 +7931,6 @@
             <summary>
             Write the service objects.
             </summary>
-        </member>
-        <member name="M:Microsoft.PowerShell.Commands.GetServiceCommand.WriteServicePropertyError(System.String,System.String)">
-            <summary>
-            Writes a verbose message when a service property query fails.
-            </summary>
-            <param name="serviceName">Name of the service.</param>
-            <param name="propertyName">Name of the property that failed to be queried.</param>
         </member>
         <member name="M:Microsoft.PowerShell.Commands.GetServiceCommand.AddProperties(System.IntPtr,System.ServiceProcess.ServiceController)">
             <summary>
@@ -9430,6 +9375,44 @@
             <param name="unfilteredPaths">The list of unfiltered paths.</param>
             <param name="currentContext">The current context.</param>
             <returns>The list of paths accepted by the user.</returns>
+        </member>
+        <member name="M:Extensions.CIMExtensions.QueryInstances(Microsoft.Management.Infrastructure.CimSession,System.String,System.String)">
+            <summary>
+            An "overload" of the
+            <see cref="T:Microsoft.Management.Infrastructure.CimSession"/>.QueryInstances
+            method that takes only the namespace and query string as a parameters.
+            </summary>
+            <param name="session">The CimSession to be queried.</param>
+            <param name="nameSpace">A string containing the namespace to run the query against.</param>
+            <param name="query">A string containing the query to be run.</param>
+            <returns>
+            An IEnumerable interface that can be used to enumerate the instances
+            </returns>
+        </member>
+        <member name="M:Extensions.CIMExtensions.QueryFirstInstance(Microsoft.Management.Infrastructure.CimSession,System.String,System.String)">
+            <summary>
+            Execute a CIM query and return only the first instance in the result.
+            </summary>
+            <param name="session">The CimSession to be queried.</param>
+            <param name="nameSpace">A string containing the namespace to run the query against.</param>
+            <param name="query">A string containing the query to be run.</param>
+            <returns>
+            A <see cref="T:Microsoft.Management.Infrastructure.CimInstance"/> object
+            representing the first instance in a query result if successful, null
+            otherwise.
+            </returns>
+        </member>
+        <member name="M:Extensions.CIMExtensions.QueryFirstInstance(Microsoft.Management.Infrastructure.CimSession,System.String)">
+            <summary>
+            Execute a CIM query and return only the first instance in the result.
+            </summary>
+            <param name="session">The CimSession to be queried.</param>
+            <param name="query">A string containing the query to be run.</param>
+            <returns>
+            A <see cref="T:Microsoft.Management.Infrastructure.CimInstance"/> object
+            representing the first instance in a query result if successful, null
+            otherwise.
+            </returns>
         </member>
         <member name="T:ClearRecycleBinResources">
             <summary>
@@ -11396,13 +11379,6 @@
             <summary>
               Looks up a localized string similar to 
                The startup type '{0}' is not supported by {1}.
-             
-            </summary>
-        </member>
-        <member name="P:ServiceResources.CouldNotGetServiceProperty">
-            <summary>
-              Looks up a localized string similar to 
-               Could not retrieve property '{1}' for service '{0}': {2}
              
             </summary>
         </member>

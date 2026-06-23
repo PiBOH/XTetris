@@ -722,13 +722,12 @@
         </member>
         <member name="P:Microsoft.PowerShell.Commands.BaseCsvWritingCommand.IncludeTypeInformation">
             <summary>
-            IncludeTypeInformation : The #TYPE line should be generated. Default is false.
+            IncludeTypeInformation : The #TYPE line should be generated. Default is false. Cannot specify with NoTypeInformation.
             </summary>
         </member>
         <member name="P:Microsoft.PowerShell.Commands.BaseCsvWritingCommand.NoTypeInformation">
             <summary>
-            Gets or sets a value indicating whether to suppress the #TYPE line.
-            This parameter is obsolete and has no effect. It is retained for backward compatibility only.
+            NoTypeInformation : The #TYPE line should not be generated. Default is true. Cannot specify with IncludeTypeInformation.
             </summary>
         </member>
         <member name="P:Microsoft.PowerShell.Commands.BaseCsvWritingCommand.QuoteFields">
@@ -1718,11 +1717,6 @@
             will be determined using property sets, etc.
             </summary>
         </member>
-        <member name="P:Microsoft.PowerShell.Commands.FormatCustomCommand.ExcludeProperty">
-            <summary>
-            Gets or sets the properties to exclude from formatting.
-            </summary>
-        </member>
         <member name="P:Microsoft.PowerShell.Commands.FormatCustomCommand.Depth">
             <summary>
             </summary>
@@ -1756,15 +1750,11 @@
             The parameter is optional, since the defaults will be determined using property sets, etc.
             </summary>
         </member>
-        <member name="P:Microsoft.PowerShell.Commands.FormatWideCommand.ExcludeProperty">
-            <summary>
-            Gets or sets the properties to exclude from formatting.
-            </summary>
-        </member>
         <member name="P:Microsoft.PowerShell.Commands.FormatWideCommand.AutoSize">
             <summary>
-            Gets or sets a value indicating whether to autosize the output.
+            Optional, non positional parameter.
             </summary>
+            <value></value>
         </member>
         <member name="P:Microsoft.PowerShell.Commands.FormatWideCommand.Column">
             <summary>
@@ -5175,6 +5165,26 @@
             Remove the event from the queue.
             </summary>
         </member>
+        <member name="T:Microsoft.PowerShell.Commands.PSPropertyExpressionFilter">
+            <summary>
+            Helper class to do wildcard matching on PSPropertyExpressions.
+            </summary>
+        </member>
+        <member name="M:Microsoft.PowerShell.Commands.PSPropertyExpressionFilter.#ctor(System.String[])">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.PowerShell.Commands.PSPropertyExpressionFilter"/> class
+            with the specified array of patterns.
+            </summary>
+            <param name="wildcardPatternsStrings">Array of pattern strings to use.</param>
+        </member>
+        <member name="M:Microsoft.PowerShell.Commands.PSPropertyExpressionFilter.IsMatch(Microsoft.PowerShell.Commands.PSPropertyExpression)">
+            <summary>
+            Try to match the expression against the array of wildcard patterns.
+            The first match shortcircuits the search.
+            </summary>
+            <param name="expression">PSPropertyExpression to test against.</param>
+            <returns>True if there is a match, else false.</returns>
+        </member>
         <member name="T:Microsoft.PowerShell.Commands.SelectObjectCommand">
             <summary>
             </summary>
@@ -6231,7 +6241,7 @@
         </member>
         <member name="M:Microsoft.PowerShell.Commands.TeeObjectCommand.Dispose">
             <summary>
-            Release all resources.
+            Dispose method in IDisposable.
             </summary>
         </member>
         <member name="T:Microsoft.PowerShell.Commands.TestJsonCommand">
@@ -6284,14 +6294,6 @@
             <summary>
             Validate a JSON.
             </summary>
-        </member>
-        <member name="M:Microsoft.PowerShell.Commands.TestJsonCommand.ReportValidationErrors(Json.Schema.EvaluationResults)">
-            <summary>
-            Recursively reports validation errors from hierarchical evaluation results.
-            Skips nodes (and their children) where IsValid is true to avoid false positives
-            from constructs like OneOf or AnyOf.
-            </summary>
-            <param name="evaluationResult">The evaluation result to process.</param>
         </member>
         <member name="T:Microsoft.PowerShell.Commands.MeasureCommandCommand">
             <summary>
@@ -9444,7 +9446,7 @@
         </member>
         <member name="M:Microsoft.PowerShell.Commands.ImportClixmlCommand.Dispose">
             <summary>
-            Release all resources.
+            Public dispose method.
             </summary>
         </member>
         <member name="M:Microsoft.PowerShell.Commands.ImportClixmlCommand.ProcessRecord">
@@ -10609,6 +10611,13 @@
              
             </summary>
         </member>
+        <member name="P:CsvCommandStrings.CannotSpecifyIncludeTypeInformationAndNoTypeInformation">
+            <summary>
+              Looks up a localized string similar to 
+               You must specify either the -IncludeTypeInformation or -NoTypeInformation parameters, but not both.
+             
+            </summary>
+        </member>
         <member name="P:CsvCommandStrings.CannotSpecifyPathAndLiteralPath">
             <summary>
               Looks up a localized string similar to 
@@ -10662,13 +10671,6 @@
             <summary>
               Looks up a localized string similar to 
                EOF is reached.
-             
-            </summary>
-        </member>
-        <member name="P:CsvCommandStrings.CannotSpecifyAppendAndNoHeader">
-            <summary>
-              Looks up a localized string similar to 
-               You must specify either the -Append or -NoHeader parameters, but not both.
              
             </summary>
         </member>
