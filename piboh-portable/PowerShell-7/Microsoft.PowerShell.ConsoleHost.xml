@@ -3422,7 +3422,7 @@
              <summary>
              Executor wraps a Pipeline instance, and provides helper methods for executing commands in that pipeline. It is used to
              provide bookkeeping and structure to the use of pipeline in such a way that they can be interrupted and cancelled by a
-             break event handler, and to track nesting of pipelines (which happens with interrupted input loops (aka subshells) and 
+             break event handler, and to track nesting of pipelines (which happens with interrupted input loops (aka subshells) and
              use of tab-completion in prompts). The bookkeeping is necessary because the break handler is static and global, and
              there is no means for tying a break handler to an instance of an object.
             
@@ -4323,18 +4323,18 @@
         </member>
         <member name="T:Microsoft.PowerShell.HResult">
             <summary>
-            HRESULT Wrapper    
-            </summary>    
+            HRESULT Wrapper
+            </summary>
         </member>
         <member name="F:Microsoft.PowerShell.HResult.Ok">
-            <summary>     
-            S_OK          
-            </summary>    
+            <summary>
+            S_OK
+            </summary>
         </member>
         <member name="F:Microsoft.PowerShell.HResult.False">
             <summary>
             S_FALSE.
-            </summary>        
+            </summary>
         </member>
         <member name="F:Microsoft.PowerShell.HResult.InvalidArguments">
             <summary>

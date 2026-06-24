@@ -488,6 +488,20 @@
              
             </summary>
         </member>
+        <member name="P:GetEventResources.LogInfoNoAccess">
+            <summary>
+              Looks up a localized string similar to 
+               Access denied for log: '{0}'.
+             
+            </summary>
+        </member>
+        <member name="P:GetEventResources.SuggestElevation">
+            <summary>
+              Looks up a localized string similar to 
+               Launch PowerShell with elevated user rights.
+             
+            </summary>
+        </member>
         <member name="P:GetEventResources.NoEventMessage">
             <summary>
               Looks up a localized string similar to 
@@ -555,6 +569,55 @@
             <summary>
               Looks up a localized string similar to 
                Log count ({0}) is exceeded Windows Event Log API limit ({1}). Adjust filter to return less log names.
+             
+            </summary>
+        </member>
+        <member name="P:GetEventResources.ListLogParamHelp">
+            <summary>
+              Looks up a localized string similar to 
+               Specifies the event logs. Wildcards are permitted.
+             
+            </summary>
+        </member>
+        <member name="P:GetEventResources.GetLogParamHelp">
+            <summary>
+              Looks up a localized string similar to 
+               Specifies the event logs that this cmdlet gets events from. Wildcards are permitted.
+             
+            </summary>
+        </member>
+        <member name="P:GetEventResources.ListProviderParamHelp">
+            <summary>
+              Looks up a localized string similar to 
+               Specifies the event log providers that this cmdlet gets.
+             
+            </summary>
+        </member>
+        <member name="P:GetEventResources.GetProviderParamHelp">
+            <summary>
+              Looks up a localized string similar to 
+               Specifies the event log providers from which this cmdlet gets events.
+             
+            </summary>
+        </member>
+        <member name="P:GetEventResources.PathParamHelp">
+            <summary>
+              Looks up a localized string similar to 
+               Specifies the path to the event log files that this cmdlet gets events from.
+             
+            </summary>
+        </member>
+        <member name="P:GetEventResources.MaxEventsParamHelp">
+            <summary>
+              Looks up a localized string similar to 
+               Specifies the maximum number of events that are returned.
+             
+            </summary>
+        </member>
+        <member name="P:GetEventResources.ComputerNameParamHelp">
+            <summary>
+              Looks up a localized string similar to 
+               Specifies the name of the computer from which this cmdlet gets data.
              
             </summary>
         </member>

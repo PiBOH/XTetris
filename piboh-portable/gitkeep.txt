@@ -1,4 +1,4 @@
 versione dei programmi inclusi
 Alacritty-portable -> 0.17.0
 Notepad++Portable -> 8.9.6.4 (32bit)
-Powershell7 -> PowerShell-7.7.0-preview.2-win-x64
+Powershell7 -> 7.7.0 preview2

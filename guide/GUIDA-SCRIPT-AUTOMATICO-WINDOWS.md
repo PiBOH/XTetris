@@ -11,16 +11,16 @@ Questa guida spiega come usare lo script automatico incluso nel repository per:
 ## Versioni attuali degli script
 
 ```text
-Menu: 3.1.12
-Installatore: 3.1.12
-Disinstallatore: 3.1.12
-Guide launcher: 3.1.12
-Integrity check: 3.1.12
+Menu: 3.0.45
+Installatore: 3.0.45
+Disinstallatore: 3.0.45
+Guide launcher: 3.0.45
+Integrity check: 3.0.45
 ```
 
 ## File disponibili
 
-Nel repository trovi (versione corrente letta da `piboh-script/version.txt` = `3.1.12`):
+Nel repository trovi (versione corrente letta da `piboh-script/version.txt` = `3.0.45`):
 
 - `MENU-XTETRIS-WINDOWS.bat` → pre-menu principale Windows, con accesso a installazione, avvio, guide, changelog e controllo integrità
 - `piboh-script/installa-compila-windows.ps1` → script PowerShell principale consigliato
@@ -41,11 +41,11 @@ Nel repository trovi (versione corrente letta da `piboh-script/version.txt` = `3
 Lo script PowerShell di installazione prova a fare automaticamente queste operazioni:
 
 - installa tutte le dipendenze gestite automaticamente nella cartella `piboh-temp/` del progetto;
-- usa con priorità assoluta **PowerShell 7 portable** se trova `piboh-portable/PowerShell-7/pwsh.exe`;
+- mantiene **PowerShell 7** sempre nel percorso predefinito;
 - non gestisce **Git** come dipendenza automatica;
 - rileva se è stato aperto con **Windows PowerShell classico**;
 - se serve, si rilancia automaticamente con **PowerShell 7**;
-- installa **PowerShell 7** con `winget` solo se manca sia la copia portable sia una copia di sistema utilizzabile;
+- se **PowerShell 7** non è installato, prova a installarlo con `winget` in modalità silenziosa;
 - mostra comunque il messaggio iniziale che avvisa se non sei amministratore;
 - verifica che `winget` sia disponibile;
 - installa **CMake** se manca;
@@ -73,7 +73,7 @@ Apri **PowerShell** o **Windows Terminal** nella cartella del repository e lanci
 powershell -ExecutionPolicy Bypass -File .\piboh-script\installa-compila-windows.ps1
 ```
 
-> Anche se parti da Windows PowerShell classico, lo script proverà a spostarsi automaticamente su **PowerShell 7**: prima sulla copia portable del repository, poi su quella di sistema e solo come ultima scelta tenterà l'installazione con `winget`.
+> Anche se parti da Windows PowerShell classico, lo script proverà a spostarsi automaticamente su **PowerShell 7**.
 
 ### Metodo 2 - Da menu
 
@@ -101,7 +101,7 @@ La priorità è:
 
 Quando apri una guida o il changelog, il launcher prova anche ad attivare automaticamente la preview del plugin **NppMarkdownPanel** (se presente nella copia portable).
 
-Se in `piboh-portable/PowerShell-7/` è presente una copia **portable** di PowerShell 7 (`pwsh.exe`), tutti gli script la usano con priorità assoluta e non tentano di installare `Microsoft.PowerShell`; in sua assenza usano PowerShell 7 di sistema e solo se manca anche quello provano l'installazione automatica.
+Se in `piboh-portable/PowerShell-7/` è presente una copia **portable** di PowerShell 7 (`pwsh.exe`), tutti gli script la usano con priorità assoluta; in sua assenza usano PowerShell 7 di sistema.
 
 ---
 
@@ -175,7 +175,7 @@ Installa o aggiorna App Installer.
 
 ### Errore su PowerShell 7
 
-Controlla prima la presenza di `piboh-portable/PowerShell-7/pwsh.exe`. Se il file manca davvero, rilancia lo script; solo se non hai neppure una copia di sistema installa manualmente **PowerShell 7** e poi riprova.
+Rilancia lo script. Se necessario installa manualmente **PowerShell 7** e poi riprova.
 
 ### Errore durante la build
 

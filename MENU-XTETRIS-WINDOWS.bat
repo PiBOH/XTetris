@@ -26,11 +26,10 @@ echo  4. Disinstalla dipendenze / rimuovi build e file compilati di XTetris
 echo  5. Apri una guida in Notepad++
 echo  6. Visualizza CHANGELOG.md
 echo  7. Controlla integrita del repository
-echo  8. Pulisci log e cache
-echo  9. Esci
+echo  8. Esci
 echo.
 set "CHOICE="
-set /p CHOICE=Seleziona un'opzione [1-9]: 
+set /p CHOICE=Seleziona un'opzione [1-8]: 
 >> "%LOG_FILE%" echo [%date% %time%] Scelta menu principale: %CHOICE%
 
 if "%CHOICE%"=="1" goto install_build
@@ -40,11 +39,10 @@ if "%CHOICE%"=="4" goto uninstall_all
 if "%CHOICE%"=="5" goto guides_launcher
 if "%CHOICE%"=="6" goto changelog_launcher
 if "%CHOICE%"=="7" goto integrity_check
-if "%CHOICE%"=="8" goto cleanup_logs_cache
-if "%CHOICE%"=="9" goto end
+if "%CHOICE%"=="8" goto end
 
 echo.
-echo Opzione non valida. Inserisci un numero da 1 a 9.
+echo Opzione non valida. Inserisci un numero da 1 a 8.
 pause
 goto menu
 
@@ -130,21 +128,21 @@ if exist "%~dp0piboh-script\verifica-integrita-windows.bat" (
 )
 goto menu
 
-:cleanup_logs_cache
-if exist "%~dp0piboh-script\pulisci-log-cache-windows.bat" (
-  call "%~dp0piboh-script\pulisci-log-cache-windows.bat"
-  call :flush_input
-) else (
-  echo.
-  echo ERRORE: file non trovato: piboh-script\pulisci-log-cache-windows.bat
-  pause
-)
-goto menu
-
 :flush_input
-REM Flush input buffer senza chiamare PowerShell (che causa crash cmd.exe su alcune configurazioni).
-REM Strategia: pause < nul legge EOF da nul immediatamente e "consuma" eventuali key residue.
-pause < nul >nul 2>nul
+set "FLUSH_HOST="
+if exist "%~dp0piboh-portable\PowerShell-7\pwsh.exe" (
+  set "FLUSH_HOST=%~dp0piboh-portable\PowerShell-7\pwsh.exe"
+) else where pwsh >nul 2>nul
+if not errorlevel 1 (
+  set "FLUSH_HOST=pwsh"
+) else if exist "%ProgramFiles%\PowerShell\7\pwsh.exe" (
+  set "FLUSH_HOST=%ProgramFiles%\PowerShell\7\pwsh.exe"
+) else if exist "%ProgramFiles%\PowerShell\7-preview\pwsh.exe" (
+  set "FLUSH_HOST=%ProgramFiles%\PowerShell\7-preview\pwsh.exe"
+) else (
+  set "FLUSH_HOST=powershell"
+)
+"%FLUSH_HOST%" -NoProfile -Command "try { $Host.UI.RawUI.FlushInputBuffer() } catch { }" >nul 2>nul
 goto :eof
 
 :end

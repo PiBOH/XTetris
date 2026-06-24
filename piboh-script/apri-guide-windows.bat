@@ -74,6 +74,7 @@ if not exist "%GUIDE_FILE%" (
 
 >> "%LOG_FILE%" echo [%date% %time%] Apertura file: %GUIDE_FILE%
 start "Notepad++" "%NPP_EXE%" "%GUIDE_FILE%"
+call :activate_markdown_preview
 goto :eof
 
 :find_notepadpp
@@ -106,9 +107,7 @@ goto :eof
 :activate_markdown_preview
 if exist "%~dp0..\piboh-portable\Notepad++Portable\plugins\NppMarkdownPanel\NppMarkdownPanel.dll" (
   set "SENDKEYS_HOST="
-  if exist "%~dp0..\piboh-portable\PowerShell-7\pwsh.exe" (
-    set "SENDKEYS_HOST=%~dp0..\piboh-portable\PowerShell-7\pwsh.exe"
-  ) else where pwsh >nul 2>nul
+  where pwsh >nul 2>nul
   if not errorlevel 1 (
     set "SENDKEYS_HOST=pwsh"
   ) else if exist "%ProgramFiles%\PowerShell\7\pwsh.exe" (
@@ -126,8 +125,6 @@ goto :eof
 set "FLUSH_HOST="
 if exist "%~dp0..\piboh-portable\PowerShell-7\pwsh.exe" (
   set "FLUSH_HOST=%~dp0..\piboh-portable\PowerShell-7\pwsh.exe"
-) else if exist "%~dp0..\piboh-portable\PowerShell-7.7.0-preview.2-win-x64\pwsh.exe" (
-  set "FLUSH_HOST=%~dp0..\piboh-portable\PowerShell-7.7.0-preview.2-win-x64\pwsh.exe"
 ) else where pwsh >nul 2>nul
 if not errorlevel 1 (
   set "FLUSH_HOST=pwsh"

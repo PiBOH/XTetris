@@ -103,8 +103,7 @@ function Resolve-InstalledPackageLocation([string]$Id, [string]$RequestedInstall
             }
         }
         'MSYS2.MSYS2' {
-            $root = Find-Msys2Root -Quiet
-            if ($root) { return $root }
+            try { return (Find-Msys2Root) } catch { }
         }
     }
 
@@ -152,24 +151,16 @@ function Ensure-Winget {
     }
 }
 
-function Get-PortablePwshPath {
+function Get-PwshPath {
+    Refresh-CommonPaths
+
     $portableRoot = Join-Path (Split-Path -Parent $PSScriptRoot) 'piboh-portable'
     $portablePreferred = Join-Path $portableRoot 'PowerShell-7\pwsh.exe'
-    $portablePreferredAlt = Join-Path $portableRoot 'PowerShell-7.7.0-preview.2-win-x64\pwsh.exe'
     if (Test-Path $portablePreferred) { return $portablePreferred }
-    if (Test-Path $portablePreferredAlt) { return $portablePreferredAlt }
     if (Test-Path $portableRoot) {
         $portablePwsh = Get-ChildItem -Path $portableRoot -Filter 'pwsh.exe' -Recurse -File -ErrorAction SilentlyContinue | Select-Object -First 1
         if ($portablePwsh) { return $portablePwsh.FullName }
     }
-    return $null
-}
-
-function Get-PwshPath {
-    Refresh-CommonPaths
-
-    $portablePwsh = Get-PortablePwshPath
-    if ($portablePwsh) { return $portablePwsh }
 
     $cmd = Get-Command pwsh -ErrorAction SilentlyContinue
     if ($cmd -and $cmd.Source) { return $cmd.Source }
@@ -213,22 +204,6 @@ function Ensure-PowerShell7Host {
     exit $LASTEXITCODE
 }
 
-function Ensure-PreferredPowerShell7 {
-    $portablePwsh = Get-PortablePwshPath
-    if ($portablePwsh) {
-        Write-Ok "PowerShell 7 Portable rilevato: $portablePwsh"
-        return
-    }
-
-    $pwsh = Get-PwshPath
-    if ($pwsh) {
-        Write-Ok "PowerShell 7 gia disponibile: $pwsh"
-        return
-    }
-
-    Ensure-WingetPackage 'Microsoft.PowerShell' 'PowerShell 7'
-}
-
 function Test-WingetPackageInstalled([string]$Id) {
     $output = winget list --id $Id --exact --accept-source-agreements 2>$null | Out-String
     return ($output -match [regex]::Escape($Id))
@@ -249,10 +224,6 @@ function Get-PackageInstallLocation([string]$Id, [string]$ProjectRoot) {
 }
 
 function Find-Msys2Root {
-    param(
-        [switch]$Quiet
-    )
-
     $candidates = @()
     if ($script:TempInstallRoot) {
         $candidates += $script:TempInstallRoot
@@ -269,7 +240,6 @@ function Find-Msys2Root {
     foreach ($candidate in $candidates | Where-Object { $_ } | Select-Object -Unique) {
         if (Test-Path (Join-Path $candidate 'usr\bin\bash.exe')) { return $candidate }
     }
-    if ($Quiet) { return $null }
     throw "MSYS2 non trovato. Verifica che l'installazione sia andata a buon fine."
 }
 
@@ -300,8 +270,10 @@ function Test-PackageUsable([string]$Id, [string]$InstallLocation) {
                     (Join-Path $InstallLocation 'msys64\usr\bin\bash.exe')
                 )
             }
-            $rootFound = Find-Msys2Root -Quiet
-            if ($rootFound) { $candidates += (Join-Path $rootFound 'usr\bin\bash.exe') }
+            try {
+                $rootFound = Find-Msys2Root
+                if ($rootFound) { $candidates += (Join-Path $rootFound 'usr\bin\bash.exe') }
+            } catch {}
             return [bool]($candidates | Where-Object { $_ -and (Test-Path $_) } | Select-Object -First 1)
         }
         default {
@@ -469,7 +441,7 @@ $script:TempInstallRoot = Join-Path $repoDirResolved 'piboh-temp'
 New-Item -ItemType Directory -Path $script:TempInstallRoot -Force | Out-Null
 Write-Ok "Modalita installazione dipendenze: piboh-temp ($script:TempInstallRoot)"
 
-Ensure-PreferredPowerShell7
+Ensure-WingetPackage 'Microsoft.PowerShell' 'PowerShell 7'
 Write-WarnMsg 'Git non viene gestito dagli script automatici.'
 
 Ensure-WingetPackage 'Kitware.CMake' 'CMake' (Get-PackageInstallLocation 'Kitware.CMake' $repoDirResolved)
