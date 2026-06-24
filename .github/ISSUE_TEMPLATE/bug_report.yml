@@ -39,7 +39,7 @@ body:
   - type: dropdown
     id: frequency
     attributes:
-      label: 📉 How often does it happen?
+      label: 📉 Con che frequenza accade?
       options:
         - 🔴 Sempre (100%)
         - 🟠 Spesso (> 50%)
