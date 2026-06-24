@@ -70,8 +70,8 @@ body:
       label: 🆚 Cosa dovrebbe succedere vs. Cosa succede
       description: What happened vs. what should have happened.
       placeholder: |
-        Expected: Inizio un corso.
-        Actual: L'App crasha immediatamente.
+        Aspettativa: Inizio un corso.
+        Realtà: L'App crasha immediatamente.
     validations:
       required: true
 
