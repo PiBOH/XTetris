@@ -35,9 +35,9 @@ Esegui il file `MENU-XTETRIS-WINDOWS.bat` e scegli tra le opzioni disponibili in
 
 6 - Visualizza CHANGELOG.md
 
-7 - Pulisci log e cache (Preview)
+7 - Controlla integrita del repository (Preview)
 
-8 - Controlla integrita del repository (Preview)
+8 - Pulisci log e cache (Preview)
 
 9 - Esci
 
