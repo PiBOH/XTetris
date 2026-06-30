@@ -23,7 +23,7 @@ echo  1. Installa prerequisiti e compila XTetris
 echo  2. Compila e avvia subito XTetris
 echo  3. Avvia il gioco gia compilato
 echo  4. Disinstalla dipendenze / rimuovi build e file compilati di XTetris
-echo  5. Apri una guida in Notepad++
+echo  5. Apri una guida in multimdreader
 echo  6. Visualizza CHANGELOG.md
 echo  7. Controlla integrita del repository
 echo  8. Esci
